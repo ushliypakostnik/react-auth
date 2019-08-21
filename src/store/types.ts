@@ -1,14 +1,14 @@
 export interface Store {
   readonly rootReducer: {
     readonly auth: {
-       readonly isAuth: boolean,
-    },
-    readonly error : string[],
+       readonly isAuth: boolean;
+    };
+    readonly error? : string[];
   }
 };
 
 export interface Test {
-  test: string,
+  test: string;
 };
 
 // Actions Types
@@ -16,8 +16,8 @@ export interface Test {
 export const TEST_ACTION_TYPE = 'TEST_ACTION_TYPE';
 
 interface testAction {
-  type: typeof TEST_ACTION_TYPE,
-  test: Test,
+  type: typeof TEST_ACTION_TYPE;
+  test: Test;
 };
 
 export type testActionType = testAction;

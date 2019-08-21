@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/redux-logger": "^3.0.7",
+    "babel-plugin-styled-components": "^1.10.6",
     "redux-logger": "^3.0.6"
   }
 }
