@@ -1,11 +1,11 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from "connected-react-router";
+import { CookiesProvider } from 'react-cookie';
 
-import './index.css';
-import App from './App';
+import App from './containers/App';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -14,7 +14,9 @@ import store, { history } from './store/store';
 ReactDOM.render((
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <CookiesProvider>
+        <App />
+      </CookiesProvider>
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));

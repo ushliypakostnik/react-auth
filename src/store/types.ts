@@ -1,7 +1,9 @@
 export interface Store {
   readonly rootReducer: {
-    readonly test: string,
-    readonly error? : string[],
+    readonly auth: {
+       readonly isAuth: boolean,
+    },
+    readonly error : string[],
   }
 };
 

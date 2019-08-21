@@ -1,6 +1,8 @@
 export const INITIAL_STATE = {
   rootReducer: {
-    test: '',
+    auth: {
+      isAuth: false,
+    },
     error: [],
   }
 };
