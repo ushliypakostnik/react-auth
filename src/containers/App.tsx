@@ -1,15 +1,17 @@
 import * as React from 'react';
 
-import { Route, Redirect, Switch, RouteComponentProps, RouteProps } from "react-router-dom";
+import {
+  Route,
+  Redirect,
+  Switch,
+  RouteComponentProps,
+  RouteProps
+} from "react-router-dom";
+
 import { connect } from 'react-redux';
+import { StoreType } from '../store/types';
 
-import { Store } from '../store/types';
-
-const Login = () => {
-  return (
-    <h1>Login</h1>
-  );
-};
+import Login from './Login';
 
 const Newslist = () => {
   return (
@@ -73,18 +75,20 @@ class App extends React.Component<State> {
     const { isAuth } = this.state;
 
     return (
-      <div className="app">
-        <Switch>
-          <LoginRoute path="/login" auth={ isAuth } component={ Login } />
-          <PrivateRoute exact path="/" auth={ isAuth } component={ Newslist } />
-          <Route component={ Page404 } />
-        </Switch>
-      </div>
+      <Switch>
+        <LoginRoute path="/login" auth={ isAuth } component={ Login } />
+        <PrivateRoute exact path="/" auth={ isAuth } component={ Newslist } />
+        <Route component={ Page404 } />
+      </Switch>
     );
   }
 };
 
-const mapStateToProps = (state : Store) => ({
+interface StateFromProps {
+  isAuth: boolean;
+}
+
+const mapStateToProps = (state : StoreType) : StateFromProps => ({
   isAuth: state.rootReducer.auth.isAuth,
 });
 

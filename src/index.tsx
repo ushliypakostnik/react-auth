@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from "connected-react-router";
 import { CookiesProvider } from 'react-cookie';
 
-import styled from 'styled-components';
-import { GlobalStyle } from "./theme/theme";
+import styled, { ThemeProvider } from 'styled-components';
+import theme, { GlobalStyle } from "./theme/theme";
 
 import App from './containers/App';
 
@@ -19,7 +19,9 @@ ReactDOM.render((
     <ConnectedRouter history={history}>
       <CookiesProvider>
         <GlobalStyle />
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </CookiesProvider>
     </ConnectedRouter>
   </Provider>

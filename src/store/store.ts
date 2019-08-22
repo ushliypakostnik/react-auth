@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 import { INITIAL_STATE } from './constants';
-import { Store } from './types';
+import { StoreType } from './types';
 import rootReducer from './reducers';
 
 const middlewares : any[] = [];
@@ -29,7 +29,7 @@ const localStorageMiddleware = ({getState} : any) => {
 };
 middlewares.push(localStorageMiddleware);
 
-const reHydrateStore = (state: Store) => {
+const reHydrateStore = (state: StoreType) => {
   if (localStorage.getItem('localState') !== null) {
     // const localCollection = JSON.parse(localStorage.getItem('localCollection') || '{}');
     const _state = Object.assign({}, state, {
@@ -45,7 +45,7 @@ const reHydrateStore = (state: Store) => {
 export const history = createHistory();
 middlewares.push(routerMiddleware(history));
 
-function configureStore(state : Store) {
+function configureStore(state : StoreType) {
   return createStore(
     combineReducers({
       rootReducer,

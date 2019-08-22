@@ -1,23 +1,22 @@
-export interface Store {
+export interface StoreType {
   readonly rootReducer: {
+    readonly isFetching: boolean;
     readonly auth: {
        readonly isAuth: boolean;
+       readonly error? : string[];
     };
-    readonly error? : string[];
   }
 };
 
-export interface Test {
-  test: string;
+export interface credentialsType {
+  usermail: string;
+  password: string;
 };
 
-// Actions Types
-
-export const TEST_ACTION_TYPE = 'TEST_ACTION_TYPE';
-
-interface testAction {
-  type: typeof TEST_ACTION_TYPE;
-  test: Test;
+export interface errorType {
+  error: string[];
 };
 
-export type testActionType = testAction;
+export interface responseType {
+  response: any[];
+};
