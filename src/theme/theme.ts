@@ -73,7 +73,13 @@ Object.assign(theme.typography, {
 });
 
 export const GlobalStyle = createGlobalStyle`
+  #root,
+  html {
+    height: 100%;
+  }
+
   body {
+    height: 100%;
     margin: 0
     padding: 0;
     color: ${theme.colors.color_text};

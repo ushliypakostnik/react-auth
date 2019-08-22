@@ -3,8 +3,8 @@ export interface StoreType {
     readonly isFetching: boolean;
     readonly auth: {
        readonly isAuth: boolean;
-       readonly error? : string[];
     };
+   readonly error? : string;
   }
 };
 

@@ -53,6 +53,7 @@ export const fetchAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void,
         const responce = await Api.post(`/api/user/login`, { credentials });
         return dispatch(authSuccess(responce));
       } catch (e) {
+        console.log(e);
         return dispatch(authError(e));
       };
     };

@@ -6,7 +6,7 @@ export const INITIAL_STATE = {
     auth: {
       isAuth: false,
     },
-    error: [],
+    error: '',
   }
 };
 
