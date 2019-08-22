@@ -5,6 +5,7 @@ const theme : DefaultTheme = {
   sizes: {
     gutter: 20,
     header_height: 70,
+    input_height: 40,
     layout_front: 900,
   },
 
@@ -55,22 +56,24 @@ const theme : DefaultTheme = {
 
 // Dependencies
 
-Object.assign(theme.colors, {
+Object.assign(theme, {
+  ...theme,
   colors: {
+    ...theme.colors,
     color_link_hover: theme.colors.color_link,
     color_disabled: theme.colors.color_border,
     color_placeholder: theme.colors.color_border,
   },
-});
-
-Object.assign(theme.typography, {
   // Good line height for all font sizes
   typography: {
+    ...theme.typography,
     lineheight_large: Math.floor(theme.typography.fontsize_large * theme.typography.line_height_standart),
     lineheight_normal: Math.floor(theme.typography.fontsize_normal * theme.typography.line_height_standart),
     lineheight_small: Math.floor(theme.typography.fontsize_small * theme.typography.line_height_standart),
   },
 });
+
+// console.log('Theme variables: ', theme);
 
 export const GlobalStyle = createGlobalStyle`
   #root,

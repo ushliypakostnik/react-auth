@@ -5,6 +5,7 @@ declare module 'styled-components' {
     // Sizes and layouts
     sizes? : {
       gutter? : number;
+      input_height? : number;
       header_height? : number;
       layout_front? : number;
     };

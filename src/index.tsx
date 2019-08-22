@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from "connected-react-router";
 import { CookiesProvider } from 'react-cookie';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styled, { ThemeProvider } from 'styled-components';
 import theme, { GlobalStyle } from "./theme/theme";
 

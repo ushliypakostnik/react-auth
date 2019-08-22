@@ -6,7 +6,6 @@ import Api from '../utils/api';
 import {
   credentialsType,
   errorType,
-  responseType,
 } from './types';
 
 // Actions Types
@@ -24,10 +23,9 @@ export const authRequest : ActionCreator<Action> = () => {
   };
 };
 
-export const authSuccess : ActionCreator<Action> = (response: responseType) => {
+export const authSuccess : ActionCreator<Action> = () => {
   return {
     type: AUTH_SUCCESS,
-    response,
   };
 };
 
@@ -49,9 +47,12 @@ export const fetchAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void,
   = (credentials: credentialsType) => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(authRequest());
+      console.log(credentials);
       try {
-        const responce = await Api.post(`/api/user/login`, { credentials });
-        return dispatch(authSuccess(responce));
+        const response = await Api.post(`/api/user/login`, { user: credentials });
+        const token = response.data.user.token;
+        console.log(token);
+        return dispatch(authSuccess());
       } catch (e) {
         console.log(e);
         return dispatch(authError(e));

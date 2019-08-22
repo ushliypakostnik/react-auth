@@ -1,10 +1,8 @@
 export interface StoreType {
   readonly rootReducer: {
     readonly isFetching: boolean;
-    readonly auth: {
-       readonly isAuth: boolean;
-    };
-   readonly error? : string;
+    readonly isAuth: boolean;
+    readonly error? : string;
   }
 };
 
@@ -14,9 +12,5 @@ export interface credentialsType {
 };
 
 export interface errorType {
-  error: string[];
-};
-
-export interface responseType {
-  response: any[];
+  error: string;
 };

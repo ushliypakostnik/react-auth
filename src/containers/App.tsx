@@ -13,9 +13,9 @@ import { StoreType } from '../store/types';
 
 import Login from './Login';
 
-const Newslist = () => {
+const Account = () => {
   return (
-    <h1>Newslist</h1>
+    <h1>Account</h1>
   );
 };
 
@@ -77,7 +77,7 @@ class App extends React.Component<State> {
     return (
       <Switch>
         <LoginRoute path="/login" auth={ isAuth } component={ Login } />
-        <PrivateRoute exact path="/" auth={ isAuth } component={ Newslist } />
+        <PrivateRoute exact path="/" auth={ isAuth } component={ Account } />
         <Route component={ Page404 } />
       </Switch>
     );
@@ -89,7 +89,7 @@ interface StateFromProps {
 }
 
 const mapStateToProps = (state : StoreType) : StateFromProps => ({
-  isAuth: state.rootReducer.auth.isAuth,
+  isAuth: state.rootReducer.isAuth,
 });
 
 export default connect(mapStateToProps, null)(App);
