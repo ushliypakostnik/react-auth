@@ -17,11 +17,27 @@ if (t) {
 
 export const INITIAL_STATE = {
   rootReducer: {
-    isFetching: false,
-    isAuth: isAuth,
-    error: '',
-  }
+    auth: {
+      isFetching: false,
+      isAuth: isAuth,
+      error: '',
+    },
+    user: {
+      isFetching: false,
+      profile: {
+        userid: null,
+        usermail: null,
+        username: null,
+        isVerify: false,
+      },
+      error: '',
+    },
+  },
 };
+
+export const LOCAL = {
+  PROFILE: 'UserProfile',
+}
 
 export const PAGES = [
   {

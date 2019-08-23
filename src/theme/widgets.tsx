@@ -20,7 +20,7 @@ export const Page = styled.div<PageProps>`
   `}
 `;
 
-export const CenterFormWrapper = styled.div`
+export const CenterWrapper = styled.div`
   margin-top: -15%;
   width: 300px;
 `;
@@ -120,7 +120,11 @@ export const TextSmall = styled.span`
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
 `;
 
-export const TextNormal = styled.span`
+interface TextNormalProps {
+  readonly label?: boolean;
+};
+
+export const TextNormal = styled.span<TextNormalProps>`
   display: inline;
   color: inherit;
   font-family:  ${props => props.theme.typography.fontfamily_sans};
@@ -132,6 +136,7 @@ export const TextNormal = styled.span`
 
 interface TextLargeProps {
   readonly super? : boolean;
+  readonly light? : boolean;
 };
 
 export const TextLarge = styled.span<TextLargeProps>`
@@ -147,4 +152,27 @@ export const TextLarge = styled.span<TextLargeProps>`
     font-size:  calc(${props => props.theme.typography.fontsize_large}px * 4);
     line-height: calc(${props => props.theme.typography.lineheight_large}px * 4);
   `}
+
+  ${props => props.light && css`
+    opacity: 0.5;
+  `}
 `;
+
+interface TextStringProps {
+  readonly top? : boolean;
+};
+
+export const TextString = styled.div<TextStringProps>`
+  text-align: center;
+  display: block;
+  margin-bottom: ${props => props.theme.sizes.gutter}px;
+
+  ${props => props.top && css`
+    margin-bottom: calc(${props => props.theme.sizes.gutter}px / 4);
+  `}
+
+  > * {
+    white-space: nowrap;
+  }
+`;
+

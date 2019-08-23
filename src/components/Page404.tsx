@@ -4,19 +4,19 @@ import CenterMessage from './CenterMessage';
 
 import {
   Page,
-  CenterFormWrapper,
+  CenterWrapper,
   TextLarge,
 } from '../theme/widgets';
 
 const Page404 : React.SFC = () => {
   return (
     <Page outer>
-      <CenterFormWrapper>
+      <CenterWrapper>
         <CenterMessage>
           <TextLarge super>404</TextLarge>
           <TextLarge>Page Not Found!!!</TextLarge>
         </CenterMessage>
-      </CenterFormWrapper>
+      </CenterWrapper>
     </Page>
   );
 };

@@ -6,13 +6,13 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { credentialsType } from '../store/types';
 
-import { fetchAuth } from '../store/actions';
+import { postAuth } from '../store/actions';
 
 import CenterMessage from '../components/CenterMessage';
 
 import {
   Page,
-  CenterFormWrapper,
+  CenterWrapper,
   Form,
   FormGroup,
   FormMessage,
@@ -24,13 +24,13 @@ import {
 } from '../theme/widgets';
 
 interface Props {
-  fetchAuth: (credentials: credentialsType) => void;
+  postAuth : (credentials: credentialsType) => void;
 }
 
 interface State {
-  login: boolean,
-  mailError: string;
-  passError: string;
+  login : boolean,
+  mailError : string;
+  passError : string;
 }
 
 class Login extends React.Component<Props, State> {
@@ -51,7 +51,7 @@ class Login extends React.Component<Props, State> {
   };
 
   private submit = credentials => {
-    this.props.fetchAuth(credentials);
+    this.props.postAuth(credentials);
   };
 
   private validateEmail = (email : string) : boolean => {
@@ -98,7 +98,7 @@ class Login extends React.Component<Props, State> {
 
     return (
       <Page outer>
-        <CenterFormWrapper>
+        <CenterWrapper>
           <CenterMessage>
             <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
           </CenterMessage>
@@ -157,14 +157,14 @@ class Login extends React.Component<Props, State> {
               }}
             >{login ? 'Забыли пароль?' : 'Попробовать зайти'}</A>
           </Form>
-        </CenterFormWrapper>
+        </CenterWrapper>
        </Page>
     );
   }
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Props => ({
-  fetchAuth: (credentials: credentialsType) => dispatch(fetchAuth(credentials)),
+  postAuth: (credentials: credentialsType) => dispatch(postAuth(credentials)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

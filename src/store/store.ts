@@ -5,7 +5,7 @@ import { createBrowserHistory as createHistory } from 'history';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-import { INITIAL_STATE } from './constants';
+import { INITIAL_STATE, LOCAL } from './constants';
 import { StoreType } from './types';
 import rootReducer from './reducers';
 
@@ -21,20 +21,26 @@ if (process.env.NODE_ENV !== 'production') {
 const localStorageMiddleware = ({getState} : any) => {
   return (next : any) => (action: any) => {
     const result = next(action);
-    localStorage.setItem('localState', JSON.stringify(
-        getState().rootReducer.collection
-    ));
+    if (getState().rootReducer.auth.isAuth) {
+      localStorage.setItem(LOCAL.PROFILE, JSON.stringify(
+          getState().rootReducer.user.profile,
+      ));
+    }
     return result;
   };
 };
 middlewares.push(localStorageMiddleware);
 
 const reHydrateStore = (state: StoreType) => {
-  if (localStorage.getItem('localState') !== null) {
-    // const localCollection = JSON.parse(localStorage.getItem('localCollection') || '{}');
+  if (localStorage.getItem(LOCAL.PROFILE) !== null) {
+    const localData = JSON.parse(localStorage.getItem(LOCAL.PROFILE) || '{}');
     const _state = Object.assign({}, state, {
       rootReducer: {
         ...state.rootReducer,
+        user: {
+          ...state.rootReducer.user,
+          profile: localData,
+        },
       },
     });
     return _state;
@@ -57,5 +63,7 @@ function configureStore(state : StoreType) {
 }
 
 const store = configureStore(INITIAL_STATE);
+
+// console.log('Store: ', store.getState());
 
 export default store;

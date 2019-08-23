@@ -4,17 +4,20 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { credentialsType } from '../store/types';
+import { StoreType } from '../store/types';
 
-import { authLogout } from '../store/actions';
+import {
+  getUser,
+  authLogout,
+} from '../store/actions';
 
 import styled from 'styled-components';
 import {
   Page,
-  CenterFormWrapper,
-  Form,
+  CenterWrapper,
   Button,
-  TextNormal,
+  TextLarge,
+  TextString,
 } from '../theme/widgets';
 
 const ButtonWrapper = styled.div`
@@ -23,20 +26,54 @@ const ButtonWrapper = styled.div`
 `;
 
 interface Props {
-  authLogout: () => void;
-}
+  authLogout : () => void;
+  getUser : () => void;
+  profile : {
+    usermail: string;
+    isVerify: boolean;
+  };
+};
 
 interface State {
-
-}
+  profile: {
+    usermail: string;
+    isVerify: boolean;
+  };
+};
 
 class Account extends React.Component<Props, State> {
 
+  public state : State = {
+    profile: {
+      usermail: '',
+      isVerify: false,
+    },
+  };
+
+  componentDidMount() {
+    this.props.getUser();
+  }
+
+  public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
+    profile: nextProps.profile,
+  });
+
   public render() {
+    const { profile } = this.state;
 
     return (
       <Page>
-        <CenterFormWrapper>
+        <CenterWrapper>
+          <TextString top>
+            <TextLarge light>Usermail:</TextLarge>
+          </TextString>
+          <TextString>
+            <TextLarge>{profile.usermail}</TextLarge>
+          </TextString>
+          <TextString>
+            <TextLarge light>IsVerify: </TextLarge>
+            <TextLarge>{ profile.isVerify ? 'Yes' : 'No' }</TextLarge>
+          </TextString>
           <ButtonWrapper>
             <Button
               type="button"
@@ -54,14 +91,24 @@ class Account extends React.Component<Props, State> {
                 e.preventDefault();
             }}>Resend Verify Email</Button>
            </ButtonWrapper>
-        </CenterFormWrapper>
+        </CenterWrapper>
       </Page>
     );
   }
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Props => ({
-  authLogout: () => dispatch(authLogout()),
+interface DispatchProps {
+  authLogout : () => void;
+  getUser : () => void;
+};
+
+const mapStateToProps = (state : StoreType) : State => ({
+  profile: state.rootReducer.user.profile,
 });
 
-export default connect(null, mapDispatchToProps)(Account);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
+  authLogout: () => dispatch(authLogout()),
+  getUser: () => dispatch(getUser()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

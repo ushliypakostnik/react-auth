@@ -40,14 +40,14 @@ const LoginRoute : React.SFC<RouteProps & any> =
 };
 
 interface Props {
-  isAuth: boolean;
-}
+  isAuth : boolean;
+};
 
 interface State {
-  isAuth: boolean;
-}
+  isAuth : boolean;
+};
 
-class App extends React.Component<State> {
+class App extends React.Component<Props, State> {
 
   public state : State = {
     isAuth: false,
@@ -74,12 +74,8 @@ class App extends React.Component<State> {
   }
 };
 
-interface StateFromProps {
-  isAuth: boolean;
-}
-
-const mapStateToProps = (state : StoreType) : StateFromProps => ({
-  isAuth: state.rootReducer.isAuth,
+const mapStateToProps = (state : StoreType) : State => ({
+  isAuth: state.rootReducer.auth.isAuth,
 });
 
 export default connect(mapStateToProps, null)(App);
