@@ -3,13 +3,26 @@ import styled, { css } from 'styled-components';
 // Containers
 ////////////////////////////////////////////////////////////
 
-export const OuterPage = styled.div`
+interface PageProps {
+  readonly outer? : boolean;
+};
+
+export const Page = styled.div<PageProps>`
   height: 100%;
-  background: ${props => props.theme.colors.color_light};
+  background: ${props => props.theme.colors.color_white};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  ${props => props.outer && css`
+    background: ${props => props.theme.colors.color_light};
+  `}
+`;
+
+export const CenterFormWrapper = styled.div`
+  margin-top: -15%;
+  width: 300px;
 `;
 
 // Forms
@@ -97,7 +110,7 @@ export const A = styled.a`
   }
 `;
 
-export const TextSmall = styled.p`
+export const TextSmall = styled.span`
   display: inline;
   color: inherit;
   font-family:  ${props => props.theme.typography.fontfamily_sans};
@@ -107,7 +120,21 @@ export const TextSmall = styled.p`
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
 `;
 
-export const TextLarge = styled.p`
+export const TextNormal = styled.span`
+  display: inline;
+  color: inherit;
+  font-family:  ${props => props.theme.typography.fontfamily_sans};
+  font-size:  ${props => props.theme.typography.fontsize_normal}px;
+  line-height: ${props => props.theme.typography.lineheight_normal}px;
+  font-weight: ${props => props.theme.typography.fontweight_sans_regular};
+  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+`;
+
+interface TextLargeProps {
+  readonly super? : boolean;
+};
+
+export const TextLarge = styled.span<TextLargeProps>`
   display: inline;
   color: inherit;
   font-family:  ${props => props.theme.typography.fontfamily_sans};
@@ -115,4 +142,9 @@ export const TextLarge = styled.p`
   line-height: ${props => props.theme.typography.lineheight_large}px;
   font-weight: ${props => props.theme.typography.fontweight_sans_bold};
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+
+  ${props => props.super && css`
+    font-size:  calc(${props => props.theme.typography.fontsize_large}px * 4);
+    line-height: calc(${props => props.theme.typography.lineheight_large}px * 4);
+  `}
 `;

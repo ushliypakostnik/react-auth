@@ -157,6 +157,10 @@ export const GlobalStyle = createGlobalStyle`
   textarea {
     overflow: auto; // Remove the default vertical scrollbar in IE 10+.
   }
+
+  strong {
+    font-weight:  ${theme.typography.fontweight_sans_bold};
+  }
 `;
 
 export default theme;

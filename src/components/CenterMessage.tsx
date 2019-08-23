@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import styled, { keyframes } from 'styled-components';
 import { TextLarge } from '../theme/widgets';
@@ -25,7 +25,7 @@ const Logo = styled.img`
   }
 `;
 
-const EntryHeaderWparrer = styled.div`
+const EntryHeaderWpapper = styled.div`
   padding-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -36,13 +36,17 @@ const EntryHeaderWparrer = styled.div`
   }
 `;
 
-const EntryHeader : React.SFC = () => {
+interface CenterMessageProps {
+  children? : React.ReactNode;
+};
+
+const CenterMessage : React.SFC<CenterMessageProps> = props => {
   return (
-    <EntryHeaderWparrer>
+    <EntryHeaderWpapper>
       <Logo src={logo} alt="logo" />
-      <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
-    </EntryHeaderWparrer>
+      {props.children}
+    </EntryHeaderWpapper>
   );
 };
 
-export default EntryHeader;
+export default CenterMessage;

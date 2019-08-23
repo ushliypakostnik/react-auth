@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
@@ -8,24 +8,20 @@ import { credentialsType } from '../store/types';
 
 import { fetchAuth } from '../store/actions';
 
-import EntryHeader from '../components/EntryHeader';
+import CenterMessage from '../components/CenterMessage';
 
-import styled from 'styled-components';
 import {
-  OuterPage,
+  Page,
+  CenterFormWrapper,
   Form,
   FormGroup,
   FormMessage,
   TextSmall,
+  TextLarge,
   Input,
   Button,
   A,
 } from '../theme/widgets';
-
-export const LoginFormWrapper = styled.div`
-  margin-top: -15%;
-  width: 300px;
-`;
 
 interface Props {
   fetchAuth: (credentials: credentialsType) => void;
@@ -98,16 +94,19 @@ class Login extends React.Component<Props, State> {
   }
 
   render() {
-    const { login, mailError, passError} = this.state;
+    const { login, mailError, passError } = this.state;
 
     return (
-      <OuterPage>
-        <LoginFormWrapper>
-          <EntryHeader />
+      <Page outer>
+        <CenterFormWrapper>
+          <CenterMessage>
+            <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
+          </CenterMessage>
           <Form>
             <FormGroup>
               <Input
                 type="email"
+                aria-label="email input"
                 placeholder="Email"
                 ref={this.usermailInput}
               />
@@ -120,6 +119,7 @@ class Login extends React.Component<Props, State> {
               <FormGroup>
                 <Input
                   type="password"
+                  aria-label="password input"
                   placeholder="Password"
                   ref={this.passwordInput}
                  />
@@ -129,7 +129,10 @@ class Login extends React.Component<Props, State> {
                       </FormMessage>}
               </FormGroup>
             }
-            <Button type="submit"
+            <Button
+              type="submit"
+              role="button"
+              aria-label={login ? 'Login' : 'Remind'}
               onClick={(e) => {
                 e.preventDefault();
                 const emailValid = this.validateEmail(this.usermailInput.current.value);
@@ -145,6 +148,7 @@ class Login extends React.Component<Props, State> {
             <A
               href="#"
               rel="noopener noreferrer"
+              aria-label={login ? 'Забыли пароль?' : 'Попробовать зайти'}
               onClick={(e) => {
                 e.preventDefault();
                 this.setState({
@@ -153,8 +157,8 @@ class Login extends React.Component<Props, State> {
               }}
             >{login ? 'Забыли пароль?' : 'Попробовать зайти'}</A>
           </Form>
-        </LoginFormWrapper>
-       </OuterPage>
+        </CenterFormWrapper>
+       </Page>
     );
   }
 };

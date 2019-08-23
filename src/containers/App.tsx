@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import {
   Route,
@@ -12,18 +12,8 @@ import { connect } from 'react-redux';
 import { StoreType } from '../store/types';
 
 import Login from './Login';
-
-const Account = () => {
-  return (
-    <h1>Account</h1>
-  );
-};
-
-const Page404 = () => {
-  return (
-    <h1>Page404</h1>
-  );
-};
+import Account from './Account';
+import Page404 from '../components/Page404';
 
 const PrivateRoute : React.SFC<RouteProps & any> =
   ({ component: Component, auth, ...rest }) => {
