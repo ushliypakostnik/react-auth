@@ -17,11 +17,14 @@ declare module 'styled-components' {
 
     // Colors
     colors? : {
+      // Pallette
       color_white? : string;
       color_black? : string;
-      color_light? : string;
+      color_mint? : string;
+      color_red? : string;
 
       // Functional
+      color_light? : string;
       color_text? : string;
       color_text_light? : string;
       color_link? : string;
@@ -31,8 +34,8 @@ declare module 'styled-components' {
       color_border? : string;
       color_shadow? : string;
 
-      // Pallette
       color_primary? : string;
+      color_error? : string;
     };
 
     // Typography
@@ -59,5 +62,10 @@ declare module 'styled-components' {
       shadow_size? : number;
       shadow_spread: number;
     };
+
+    effects? : {
+      transition_duration: string,
+      transition_timingfunction: string,
+    }
   }
 };

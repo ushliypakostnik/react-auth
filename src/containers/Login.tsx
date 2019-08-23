@@ -8,19 +8,23 @@ import { credentialsType } from '../store/types';
 
 import { fetchAuth } from '../store/actions';
 
+import EntryHeader from '../components/EntryHeader';
+
 import styled from 'styled-components';
 import {
   OuterPage,
   Form,
+  FormGroup,
+  FormMessage,
+  TextSmall,
   Input,
   Button,
-  Link,
+  A,
 } from '../theme/widgets';
 
 export const LoginFormWrapper = styled.div`
-  margin-top: -10%;
+  margin-top: -15%;
   width: 300px;
-
 `;
 
 interface Props {
@@ -28,6 +32,7 @@ interface Props {
 }
 
 interface State {
+  login: boolean,
   mailError: string;
   passError: string;
 }
@@ -43,81 +48,110 @@ class Login extends React.Component<Props, State> {
     this.passwordInput = React.createRef();
   }
 
-  public state = {
+  public state : State = {
+    login: true,
     mailError: '',
     passError: '',
   };
 
-  public submit = credentials => {
+  private submit = credentials => {
     this.props.fetchAuth(credentials);
   };
 
-  private validateEmail = (email : string) : void => {
+  private validateEmail = (email : string) : boolean => {
     // eslint-disable-next-line no-useless-escape
     const regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const validate = regExp.test(email);
+    let mailError;
     if (email === '') {
-      this.setState({
-        mailError: 'This field is required!',
-      });
+      mailError = 'This field is required!';
     } else if (validate) {
-      this.setState({
-        mailError: '',
-      });
+      mailError = '';
     } else {
-      this.setState({
-        mailError: 'Invalid email!',
-      });
+      mailError = 'Invalid email!';
     }
+    this.setState({
+      mailError: mailError,
+    });
+    return validate;
   };
 
-  private validatePassword = (password : string) : void => {
-    const minLenght = 6;
+  private validatePassword = (password : string) : boolean => {
     // eslint-disable-next-line no-useless-escape
-    const regExp = /^(?=.*\d)(?=.*[a-zA-Z])$/;
+    const regExp = /^(?=.*\d)(?=.*[a-z])(?!.*\s).*$/;
     const validate = regExp.test(password);
+    const minLenght = 6;
+    let passError;
     if (password === '') {
-      this.setState({
-        passError: 'This field is required!',
-      });
+      passError = 'This field is required!';
     } else if (password.length < minLenght) {
-      this.setState({
-        passError: `Your password must be at least ${minLenght} characters`,
-      });
+      passError = `Password must be at least ${minLenght} characters`;
     } else if (!validate) {
-      this.setState({
-        passError: 'Your password must contain at least one lowercase letter and least one digit.',
-      });
+      passError = 'Password must contain at least one digit.';
+    } else {
+      passError = '';
     }
+    this.setState({
+      passError: passError,
+    });
+    return validate;
   }
 
   render() {
+    const { login, mailError, passError} = this.state;
+
     return (
       <OuterPage>
         <LoginFormWrapper>
+          <EntryHeader />
           <Form>
-            <Input
-              type="email"
-              placeholder="Username"
-              ref={this.usermailInput}
-            />
-            {!(this.state.mailError === '') && <p>{this.state.mailError}</p>}
-            <Input
-              type="password"
-              placeholder="Password"
-              ref={this.passwordInput}
-             />
-             {!(this.state.passError === '') && <p>{this.state.passError}</p>}
-            <Button type="submit" onClick={(e) => {
-              e.preventDefault();
-              this.validateEmail(this.usermailInput.current.value);
-              this.validatePassword(this.passwordInput.current.value);
-              // this.submit({usermail: 'dfsdf', password: 'dfsdfsdf'});
-            }}>Login</Button>
-            <Link
+            <FormGroup>
+              <Input
+                type="email"
+                placeholder="Email"
+                ref={this.usermailInput}
+              />
+              {!(mailError === '')
+                && <FormMessage error={!!mailError}>
+                     <TextSmall>{mailError}</TextSmall>
+                   </FormMessage>}
+            </FormGroup>
+            {login &&
+              <FormGroup>
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  ref={this.passwordInput}
+                 />
+                 {!(passError === '')
+                   && <FormMessage error={!!passError}>
+                         <TextSmall>{passError}</TextSmall>
+                      </FormMessage>}
+              </FormGroup>
+            }
+            <Button type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                const emailValid = this.validateEmail(this.usermailInput.current.value);
+                const passwordValid = this.validatePassword(this.passwordInput.current.value);
+                if (emailValid && passwordValid) {
+                  const user = {
+                    usermail: this.usermailInput.current.value,
+                    password: this.passwordInput.current.value,
+                  }
+                  this.submit(user);
+                }
+            }}>{login ? 'Login' : 'Remind'}</Button>
+            <A
               href="#"
               rel="noopener noreferrer"
-            >Забыли пароль?</Link>
+              onClick={(e) => {
+                e.preventDefault();
+                this.setState({
+                  login: !login,
+                });
+              }}
+            >{login ? 'Забыли пароль?' : 'Попробовать зайти'}</A>
           </Form>
         </LoginFormWrapper>
        </OuterPage>

@@ -16,19 +16,19 @@ const theme : DefaultTheme = {
 
   // Colors
   colors: {
+    // Pallette
     color_white: '#ffffff',
     color_black: '#000000',
-    color_light: '#fafafa',
+    color_mint: '#00A287',
+    color_red: '#ff3237',
 
     // Functional
+    color_light: '#fafafa',
     color_text: '#6c7a89',
     color_text_light: 'rgba(108, 122, 137, 0.75)',
     color_link: '#1890ff',
     color_border: '#eff2f5',
     color_shadow: 'rgba(0, 0, 0, 0.15)',
-
-    // Pallette
-    color_primary: '#e9e9eb',
   },
 
   // Typography
@@ -52,6 +52,12 @@ const theme : DefaultTheme = {
     shadow_size: 4,
     shadow_spread: -1,
   },
+
+  // Effects
+  effects: {
+    transition_duration: '0.2s',
+    transition_timingfunction: 'linear',
+  }
 };
 
 // Dependencies
@@ -60,6 +66,8 @@ Object.assign(theme, {
   ...theme,
   colors: {
     ...theme.colors,
+    color_primary: theme.colors.color_mint,
+    color_error: theme.colors.color_red,
     color_link_hover: theme.colors.color_link,
     color_disabled: theme.colors.color_border,
     color_placeholder: theme.colors.color_border,
@@ -90,6 +98,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family:  ${theme.typography.fontfamily_sans};
     font-size:  ${theme.typography.fontsize_small}px;
     line-height: ${theme.typography.lineheight_small}px;
+    font-weight:  ${theme.typography.fontweight_sans_regular};
     letter-spacing: ${theme.typography.letterspacing_normal};
     overflow-x: hidden;
     backface-visibility: hidden;
