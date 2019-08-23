@@ -1,5 +1,8 @@
 import { Action, ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import Cookies from "js-cookie";
+
+import { COOKIES } from './constants';
 
 import Api from '../utils/api';
 
@@ -9,6 +12,7 @@ import {
 } from './types';
 
 // Actions Types
+////////////////////////////////////////////////////////////
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
@@ -16,6 +20,7 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 // Action Creators
+////////////////////////////////////////////////////////////
 
 export const authRequest : ActionCreator<Action> = () => {
   return {
@@ -51,7 +56,7 @@ export const fetchAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void,
       try {
         const response = await Api.post(`/api/user/login`, { user: credentials });
         const token = response.data.user.token;
-        console.log(token);
+        Cookies.set(COOKIES.TOKEN.name, token, { expires: COOKIES.TOKEN.expires });
         return dispatch(authSuccess());
       } catch (e) {
         console.log(e);

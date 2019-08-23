@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from "connected-react-router";
-import { CookiesProvider } from 'react-cookie';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styled, { ThemeProvider } from 'styled-components';
@@ -18,12 +17,10 @@ import store, { history } from './store/store';
 ReactDOM.render((
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <CookiesProvider>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </CookiesProvider>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));
