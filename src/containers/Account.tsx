@@ -37,32 +37,28 @@ interface Props extends DispatchProps {
   success: string;
 };
 
-interface State {
+const initialState = {
   profile: {
-    usermail: string;
-    isVerify: boolean;
-  };
-  success: string;
+    usermail: '',
+    isVerify: false,
+  },
+  success: '',
 };
 
+type State = Readonly<typeof initialState>;
+
 class Account extends React.Component<Props, State> {
-
-  public state : State = {
-    profile: {
-      usermail: '',
-      isVerify: false,
-    },
-    success: '',
-  };
-
-  componentDidMount() {
-    this.props.getUser();
-  }
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
     profile: nextProps.profile,
     success: nextProps.success,
   });
+
+  readonly state : State = initialState;
+
+  public componentDidMount() {
+    this.props.getUser();
+  }
 
   public render() {
     const { profile, success } = this.state;
@@ -98,7 +94,7 @@ class Account extends React.Component<Props, State> {
                   e.preventDefault();
                   this.props.postVerifyEmail(profile.usermail);
               }}>Resend Verify Email</Button>
-             {(success !== '') && (!profile.isVerify)
+             {success !== ''
                && <FormMessage success>{success}</FormMessage>}
             </FormGroup>
            </ButtonWrapper>

@@ -7,14 +7,14 @@ import {
   LocalType,
 } from './types';
 
-export const API_URL : string = process.env.API_URL || 'http://127.0.0.1:8082';
-
 export const COOKIES : CookiesType = {
   TOKEN: {
     name: 'token',
     expires: 7,
   },
 };
+
+export const API_URL : string = process.env.API_URL || 'http://127.0.0.1:8082';
 
 // Auto auth
 export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null;

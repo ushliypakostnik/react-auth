@@ -44,19 +44,19 @@ interface Props {
   isAuth : boolean;
 };
 
-interface State {
-  isAuth : boolean;
+const initialState = {
+  isAuth: false,
 };
 
-class App extends React.Component<Props, State> {
+type State = Readonly<typeof initialState>;
 
-  public state : State = {
-    isAuth: false,
-  };
+class App extends React.Component<Props, State> {
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
     isAuth: nextProps.isAuth,
   });
+
+  readonly state : State = initialState;
 
   public componentDidMount() : void {
     // for test

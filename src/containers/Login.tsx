@@ -41,20 +41,26 @@ interface StateToProps {
   error : string;
 };
 
-interface Props extends DispatchProps {
-  success: string;
-  error : string;
-}
+interface Props extends DispatchProps, StateToProps {};
 
-interface State extends StateToProps {
-  login : boolean,
-  mailError : string;
-  passError : string;
-}
+const initialState = {
+  login: true,
+  mailError: '',
+  passError: '',
+  success: '',
+  error : '',
+};
+
+type State = Readonly<typeof initialState>;
 
 class Login extends React.Component<Props, State> {
   private usermailInput: React.RefObject<HTMLInputElement>;
   private passwordInput: React.RefObject<HTMLInputElement>;
+
+  public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
+    success: nextProps.success,
+    error: nextProps.error,
+  });
 
   constructor(props) {
     super(props);
@@ -63,18 +69,7 @@ class Login extends React.Component<Props, State> {
     this.passwordInput = React.createRef();
   }
 
-  public state : State = {
-    login: true,
-    mailError: '',
-    passError: '',
-    success: '',
-    error : '',
-  };
-
-  public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
-    success: nextProps.success,
-    error: nextProps.error,
-  });
+  readonly state : State = initialState;
 
   private submit = (usermail : string, password : string) : void => {
     const emailValid = this.validateEmail(usermail);
@@ -133,7 +128,7 @@ class Login extends React.Component<Props, State> {
     return validate;
   }
 
-  render() {
+  public render() {
     const { login, mailError, passError, success, error } = this.state;
 
     return (

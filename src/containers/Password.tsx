@@ -26,10 +26,12 @@ interface Props {
   postNewPassword : (credentials: CredentialsType) => void;
 }
 
-interface State {
-  pass1Error : string;
-  pass2Error : string;
-}
+const initialState = {
+  pass1Error: '',
+  pass2Error: '',
+};
+
+type State = Readonly<typeof initialState>;
 
 class Login extends React.Component<Props, State> {
   private password1Input: React.RefObject<HTMLInputElement>;
@@ -42,10 +44,7 @@ class Login extends React.Component<Props, State> {
     this.password2Input = React.createRef();
   }
 
-  public state : State = {
-    pass1Error: '',
-    pass2Error: '',
-  };
+  readonly state : State = initialState;
 
   private submit = (password1 : string, password2 : string) : void => {
     const password1Valid = this.validatePassword(password1, 1);
