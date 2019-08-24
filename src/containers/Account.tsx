@@ -56,7 +56,7 @@ class Account extends React.Component<Props, State> {
 
   readonly state : State = initialState;
 
-  public componentDidMount() {
+  public componentDidMount() : void {
     this.props.getUser();
   }
 

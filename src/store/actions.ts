@@ -13,6 +13,7 @@ import Api, {
 
 import {
   CredentialsType,
+  NewPasswordType,
 } from './types';
 
 // Actions Types
@@ -120,10 +121,9 @@ export const postRemindPassword: ActionCreator<ThunkAction<Promise<Action>, Acti
     };
 };
 
-export const setNewPassword : ActionCreator<Action> = (credentials: CredentialsType) => {
+export const setNewPassword : ActionCreator<Action> = () => {
   return {
     type: SET_NEW_PASSWORD,
-    credentials,
   };
 };
 
@@ -141,13 +141,15 @@ export const setNewPasswordError : ActionCreator<Action> = (error: string) => {
 };
 
 export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (credentials: CredentialsType) => {
+  = (credentials: NewPasswordType) => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(setNewPassword());
+      const user = { id: credentials.id, password: credentials.password }
+      const token = credentials.token;
+      console.log('postNewPassword 1 : ', user);
       try {
-        const response = await Api.post(POST_NEW_PASSWORD_PATH, { user: credentials });
-        const token = response.data.user.token;
-        console.log('postNewPassword: ', response, token);
+        const response = await Api.post(POST_NEW_PASSWORD_PATH, { user });
+        console.log('postNewPassword 2 : ', response, token);
         setAuth(token);
         return dispatch(setNewPasswordSuccess());
       } catch (e) {

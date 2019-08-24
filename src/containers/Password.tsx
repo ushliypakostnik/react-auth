@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { CredentialsType } from '../store/types';
+import { history } from '../store/store';
+
+import {
+  StoreType,
+  NewPasswordType,
+} from '../store/types';
 
 import { postNewPassword } from '../store/actions';
 
@@ -22,13 +27,21 @@ import {
   Button,
 } from '../theme/widgets';
 
-interface Props {
-  postNewPassword : (credentials: CredentialsType) => void;
+interface StateToProps {
+  hash : string;
+};
+
+interface DispatchProps {
+  postNewPassword : (credentials: NewPasswordType) => void;
 }
+
+interface Props extends StateToProps, DispatchProps {};
 
 const initialState = {
   pass1Error: '',
   pass2Error: '',
+  hash: '',
+  match: true,
 };
 
 type State = Readonly<typeof initialState>;
@@ -36,6 +49,10 @@ type State = Readonly<typeof initialState>;
 class Login extends React.Component<Props, State> {
   private password1Input: React.RefObject<HTMLInputElement>;
   private password2Input: React.RefObject<HTMLInputElement>;
+
+  public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
+    hash: nextProps.hash,
+  });
 
   constructor(props) {
     super(props);
@@ -49,6 +66,26 @@ class Login extends React.Component<Props, State> {
   private submit = (password1 : string, password2 : string) : void => {
     const password1Valid = this.validatePassword(password1, 1);
     const password2Valid = this.validatePassword(password2, 2);
+
+    if (password1 !== password2) {
+      this.setState({
+        match: false,
+      });
+      return;
+    } else {
+      this.setState({
+        match: true,
+      });
+    }
+
+    if (password1Valid && password2Valid) {
+      const query = this.state.hash;
+      const id = query.split('&')[0].slice(4);
+      const token = query.split('&')[1].slice(6);
+      console.log(id, token);
+      this.props.postNewPassword({ id, password: password1, token });
+      history.push('/');
+    }
   };
 
   private validatePassword = (password : string, number: number) : boolean => {
@@ -82,7 +119,7 @@ class Login extends React.Component<Props, State> {
   }
 
   render() {
-    const { pass1Error, pass2Error } = this.state;
+    const { pass1Error, pass2Error, match } = this.state;
 
     return (
       <Page outer>
@@ -99,7 +136,7 @@ class Login extends React.Component<Props, State> {
                 ref={this.password1Input}
                />
                {!(pass1Error === '')
-                 && <FormMessage error={!!pass1Error}>
+                 && <FormMessage error>
                        <TextSmall>{pass1Error}</TextSmall>
                     </FormMessage>}
             </FormGroup>
@@ -111,18 +148,24 @@ class Login extends React.Component<Props, State> {
                 ref={this.password2Input}
                />
                {!(pass2Error === '')
-                 && <FormMessage error={!!pass2Error}>
+                 && <FormMessage error>
                        <TextSmall>{pass2Error}</TextSmall>
                     </FormMessage>}
             </FormGroup>
-            <Button
-              type="submit"
-              role="button"
-              aria-label="Set password"
-              onClick={(e) => {
-                e.preventDefault();
-                this.submit(this.password1Input.current.value, this.password2Input.current.value);
-            }}>Set password</Button>
+            <FormGroup>
+              <Button
+                type="submit"
+                role="button"
+                aria-label="Set password"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.submit(this.password1Input.current.value, this.password2Input.current.value);
+              }}>Set password</Button>
+              {!match
+                && <FormMessage error>
+                     <TextSmall>Не совпадают!</TextSmall>
+                  </FormMessage>}
+            </FormGroup>
           </Form>
         </CenterWrapper>
        </Page>
@@ -130,8 +173,12 @@ class Login extends React.Component<Props, State> {
   }
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Props => ({
-  postNewPassword: (credentials: CredentialsType) => dispatch(postNewPassword(credentials)),
+const mapStateToProps = (state : StoreType) : StateToProps => ({
+  hash: state.router.location.hash,
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
+  postNewPassword: (credentials: NewPasswordType) => dispatch(postNewPassword(credentials)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

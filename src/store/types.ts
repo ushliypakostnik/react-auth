@@ -18,11 +18,18 @@ export interface StoreType {
       readonly success : string;
     };
   };
+  readonly router? : any;
 };
 
 export interface CredentialsType {
   readonly usermail: string;
   readonly password: string;
+};
+
+export interface NewPasswordType {
+  readonly id: string;
+  readonly password: string;
+  readonly token: string;
 };
 
 interface MessageType {

@@ -8,18 +8,21 @@ import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
   AUTH_ERROR,
-  SEND_VERIFY_EMAIL,
-  SEND_VERIFY_EMAIL_SUCCESS,
-  SEND_VERIFY_EMAIL_ERROR,
   REMIND_PASSWORD_REQUEST,
   REMIND_PASSWORD_SUCCESS,
   REMIND_PASSWORD_ERROR,
+  SET_NEW_PASSWORD,
+  SET_NEW_PASSWORD_SUCCESS,
+  SET_NEW_PASSWORD_ERROR,
   CLEAR_MESSAGES,
   AUTH_LOGOUT,
 
   USER_REQUEST,
   USER_SUCCESS,
   USER_ERROR,
+  SEND_VERIFY_EMAIL,
+  SEND_VERIFY_EMAIL_SUCCESS,
+  SEND_VERIFY_EMAIL_ERROR,
 } from './actions';
 
 const auth = (state : StoreType, action: Action & any) => {
@@ -53,6 +56,20 @@ const auth = (state : StoreType, action: Action & any) => {
         success: action.message,
       });
     case REMIND_PASSWORD_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error,
+      });
+    case SET_NEW_PASSWORD:
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case SET_NEW_PASSWORD_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuth: true,
+      });
+    case SET_NEW_PASSWORD_ERROR:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error,
