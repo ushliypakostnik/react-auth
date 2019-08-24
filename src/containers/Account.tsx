@@ -12,30 +12,24 @@ import {
   postVerifyEmail,
 } from '../store/actions';
 
-import styled from 'styled-components';
 import {
   Page,
   CenterWrapper,
   Button,
+  ButtonWrapper,
   TextLarge,
   TextString,
   FormGroup,
   FormMessage,
 } from '../theme/widgets';
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  ${FormGroup} ${Button} {
-    width: 100%;
-  }
-`;
-
-interface Props {
+interface DispatchProps {
   authLogout : () => void;
   getUser : () => void;
   postVerifyEmail: (usermail: string) => void;
+};
+
+interface Props extends DispatchProps {
   profile : {
     usermail: string;
     isVerify: boolean;
@@ -104,19 +98,14 @@ class Account extends React.Component<Props, State> {
                   e.preventDefault();
                   this.props.postVerifyEmail(profile.usermail);
               }}>Resend Verify Email</Button>
-             {(success !== '') &&  <FormMessage success>{success}</FormMessage>}
+             {(success !== '') && (!profile.isVerify)
+               && <FormMessage success>{success}</FormMessage>}
             </FormGroup>
            </ButtonWrapper>
         </CenterWrapper>
       </Page>
     );
   }
-};
-
-interface DispatchProps {
-  authLogout : () => void;
-  getUser : () => void;
-  postVerifyEmail: (usermail: string) => void;
 };
 
 const mapStateToProps = (state : StoreType) : State => ({

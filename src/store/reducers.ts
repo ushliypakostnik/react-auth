@@ -2,19 +2,24 @@ import { combineReducers } from 'redux';
 
 import { Action } from 'redux';
 
-import { INITIAL_STATE } from './constants';
+import { INITIAL_STATE, MESSAGES } from './constants';
 import { StoreType } from './types';
 import {
   AUTH_REQUEST,
   AUTH_SUCCESS,
   AUTH_ERROR,
-  AUTH_LOGOUT,
-  USER_REQUEST,
-  USER_SUCCESS,
-  USER_ERROR,
   SEND_VERIFY_EMAIL,
   SEND_VERIFY_EMAIL_SUCCESS,
   SEND_VERIFY_EMAIL_ERROR,
+  REMIND_PASSWORD_REQUEST,
+  REMIND_PASSWORD_SUCCESS,
+  REMIND_PASSWORD_ERROR,
+  CLEAR_MESSAGES,
+  AUTH_LOGOUT,
+
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_ERROR,
 } from './actions';
 
 const auth = (state : StoreType, action: Action & any) => {
@@ -36,7 +41,26 @@ const auth = (state : StoreType, action: Action & any) => {
       return Object.assign({}, state, {
         isFetching: false,
         isAuth: false,
-        error: action.error
+        error: action.error,
+      });
+     case REMIND_PASSWORD_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case REMIND_PASSWORD_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        success: action.message,
+      });
+    case REMIND_PASSWORD_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error,
+      });
+    case CLEAR_MESSAGES:
+      return Object.assign({}, state, {
+        success: '',
+        error: '',
       });
     case AUTH_LOGOUT:
       return Object.assign({}, state, {
@@ -61,7 +85,7 @@ const user = (state : StoreType, action: Action & any) => {
     case USER_SUCCESS:
       let success = '';
       if (!action.profile.isVerify) {
-        success = 'Verify your account! A confirmation email has been sent to your inbox!'
+        success = MESSAGES.verify_account.message;
       }
       return Object.assign({}, state, {
         isFetching: false,
@@ -85,7 +109,7 @@ const user = (state : StoreType, action: Action & any) => {
     case SEND_VERIFY_EMAIL_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        success: action.success,
+        success: MESSAGES.resend_verify_email.message,
       });
     case SEND_VERIFY_EMAIL_ERROR:
       return Object.assign({}, state, {

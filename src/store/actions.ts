@@ -12,7 +12,7 @@ import Api, {
 } from '../utils/api';
 
 import {
-  credentialsType,
+  CredentialsType,
 } from './types';
 
 // Actions Types
@@ -31,6 +31,8 @@ export const REMIND_PASSWORD_ERROR = 'REMIND_PASSWORD_ERROR';
 export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD';
 export const SET_NEW_PASSWORD_SUCCESS = 'SET_NEW_PASSWORD_SUCCESS';
 export const SET_NEW_PASSWORD_ERROR = 'SET_NEW_PASSWORD_ERROR';
+
+export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
 
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
@@ -68,15 +70,8 @@ export const authError : ActionCreator<Action> = (error: string) => {
   };
 };
 
-export const authLogout : ActionCreator<Action> = () => {
-  deleteAuth();
-  return {
-    type: AUTH_LOGOUT,
-  };
-};
-
 export const postAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (credentials: credentialsType) => {
+  = (credentials: CredentialsType) => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(authRequest());
       try {
@@ -97,10 +92,11 @@ export const remindPasswordRequest : ActionCreator<Action> = () => {
   };
 };
 
-export const remindPasswordSuccess : ActionCreator<Action> = (response: string) => {
+export const remindPasswordSuccess : ActionCreator<Action> = (message: string) => {
+  console.log(message);
   return {
     type: REMIND_PASSWORD_SUCCESS,
-    response,
+    message,
   };
 };
 
@@ -117,16 +113,14 @@ export const postRemindPassword: ActionCreator<ThunkAction<Promise<Action>, Acti
       dispatch(remindPasswordRequest());
       try {
         const response = await Api.post(POST_REMIND_PASSWORD_PATH, { usermail });
-        console.log('postRemindPassword', response);
-        return dispatch(remindPasswordSuccess());
+        return dispatch(remindPasswordSuccess(response.data.success.message));
       } catch (e) {
-        console.log(e);
-        return dispatch(remindPasswordError(e));
+        return dispatch(remindPasswordError(e.response.data.error.message));
       };
     };
 };
 
-export const setNewPassword : ActionCreator<Action> = (credentials: credentialsType) => {
+export const setNewPassword : ActionCreator<Action> = (credentials: CredentialsType) => {
   return {
     type: SET_NEW_PASSWORD,
     credentials,
@@ -147,7 +141,7 @@ export const setNewPasswordError : ActionCreator<Action> = (error: string) => {
 };
 
 export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (credentials: credentialsType) => {
+  = (credentials: CredentialsType) => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(setNewPassword());
       try {
@@ -161,6 +155,20 @@ export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action,
         return dispatch(setNewPasswordError(e));
       };
     };
+};
+
+export const clearMessages : ActionCreator<Action> = () => {
+  deleteAuth();
+  return {
+    type: CLEAR_MESSAGES,
+  };
+};
+
+export const authLogout : ActionCreator<Action> = () => {
+  deleteAuth();
+  return {
+    type: AUTH_LOGOUT,
+  };
 };
 
 // User
@@ -186,7 +194,7 @@ export const userError : ActionCreator<Action> = (error: string) => {
 };
 
 export const getUser: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (credentials: credentialsType) => {
+  = (credentials: CredentialsType) => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(userRequest());
       try {
@@ -208,7 +216,6 @@ export const sendVerifyEmail : ActionCreator<Action> = () => {
 export const sendVerifyEmailSuccess : ActionCreator<Action> = () => {
   return {
     type: SEND_VERIFY_EMAIL_SUCCESS,
-    success: 'Letter sent successfully!',
   };
 };
 
@@ -223,8 +230,8 @@ export const postVerifyEmail: ActionCreator<ThunkAction<Promise<Action>, Action,
   = (usermail: string) => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(sendVerifyEmail());
-      console.log('postVerifyEmail', usermail);
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await Api.post(POST_VERIFY_EMAIL_PATH, { usermail });
         return dispatch(sendVerifyEmailSuccess());
       } catch (e) {

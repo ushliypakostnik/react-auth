@@ -4,11 +4,15 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { credentialsType } from '../store/types';
+import {
+  StoreType,
+  CredentialsType
+} from '../store/types';
 
 import {
   postAuth,
   postRemindPassword,
+  clearMessages,
 } from '../store/actions';
 
 import CenterMessage from '../components/CenterMessage';
@@ -26,12 +30,23 @@ import {
   A,
 } from '../theme/widgets';
 
-interface Props {
-  postAuth : (credentials: credentialsType) => void;
+interface DispatchProps {
+  postAuth : (credentials: CredentialsType) => void;
   postRemindPassword : (usermail: string) => void;
+  clearMessages: () => void;
+};
+
+interface StateToProps {
+  success : string;
+  error : string;
+};
+
+interface Props extends DispatchProps {
+  success: string;
+  error : string;
 }
 
-interface State {
+interface State extends StateToProps {
   login : boolean,
   mailError : string;
   passError : string;
@@ -52,7 +67,14 @@ class Login extends React.Component<Props, State> {
     login: true,
     mailError: '',
     passError: '',
+    success: '',
+    error : '',
   };
+
+  public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
+    success: nextProps.success,
+    error: nextProps.error,
+  });
 
   private submit = (usermail : string, password : string) : void => {
     const emailValid = this.validateEmail(usermail);
@@ -112,7 +134,7 @@ class Login extends React.Component<Props, State> {
   }
 
   render() {
-    const { login, mailError, passError } = this.state;
+    const { login, mailError, passError, success, error } = this.state;
 
     return (
       <Page outer>
@@ -128,10 +150,18 @@ class Login extends React.Component<Props, State> {
                 placeholder="Email"
                 ref={this.usermailInput}
               />
-              {!(mailError === '')
-                && <FormMessage error={!!mailError}>
+              {mailError !== ''
+                && <FormMessage error>
                      <TextSmall>{mailError}</TextSmall>
                    </FormMessage>}
+              {!login && success !== ''
+                && <FormMessage success>
+                     <TextSmall>{success}</TextSmall>
+                  </FormMessage>}
+              {error !== ''
+                && <FormMessage error>
+                     <TextSmall>{error}</TextSmall>
+                  </FormMessage>}
             </FormGroup>
             {login &&
               <FormGroup>
@@ -141,8 +171,8 @@ class Login extends React.Component<Props, State> {
                   placeholder="Password"
                   ref={this.passwordInput}
                  />
-                 {!(passError === '')
-                   && <FormMessage error={!!passError}>
+                 {passError !== ''
+                   && <FormMessage error>
                          <TextSmall>{passError}</TextSmall>
                       </FormMessage>}
               </FormGroup>
@@ -153,6 +183,7 @@ class Login extends React.Component<Props, State> {
               aria-label={login ? 'Login' : 'Remind'}
               onClick={(e) => {
                 e.preventDefault();
+                if (success !== '' || error !== '') this.props.clearMessages();
                 if (login) {
                   this.submit(this.usermailInput.current.value, this.passwordInput.current.value);
                 } else {
@@ -165,6 +196,7 @@ class Login extends React.Component<Props, State> {
               aria-label={login ? 'Remind password' : 'Back to login'}
               onClick={(e) => {
                 e.preventDefault();
+                success !== '' && this.props.clearMessages();
                 this.setState({
                   login: !login,
                 });
@@ -177,9 +209,15 @@ class Login extends React.Component<Props, State> {
   }
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Props => ({
-  postAuth: (credentials: credentialsType) => dispatch(postAuth(credentials)),
-  postRemindPassword: (usermail: string) => dispatch(postRemindPassword(usermail)),
+const mapStateToProps = (state : StoreType) : StateToProps => ({
+  success: state.rootReducer.auth.success,
+  error: state.rootReducer.auth.error,
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
+  postAuth: (credentials: CredentialsType) => dispatch(postAuth(credentials)),
+  postRemindPassword: (usermail: string) => dispatch(postRemindPassword(usermail)),
+  clearMessages: () => dispatch(clearMessages()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

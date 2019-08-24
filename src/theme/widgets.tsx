@@ -62,6 +62,15 @@ export const FormGroup = styled.div`
   position: relative;
 `;
 
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  ${FormGroup} ${Button} {
+    width: 100%;
+  }
+`;
+
 interface FormMessageProps {
   readonly error? : boolean;
   readonly success? : boolean;

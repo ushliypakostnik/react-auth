@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { credentialsType } from '../store/types';
+import { CredentialsType } from '../store/types';
 
 import { postNewPassword } from '../store/actions';
 
@@ -23,7 +23,7 @@ import {
 } from '../theme/widgets';
 
 interface Props {
-  postNewPassword : (credentials: credentialsType) => void;
+  postNewPassword : (credentials: CredentialsType) => void;
 }
 
 interface State {
@@ -132,7 +132,7 @@ class Login extends React.Component<Props, State> {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Props => ({
-  postNewPassword: (credentials: credentialsType) => dispatch(postNewPassword(credentials)),
+  postNewPassword: (credentials: CredentialsType) => dispatch(postNewPassword(credentials)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
