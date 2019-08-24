@@ -50,7 +50,6 @@ export const getUser: ActionCreator<ThunkAction<Promise<Action>, Action, void, a
         const response = await Api.get(GET_USER_PATH);
         return dispatch(userSuccess(response.data.user));
       } catch (e) {
-        console.log(e);
         return dispatch(userError(e));
       };
     };
@@ -84,7 +83,6 @@ export const postVerifyEmail: ActionCreator<ThunkAction<Promise<Action>, Action,
         const response = await Api.post(POST_VERIFY_EMAIL_PATH, { usermail });
         return dispatch(sendVerifyEmailSuccess());
       } catch (e) {
-        console.log(e);
         return dispatch(sendVerifyEmailError(e));
       };
     };
