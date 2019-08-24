@@ -6,11 +6,11 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { StoreType } from '../store/types';
 
+import { authLogout } from '../store/modules/auth/actions';
 import {
   getUser,
-  authLogout,
   postVerifyEmail,
-} from '../store/actions';
+} from '../store/modules/user/actions';
 
 import {
   Page,

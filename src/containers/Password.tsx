@@ -6,12 +6,14 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { history } from '../store/store';
 
+import { MESSAGES } from '../store/constants';
+
 import {
   StoreType,
   NewPasswordType,
 } from '../store/types';
 
-import { postNewPassword } from '../store/actions';
+import { postNewPassword } from '../store/modules/auth/actions';
 
 import CenterMessage from '../components/CenterMessage';
 
@@ -82,7 +84,6 @@ class Login extends React.Component<Props, State> {
       const query = this.state.hash;
       const id = query.split('&')[0].slice(4);
       const token = query.split('&')[1].slice(6);
-      console.log(id, token);
       this.props.postNewPassword({ id, password: password1, token });
       history.push('/');
     }
@@ -95,11 +96,11 @@ class Login extends React.Component<Props, State> {
     const minLenght = 6;
     let passError;
     if (password === '') {
-      passError = 'This field is required!';
+      passError = MESSAGES.is_required;
     } else if (password.length < minLenght) {
-      passError = `Password must be at least ${minLenght} characters`;
+      passError = MESSAGES.password_min_lenght;
     } else if (!validate) {
-      passError = 'Password must contain at least one digit.';
+      passError = MESSAGES.password_contain_digit;
     } else {
       passError = '';
     }
@@ -108,10 +109,12 @@ class Login extends React.Component<Props, State> {
         this.setState({
           pass1Error: passError,
         });
+        break;
       case 2:
         this.setState({
           pass2Error: passError,
         });
+        break;
       default:
         break;
     };

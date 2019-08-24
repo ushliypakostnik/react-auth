@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
+import { MESSAGES } from '../store/constants';
+
 import {
   StoreType,
   CredentialsType
@@ -13,7 +15,7 @@ import {
   postAuth,
   postRemindPassword,
   clearMessages,
-} from '../store/actions';
+} from '../store/modules/auth/actions';
 
 import CenterMessage from '../components/CenterMessage';
 
@@ -95,11 +97,11 @@ class Login extends React.Component<Props, State> {
     const validate = regExp.test(email);
     let mailError;
     if (email === '') {
-      mailError = 'This field is required!';
+      mailError = MESSAGES.is_required;
     } else if (validate) {
       mailError = '';
     } else {
-      mailError = 'Invalid email!';
+      mailError = MESSAGES.email_invalid;
     }
     this.setState({
       mailError: mailError,
@@ -114,11 +116,11 @@ class Login extends React.Component<Props, State> {
     const minLenght = 6;
     let passError;
     if (password === '') {
-      passError = 'This field is required!';
+      passError = MESSAGES.is_required;
     } else if (password.length < minLenght) {
-      passError = `Password must be at least ${minLenght} characters`;
+      passError = MESSAGES.password_min_lenght;
     } else if (!validate) {
-      passError = 'Password must contain at least one digit.';
+      passError = MESSAGES.password_contain_digit;
     } else {
       passError = '';
     }

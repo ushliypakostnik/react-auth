@@ -9,16 +9,25 @@ export interface StoreType {
     readonly user : {
       readonly isFetching : boolean;
       readonly profile : {
-        readonly userid : string | null;
+        readonly id : string | null;
         readonly usermail : string | null;
         readonly username : string | null;
         readonly isVerify : boolean;
+        readonly userdata : [];
       };
       readonly error : string;
       readonly success : string;
     };
   };
   readonly router? : any;
+};
+
+export interface ObjectOfStringsType {
+  readonly [key: string] : string;
+};
+
+export interface ObjectOfAnyType {
+  readonly [key: string] : any;
 };
 
 export interface CredentialsType {
@@ -32,25 +41,16 @@ export interface NewPasswordType {
   readonly token: string;
 };
 
-interface MessageType {
-  readonly message : string;
-};
-
-export interface MessagesType {
-  readonly verify_account : MessageType;
-  readonly resend_verify_email: MessageType;
-};
-
 interface CookieType {
   readonly name : string;
   readonly expires : number;
 };
 
 export interface CookiesType {
-  readonly TOKEN : CookieType;
+  readonly [key: string] : CookieType;
 };
 
 export interface LocalType {
-  readonly PROFILE : string;
+  readonly [key: string] : string;
 };
 

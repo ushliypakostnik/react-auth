@@ -2,8 +2,9 @@ import Cookies from "js-cookie";
 
 import {
   StoreType,
+  ObjectOfStringsType,
+  ObjectOfAnyType,
   CookiesType,
-  MessagesType,
   LocalType,
 } from './types';
 
@@ -31,10 +32,11 @@ export const INITIAL_STATE : StoreType = {
     user: {
       isFetching: false,
       profile: {
-        userid: null,
+        id: null,
         usermail: null,
         username: null,
         isVerify: false,
+        userdata: [],
       },
       error: '',
       success: '',
@@ -46,7 +48,15 @@ export const LOCAL : LocalType = {
   PROFILE: 'UserProfile',
 }
 
-export const MESSAGES : MessagesType = {
-  verify_account: { message: 'Verify your account! A confirmation email has been sent to your inbox' },
-  resend_verify_email: { message: 'Letter sent successfully'},
+export const UTILS : ObjectOfAnyType = {
+  min_password_lenght: 6,
+}
+
+export const MESSAGES : ObjectOfStringsType = {
+  verify_account: 'Verify your account! A confirmation email has been sent to your inbox',
+  resend_verify_email: 'Letter sent successfully',
+  is_required: 'This field is required',
+  password_min_lenght: `Password must be at least ${UTILS.min_password_lenght} characters`,
+  password_contain_digit: 'Password must contain at least one digit',
+  email_invalid: 'Invalid email',
 };
