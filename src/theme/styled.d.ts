@@ -22,6 +22,7 @@ declare module 'styled-components' {
       color_black? : string;
       color_mint? : string;
       color_red? : string;
+      color_green? : string;
 
       // Functional
       color_light? : string;
@@ -35,6 +36,7 @@ declare module 'styled-components' {
       color_shadow? : string;
 
       color_primary? : string;
+      color_success? : string;
       color_error? : string;
     };
 
@@ -56,6 +58,7 @@ declare module 'styled-components' {
       lineheight_small? : number;
     };
 
+    // Shadow
     shadows? : {
       shadow_offset_x? : number;
       shadow_offset_y? : number;
@@ -63,6 +66,7 @@ declare module 'styled-components' {
       shadow_spread: number;
     };
 
+    // Effects
     effects? : {
       transition_duration: string,
       transition_timingfunction: string,

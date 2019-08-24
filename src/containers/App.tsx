@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { StoreType } from '../store/types';
 
 import Login from './Login';
+import Password from './Password';
 import Account from './Account';
 import Page404 from '../components/Page404';
 
@@ -67,6 +68,7 @@ class App extends React.Component<Props, State> {
     return (
       <Switch>
         <LoginRoute path="/login" auth={ isAuth } component={ Login } />
+        <Route path="/password" component={ Password } />
         <PrivateRoute exact path="/" auth={ isAuth } component={ Account } />
         <Route component={ Page404 } />
       </Switch>

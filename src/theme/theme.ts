@@ -21,6 +21,7 @@ const theme : DefaultTheme = {
     color_black: '#000000',
     color_mint: '#00A287',
     color_red: '#ff3237',
+    color_green: '#00C20D',
 
     // Functional
     color_light: '#fafafa',
@@ -67,6 +68,7 @@ Object.assign(theme, {
   colors: {
     ...theme.colors,
     color_primary: theme.colors.color_mint,
+    color_success: theme.colors.color_green,
     color_error: theme.colors.color_red,
     color_link_hover: theme.colors.color_link,
     color_disabled: theme.colors.color_border,

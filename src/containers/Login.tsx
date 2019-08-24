@@ -6,7 +6,10 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { credentialsType } from '../store/types';
 
-import { postAuth } from '../store/actions';
+import {
+  postAuth,
+  postRemindPassword,
+} from '../store/actions';
 
 import CenterMessage from '../components/CenterMessage';
 
@@ -25,6 +28,7 @@ import {
 
 interface Props {
   postAuth : (credentials: credentialsType) => void;
+  postRemindPassword : (usermail: string) => void;
 }
 
 interface State {
@@ -50,8 +54,22 @@ class Login extends React.Component<Props, State> {
     passError: '',
   };
 
-  private submit = credentials => {
-    this.props.postAuth(credentials);
+  private submit = (usermail : string, password : string) : void => {
+    const emailValid = this.validateEmail(usermail);
+    if (this.state.login) {
+      const passwordValid = this.validatePassword(password);
+      if (emailValid && passwordValid) {
+        const user = {
+          usermail,
+          password,
+        }
+        this.props.postAuth(user);
+      }
+    } else {
+      if (emailValid) {
+        this.props.postRemindPassword(usermail);
+      }
+    }
   };
 
   private validateEmail = (email : string) : boolean => {
@@ -135,27 +153,23 @@ class Login extends React.Component<Props, State> {
               aria-label={login ? 'Login' : 'Remind'}
               onClick={(e) => {
                 e.preventDefault();
-                const emailValid = this.validateEmail(this.usermailInput.current.value);
-                const passwordValid = this.validatePassword(this.passwordInput.current.value);
-                if (emailValid && passwordValid) {
-                  const user = {
-                    usermail: this.usermailInput.current.value,
-                    password: this.passwordInput.current.value,
-                  }
-                  this.submit(user);
+                if (login) {
+                  this.submit(this.usermailInput.current.value, this.passwordInput.current.value);
+                } else {
+                  this.submit(this.usermailInput.current.value, null);
                 }
             }}>{login ? 'Login' : 'Remind'}</Button>
             <A
               href="#"
               rel="noopener noreferrer"
-              aria-label={login ? 'Забыли пароль?' : 'Попробовать зайти'}
+              aria-label={login ? 'Remind password' : 'Back to login'}
               onClick={(e) => {
                 e.preventDefault();
                 this.setState({
                   login: !login,
                 });
               }}
-            >{login ? 'Забыли пароль?' : 'Попробовать зайти'}</A>
+            >{login ? 'Remind password?' : 'Back to login'}</A>
           </Form>
         </CenterWrapper>
        </Page>
@@ -165,6 +179,7 @@ class Login extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Props => ({
   postAuth: (credentials: credentialsType) => dispatch(postAuth(credentials)),
+  postRemindPassword: (usermail: string) => dispatch(postRemindPassword(usermail)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

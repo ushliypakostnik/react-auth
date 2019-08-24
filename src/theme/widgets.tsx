@@ -63,7 +63,8 @@ export const FormGroup = styled.div`
 `;
 
 interface FormMessageProps {
-  readonly error: boolean;
+  readonly error? : boolean;
+  readonly success? : boolean;
 };
 
 export const FormMessage = styled.div<FormMessageProps>`
@@ -73,10 +74,14 @@ export const FormMessage = styled.div<FormMessageProps>`
   left: 0;
   right: 0;
   text-align: center;
-  top: calc(${props => props.theme.sizes.input_height}px * 1.05);
-  line-height: calc(${props => props.theme.sizes.gutter}px / 2);
+  color: ${props => props.theme.colors.color_text};
+  top: calc(${props => props.theme.sizes.input_height}px * 1.1);
+  line-height: calc(${props => props.theme.sizes.gutter}px / 1.5);
 
-  ${props => props.error && css`
+  ${props => props.success && css`
+    color: ${props => props.theme.colors.color_success};
+  `}
+   ${props => props.error && css`
     color: ${props => props.theme.colors.color_error};
   `}
 `;
@@ -121,7 +126,7 @@ export const TextSmall = styled.span`
 `;
 
 interface TextNormalProps {
-  readonly label?: boolean;
+  readonly label? : boolean;
 };
 
 export const TextNormal = styled.span<TextNormalProps>`

@@ -14,6 +14,7 @@ export interface StoreType {
         isVerify : boolean;
       };
       readonly error : string;
+      readonly success : string;
     };
   };
 };
@@ -21,8 +22,4 @@ export interface StoreType {
 export interface credentialsType {
   usermail: string;
   password: string;
-};
-
-export interface errorType {
-  error: string;
 };

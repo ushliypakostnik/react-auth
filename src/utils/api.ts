@@ -17,17 +17,20 @@ const Api = axios.create({
 
 export const setAuth = (token: string) : void => {
   Cookies.set(COOKIES.TOKEN.name, token, { expires: COOKIES.TOKEN.expires });
-  axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+  Api.defaults.headers.common['Authorization'] = `Token ${token}`;
 };
 
 export const deleteAuth = () : void => {
   localStorage.removeItem(LOCAL.PROFILE);
   Cookies.remove(COOKIES.TOKEN.name);
-  delete axios.defaults.headers.common['Authorization'];
+  delete Api.defaults.headers.common['Authorization'];
 };
 
 export const POST_AUTH_PATH = '/api/user/login';
 export const GET_USER_PATH = '/api/user/profile';
+export const POST_REMIND_PASSWORD_PATH = '/api/user/remind';
+export const POST_NEW_PASSWORD_PATH = '/api/user/password';
+export const POST_VERIFY_EMAIL_PATH = '/api/user/send-verify-email';
 
 export default Api;
 

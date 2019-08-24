@@ -31,6 +31,7 @@ export const INITIAL_STATE = {
         isVerify: false,
       },
       error: '',
+      success: '',
     },
   },
 };

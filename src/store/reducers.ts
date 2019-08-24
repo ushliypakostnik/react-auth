@@ -12,6 +12,9 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
   USER_ERROR,
+  SEND_VERIFY_EMAIL,
+  SEND_VERIFY_EMAIL_SUCCESS,
+  SEND_VERIFY_EMAIL_ERROR,
 } from './actions';
 
 const auth = (state : StoreType, action: Action & any) => {
@@ -56,6 +59,10 @@ const user = (state : StoreType, action: Action & any) => {
         isFetching: true,
       });
     case USER_SUCCESS:
+      let success = '';
+      if (!action.profile.isVerify) {
+        success = 'Verify your account! A confirmation email has been sent to your inbox!'
+      }
       return Object.assign({}, state, {
         isFetching: false,
         profile: {
@@ -64,11 +71,31 @@ const user = (state : StoreType, action: Action & any) => {
           username: action.profile.username,
           isVerify: action.profile.isVerify,
         },
+        success,
       });
     case USER_ERROR:
       return Object.assign({}, state, {
         isFetching: false,
         error: action.error
+      });
+    case SEND_VERIFY_EMAIL:
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case SEND_VERIFY_EMAIL_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        success: action.success,
+      });
+    case SEND_VERIFY_EMAIL_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: action.error
+      });
+    case AUTH_LOGOUT:
+      return Object.assign({}, state, {
+        profile: {},
+        success: '',
       });
     default:
       return state;

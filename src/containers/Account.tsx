@@ -9,6 +9,7 @@ import { StoreType } from '../store/types';
 import {
   getUser,
   authLogout,
+  postVerifyEmail,
 } from '../store/actions';
 
 import styled from 'styled-components';
@@ -18,20 +19,28 @@ import {
   Button,
   TextLarge,
   TextString,
+  FormGroup,
+  FormMessage,
 } from '../theme/widgets';
 
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  ${FormGroup} ${Button} {
+    width: 100%;
+  }
 `;
 
 interface Props {
   authLogout : () => void;
   getUser : () => void;
+  postVerifyEmail: (usermail: string) => void;
   profile : {
     usermail: string;
     isVerify: boolean;
   };
+  success: string;
 };
 
 interface State {
@@ -39,6 +48,7 @@ interface State {
     usermail: string;
     isVerify: boolean;
   };
+  success: string;
 };
 
 class Account extends React.Component<Props, State> {
@@ -48,6 +58,7 @@ class Account extends React.Component<Props, State> {
       usermail: '',
       isVerify: false,
     },
+    success: '',
   };
 
   componentDidMount() {
@@ -56,10 +67,11 @@ class Account extends React.Component<Props, State> {
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
     profile: nextProps.profile,
+    success: nextProps.success,
   });
 
   public render() {
-    const { profile } = this.state;
+    const { profile, success } = this.state;
 
     return (
       <Page>
@@ -83,13 +95,17 @@ class Account extends React.Component<Props, State> {
                 e.preventDefault();
                 this.props.authLogout();
             }}>Sign out</Button>
-            <Button
-              type="button"
-              role="button"
-              aria-label='Logout button'
-              onClick={(e) => {
-                e.preventDefault();
-            }}>Resend Verify Email</Button>
+            <FormGroup>
+              <Button
+                type="button"
+                role="button"
+                aria-label='Logout button'
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.props.postVerifyEmail(profile.usermail);
+              }}>Resend Verify Email</Button>
+             {(success !== '') &&  <FormMessage success>{success}</FormMessage>}
+            </FormGroup>
            </ButtonWrapper>
         </CenterWrapper>
       </Page>
@@ -100,15 +116,18 @@ class Account extends React.Component<Props, State> {
 interface DispatchProps {
   authLogout : () => void;
   getUser : () => void;
+  postVerifyEmail: (usermail: string) => void;
 };
 
 const mapStateToProps = (state : StoreType) : State => ({
   profile: state.rootReducer.user.profile,
+  success: state.rootReducer.user.success,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
   authLogout: () => dispatch(authLogout()),
   getUser: () => dispatch(getUser()),
+  postVerifyEmail: (usermail: string) => dispatch(postVerifyEmail(usermail)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Account);
