@@ -70,7 +70,7 @@ class Account extends React.Component<Props, State> {
             <TextLarge light>Usermail:</TextLarge>
           </TextString>
           <TextString>
-            <TextLarge>{profile.usermail}</TextLarge>
+            <TextLarge>{ profile.usermail }</TextLarge>
           </TextString>
           <TextString>
             <TextLarge light>IsVerify: </TextLarge>
@@ -96,7 +96,7 @@ class Account extends React.Component<Props, State> {
                     this.props.postVerifyEmail(profile.usermail);
                 }}>Resend Verify Email</Button>
                {success !== ''
-                 && <FormMessage success>{success}</FormMessage>}
+                 && <FormMessage success>{ success }</FormMessage>}
               </FormGroup>}
            </ButtonWrapper>
         </CenterWrapper>

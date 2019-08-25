@@ -149,15 +149,15 @@ class Login extends React.Component<Props, State> {
               />
               {mailError !== ''
                 && <FormMessage error>
-                     <TextSmall>{mailError}</TextSmall>
+                     <TextSmall>{ mailError }</TextSmall>
                    </FormMessage>}
               {!login && success !== ''
                 && <FormMessage success>
-                     <TextSmall>{success}</TextSmall>
+                     <TextSmall>{ success }</TextSmall>
                   </FormMessage>}
               {error !== ''
                 && <FormMessage error>
-                     <TextSmall>{error}</TextSmall>
+                     <TextSmall>{ error }</TextSmall>
                   </FormMessage>}
             </FormGroup>
             {login &&
@@ -170,7 +170,7 @@ class Login extends React.Component<Props, State> {
                  />
                  {passError !== ''
                    && <FormMessage error>
-                         <TextSmall>{passError}</TextSmall>
+                         <TextSmall>{ passError }</TextSmall>
                       </FormMessage>}
               </FormGroup>
             }

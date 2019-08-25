@@ -22,7 +22,7 @@ const PrivateRoute : React.SFC<RouteProps & any> =
       <Route
         {...rest}
         render={(props : RouteComponentProps<any>) => auth
-          ? <Component {...props} isAuth={auth} />
+          ? <Component {...props} isAuth={ auth } />
           : <Redirect to='/login' />}
       />
     );

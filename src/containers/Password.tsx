@@ -43,7 +43,7 @@ const initialState = {
   pass1Error: '',
   pass2Error: '',
   hash: '',
-  match: true,
+  match: '',
 };
 
 type State = Readonly<typeof initialState>;
@@ -71,12 +71,12 @@ class Login extends React.Component<Props, State> {
 
     if (password1 !== password2) {
       this.setState({
-        match: false,
+        match: MESSAGES.passwords_do_not_match,
       });
       return;
     } else {
       this.setState({
-        match: true,
+        match: '',
       });
     }
 
@@ -140,7 +140,7 @@ class Login extends React.Component<Props, State> {
                />
                {!(pass1Error === '')
                  && <FormMessage error>
-                       <TextSmall>{pass1Error}</TextSmall>
+                       <TextSmall>{ pass1Error }</TextSmall>
                     </FormMessage>}
             </FormGroup>
             <FormGroup>
@@ -152,7 +152,7 @@ class Login extends React.Component<Props, State> {
                />
                {!(pass2Error === '')
                  && <FormMessage error>
-                       <TextSmall>{pass2Error}</TextSmall>
+                       <TextSmall>{ pass2Error }</TextSmall>
                     </FormMessage>}
             </FormGroup>
             <FormGroup>
@@ -164,9 +164,9 @@ class Login extends React.Component<Props, State> {
                   e.preventDefault();
                   this.submit(this.password1Input.current.value, this.password2Input.current.value);
               }}>Set password</Button>
-              {!match
+              {!(match === '')
                 && <FormMessage error>
-                     <TextSmall>Не совпадают!</TextSmall>
+                     <TextSmall>{ match }</TextSmall>
                   </FormMessage>}
             </FormGroup>
           </Form>

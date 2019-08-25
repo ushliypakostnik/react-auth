@@ -59,4 +59,5 @@ export const MESSAGES : ObjectOfStringsType = {
   password_min_lenght: `Password must be at least ${UTILS.min_password_lenght} characters`,
   password_contain_digit: 'Password must contain at least one digit',
   email_invalid: 'Invalid email',
+  passwords_do_not_match: 'Passwords do not match',
 };

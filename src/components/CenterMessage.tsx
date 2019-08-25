@@ -44,7 +44,7 @@ const CenterMessage : React.SFC<CenterMessageProps> = props => {
   return (
     <EntryHeaderWpapper>
       <Logo src={logo} alt="logo" />
-      {props.children}
+      { props.children }
     </EntryHeaderWpapper>
   );
 };
