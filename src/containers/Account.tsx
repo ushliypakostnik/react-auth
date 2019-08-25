@@ -85,18 +85,19 @@ class Account extends React.Component<Props, State> {
                 e.preventDefault();
                 this.props.authLogout();
             }}>Sign out</Button>
-            <FormGroup>
-              <Button
-                type="button"
-                role="button"
-                aria-label='Logout button'
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.props.postVerifyEmail(profile.usermail);
-              }}>Resend Verify Email</Button>
-             {success !== ''
-               && <FormMessage success>{success}</FormMessage>}
-            </FormGroup>
+            {!profile.isVerify &&
+              <FormGroup>
+                <Button
+                  type="button"
+                  role="button"
+                  aria-label='Logout button'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.props.postVerifyEmail(profile.usermail);
+                }}>Resend Verify Email</Button>
+               {success !== ''
+                 && <FormMessage success>{success}</FormMessage>}
+              </FormGroup>}
            </ButtonWrapper>
         </CenterWrapper>
       </Page>
