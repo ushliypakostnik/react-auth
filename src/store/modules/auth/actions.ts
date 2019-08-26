@@ -61,7 +61,7 @@ export const postAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, 
       dispatch(authRequest());
       try {
         const response = await Api.post(POST_AUTH_PATH, { user: credentials });
-        const token = response.data.user.token;
+        const { token } = response.data.user;
         setAuth(token);
         return dispatch(authSuccess());
       } catch (e) {
@@ -127,7 +127,7 @@ export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action,
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(setNewPassword());
       const user = { id: credentials.id, password: credentials.password }
-      const token = credentials.token;
+      const { token } = credentials;
       setAuth(token);
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
