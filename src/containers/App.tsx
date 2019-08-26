@@ -5,7 +5,7 @@ import {
   Redirect,
   Switch,
   RouteComponentProps,
-  RouteProps
+  RouteProps,
 } from "react-router-dom";
 
 import { connect } from 'react-redux';
@@ -57,10 +57,6 @@ class App extends React.Component<Props, State> {
   });
 
   readonly state : State = initialState;
-
-  public componentDidMount() : void {
-    // for test
-  }
 
   public render() {
     const { isAuth } = this.state;

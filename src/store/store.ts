@@ -10,7 +10,7 @@ import { StoreType } from './types';
 import rootReducer from './reducers';
 
 const middlewares : any[] = [];
-middlewares.push(thunkMiddleware)
+middlewares.push(thunkMiddleware);
 
 if (process.env.NODE_ENV !== 'production') {
   const loggerMiddleware = createLogger();
