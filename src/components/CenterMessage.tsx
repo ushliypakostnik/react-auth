@@ -19,10 +19,6 @@ const Logo = styled.img`
   pointer-events: none;
   display: inline-block;
   animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 20) ${props => props.theme.effects.transition_timingfunction};
-
-  @media (max-width: ${props => props.theme.breackpoints.breackpoint_xs_max}) {
-    animation: none;
-  }
 `;
 
 const EntryHeaderWpapper = styled.div`
