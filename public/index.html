@@ -9,6 +9,23 @@
       content="Web site created using create-react-app"
     />
 
+    <script>
+      var ieVersion = (function() {
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf('MSIE');
+        if (msie > 0) {
+          return parseInt (ua.substring(msie + 5, ua.indexOf('.', msie)));
+        }
+        if (ua.indexOf('Trident/7.0') + 1) {
+          return 11;
+        }
+        return 0;
+      })();
+      if (ieVersion && ieVersion <= 9) {
+        location.href = './legacy.html';
+      }
+    </script>
+
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" type="image/x-icon" />
 
