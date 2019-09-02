@@ -212,8 +212,8 @@ const mapStateToProps = (state : StoreType) : StateToProps => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
-  postAuth: (credentials: CredentialsType) => dispatch(postAuth(credentials)),
-  postRemindPassword: (usermail: string) => dispatch(postRemindPassword(usermail)),
+  postAuth: (credentials : CredentialsType) => dispatch(postAuth(credentials)),
+  postRemindPassword: (usermail : string) => dispatch(postRemindPassword(usermail)),
   clearMessages: () => dispatch(clearMessages()),
 });
 

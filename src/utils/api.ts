@@ -1,12 +1,21 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
 
-import { COOKIES, API_URL, LOCAL, AUTO_AUTH } from '../store/constants';
+import {
+  COOKIES,
+  API_URL,
+  LOCAL,
+  AUTO_AUTH,
+  CLIENT,
+} from '../store/constants';
 
 const Api = axios.create({
   baseURL: API_URL,
   responseType: 'json',
 });
+
+// Client type
+Api.defaults.headers.common['Client'] = `Client ${CLIENT}`;
 
 // Auto auth
 if (AUTO_AUTH) {

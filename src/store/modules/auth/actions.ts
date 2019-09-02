@@ -92,7 +92,7 @@ export const remindPasswordError : ActionCreator<Action> = (error: string) => {
 
 export const postRemindPassword: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = (usermail: string) => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+    return async (dispatch: Dispatch<Action>) : Promise<Action> => {
       dispatch(remindPasswordRequest());
       try {
         const response = await Api.post(POST_REMIND_PASSWORD_PATH, { usermail });

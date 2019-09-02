@@ -20,6 +20,8 @@ firebase.json
 .DS_Store
 .env.local
 .env.*.local
+.env.development
+.env.production
 
 # log files
 npm-debug.log*
