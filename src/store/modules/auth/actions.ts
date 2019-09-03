@@ -1,18 +1,19 @@
 import { Action, ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import Api, {
-  setAuth,
-  deleteAuth,
-  POST_AUTH_PATH,
-  POST_REMIND_PASSWORD_PATH,
-  POST_NEW_PASSWORD_PATH,
-} from '../../../utils/api';
-
 import {
   CredentialsType,
   NewPasswordType,
 } from '../../types';
+
+import Api, {
+  setAuth,
+  deleteAuth,
+  POST_AUTH_PATH,
+  POST_VERIFY,
+  POST_REMIND_PASSWORD_PATH,
+  POST_NEW_PASSWORD_PATH,
+} from '../../../utils/api';
 
 // Actions Types
 ////////////////////////////////////////////////////////////
@@ -20,6 +21,10 @@ import {
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+export const VERIFY_REQUEST = 'VERIFY_REQUEST';
+export const VERIFY_REQUEST_SUCCESS = 'VERIFY_REQUEST_SUCCESS';
+export const VERIFY_REQUEST_ERROR = 'VERIFY_REQUEST_ERROR';
 
 export const REMIND_PASSWORD_REQUEST = 'REMIND_PASSWORD';
 export const REMIND_PASSWORD_SUCCESS = 'REMIND_PASSWORD_SUCCESS';
@@ -66,6 +71,40 @@ export const postAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, 
         return dispatch(authSuccess());
       } catch (e) {
         return dispatch(authError(e));
+      };
+    };
+};
+
+export const verifyRequest : ActionCreator<Action> = () => {
+  return {
+    type: VERIFY_REQUEST,
+  };
+};
+
+export const verifyRequestSuccess : ActionCreator<Action> = () => {
+  return {
+    type: VERIFY_REQUEST_SUCCESS,
+  };
+};
+
+export const verifyRequestError : ActionCreator<Action> = (error: string) => {
+  return {
+    type: VERIFY_REQUEST_ERROR,
+    error,
+  };
+};
+
+export const postVerify: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
+  = (id: string) => {
+    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+      dispatch(verifyRequest());
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const response = await Api.post(POST_VERIFY, { id });
+        return dispatch(verifyRequestSuccess());
+      } catch (e) {
+        console.log(e);
+        return dispatch(verifyRequestError(e));
       };
     };
 };

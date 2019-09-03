@@ -6,7 +6,7 @@ import {
   API_URL,
   LOCAL,
   AUTO_AUTH,
-  CLIENT,
+  CLIENT_HOST,
 } from '../store/constants';
 
 const Api = axios.create({
@@ -15,7 +15,7 @@ const Api = axios.create({
 });
 
 // Client type
-Api.defaults.headers.common['Client'] = `Client ${CLIENT}`;
+Api.defaults.headers.common['Client'] = `${CLIENT_HOST}`;
 
 // Auto auth
 if (AUTO_AUTH) {
@@ -36,6 +36,7 @@ export const deleteAuth = () : void => {
 
 export const POST_AUTH_PATH = '/api/user/login';
 export const GET_USER_PATH = '/api/user/profile';
+export const POST_VERIFY = '/api/user/verify';
 export const POST_REMIND_PASSWORD_PATH = '/api/user/remind';
 export const POST_NEW_PASSWORD_PATH = '/api/user/password';
 export const POST_VERIFY_EMAIL_PATH = '/api/user/send-verify-email';

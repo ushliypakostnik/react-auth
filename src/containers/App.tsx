@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import {
   Route,
@@ -13,6 +13,7 @@ import { StoreType } from '../store/types';
 
 import Login from './Login';
 import Password from './Password';
+import Verify from './Verify';
 import Account from './Account';
 import Page404 from '../components/Page404';
 
@@ -64,6 +65,7 @@ class App extends React.Component<Props, State> {
     return (
       <Switch>
         <LoginRoute path="/login" auth={ isAuth } component={ Login } />
+        <Route path="/verify" component={ Verify } />
         <Route path="/password" component={ Password } />
         <PrivateRoute exact path="/" auth={ isAuth } component={ Account } />
         <Route component={ Page404 } />

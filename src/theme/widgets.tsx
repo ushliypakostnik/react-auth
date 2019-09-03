@@ -1,29 +1,85 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
-// Containers
+// Content
 ////////////////////////////////////////////////////////////
 
-interface PageProps {
-  readonly outer? : boolean;
+export const A = styled.a`
+  white-space: nowrap;
+  text-decoration: underline;
+  color: ${props => props.theme.colors.color_link};
+
+  &:hover {
+    text-decoration: none;
+    color: ${props => props.theme.colors.color_link_hover};
+  }
+`;
+
+export const TextSmall = styled.span`
+  display: inline;
+  color: inherit;
+  font-family:  ${props => props.theme.typography.fontfamily_sans};
+  font-size:  ${props => props.theme.typography.fontsize_small}px;
+  line-height: ${props => props.theme.typography.lineheight_small}px;
+  font-weight: ${props => props.theme.typography.fontweight_sans_regular};
+  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+`;
+
+interface TextNormalProps {
+  readonly label? : boolean;
 };
 
-export const Page = styled.div<PageProps>`
-  height: 100%;
-  background: ${props => props.theme.colors.color_white};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+export const TextNormal = styled.span<TextNormalProps>`
+  display: inline;
+  color: inherit;
+  font-family:  ${props => props.theme.typography.fontfamily_sans};
+  font-size:  ${props => props.theme.typography.fontsize_normal}px;
+  line-height: ${props => props.theme.typography.lineheight_normal}px;
+  font-weight: ${props => props.theme.typography.fontweight_sans_regular};
+  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+`;
 
-  ${props => props.outer && css`
-    background: ${props => props.theme.colors.color_light};
+interface TextLargeProps {
+  readonly super? : boolean;
+  readonly light? : boolean;
+};
+
+export const TextLarge = styled.span<TextLargeProps>`
+  display: inline;
+  color: inherit;
+  font-family:  ${props => props.theme.typography.fontfamily_sans};
+  font-size:  ${props => props.theme.typography.fontsize_large}px;
+  line-height: ${props => props.theme.typography.lineheight_large}px;
+  font-weight: ${props => props.theme.typography.fontweight_sans_bold};
+  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+
+  ${props => props.super && css`
+    font-size:  calc(${props => props.theme.typography.fontsize_large}px * 4);
+    line-height: calc(${props => props.theme.typography.lineheight_large}px * 4);
+  `}
+
+  ${props => props.light && css`
+    opacity: 0.5;
   `}
 `;
 
-export const CenterWrapper = styled.div`
-  margin-top: -15%;
-  width: 300px;
+interface TextStringProps {
+  readonly top? : boolean;
+};
+
+export const TextString = styled.div<TextStringProps>`
+  text-align: center;
+  display: block;
+  margin-bottom: ${props => props.theme.sizes.gutter}px;
+
+  ${props => props.top && css`
+    margin-bottom: calc(${props => props.theme.sizes.gutter}px / 4);
+  `}
+
+  > * {
+    white-space: nowrap;
+  }
 `;
+
 
 // Forms
 ////////////////////////////////////////////////////////////
@@ -110,83 +166,60 @@ export const Form = styled.form`
   }
 `;
 
-// Content
+
+// Containers
 ////////////////////////////////////////////////////////////
 
-export const A = styled.a`
-  white-space: nowrap;
-  text-decoration: underline;
-  color: ${props => props.theme.colors.color_link};
+interface PageProps {
+  readonly outer? : boolean;
+};
 
-  &:hover {
-    text-decoration: none;
-    color: ${props => props.theme.colors.color_link_hover};
+export const Page = styled.div<PageProps>`
+  height: 100%;
+  background: ${props => props.theme.colors.color_white};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  ${props => props.outer && css`
+    background: ${props => props.theme.colors.color_light};
+  `}
+`;
+
+export const CenterWrapper = styled.div`
+  margin-top: -15%;
+  width: 300px;
+`;
+
+export const EntryHeaderWpapper = styled.div`
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  ${TextLarge} {
+    margin-top: 0;
   }
 `;
 
-export const TextSmall = styled.span`
-  display: inline;
-  color: inherit;
-  font-family:  ${props => props.theme.typography.fontfamily_sans};
-  font-size:  ${props => props.theme.typography.fontsize_small}px;
-  line-height: ${props => props.theme.typography.lineheight_small}px;
-  font-weight: ${props => props.theme.typography.fontweight_sans_regular};
-  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
-`;
 
-interface TextNormalProps {
-  readonly label? : boolean;
-};
+// Animatin and elements
+////////////////////////////////////////////////////////////
 
-export const TextNormal = styled.span<TextNormalProps>`
-  display: inline;
-  color: inherit;
-  font-family:  ${props => props.theme.typography.fontfamily_sans};
-  font-size:  ${props => props.theme.typography.fontsize_normal}px;
-  line-height: ${props => props.theme.typography.lineheight_normal}px;
-  font-weight: ${props => props.theme.typography.fontweight_sans_regular};
-  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
-`;
-
-interface TextLargeProps {
-  readonly super? : boolean;
-  readonly light? : boolean;
-};
-
-export const TextLarge = styled.span<TextLargeProps>`
-  display: inline;
-  color: inherit;
-  font-family:  ${props => props.theme.typography.fontfamily_sans};
-  font-size:  ${props => props.theme.typography.fontsize_large}px;
-  line-height: ${props => props.theme.typography.lineheight_large}px;
-  font-weight: ${props => props.theme.typography.fontweight_sans_bold};
-  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
-
-  ${props => props.super && css`
-    font-size:  calc(${props => props.theme.typography.fontsize_large}px * 4);
-    line-height: calc(${props => props.theme.typography.lineheight_large}px * 4);
-  `}
-
-  ${props => props.light && css`
-    opacity: 0.5;
-  `}
-`;
-
-interface TextStringProps {
-  readonly top? : boolean;
-};
-
-export const TextString = styled.div<TextStringProps>`
-  text-align: center;
-  display: block;
-  margin-bottom: ${props => props.theme.sizes.gutter}px;
-
-  ${props => props.top && css`
-    margin-bottom: calc(${props => props.theme.sizes.gutter}px / 4);
-  `}
-
-  > * {
-    white-space: nowrap;
+export const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const Logo = styled.img`
+  height: 60px;
+  pointer-events: none;
+  display: inline-block;
+  animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 20) ${props => props.theme.effects.transition_timingfunction};
 `;
 

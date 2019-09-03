@@ -17,11 +17,11 @@ export const COOKIES : CookiesType = {
 
 const isProd : boolean = process.env.NODE_ENV === 'production';
 const apiUrl : string = process.env.API_URL;
-const clientType : string = process.env.CLIENT_TYPE;
+const clientHost : string = process.env.CLIENT_HOST;
 
 export const API_URL = isProd ? apiUrl || 'http://express-auth.kafedra.org' : apiUrl || 'http://127.0.0.1:8082';
 
-export const CLIENT = isProd ? clientType || 'react' : clientType || 'react-development';
+export const CLIENT_HOST = isProd ? clientHost || 'http://react-auth.kafedra.org' : clientHost || 'http://localhost:3000';
 
 // Auto auth
 export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null;
@@ -34,6 +34,10 @@ export const INITIAL_STATE : StoreType = {
       isAuth: isAuth,
       error: '',
       success: '',
+    },
+    verify: {
+      isFetching: false,
+      result: '',
     },
     user: {
       isFetching: false,

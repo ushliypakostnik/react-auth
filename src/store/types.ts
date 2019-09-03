@@ -6,6 +6,10 @@ export interface StoreType {
       readonly error : string;
       readonly success : string;
     };
+    readonly verify : {
+      readonly isFetching : boolean;
+      readonly result : string;
+    };
     readonly user : {
       readonly isFetching : boolean;
       readonly profile : {
