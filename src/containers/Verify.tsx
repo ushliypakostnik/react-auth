@@ -6,8 +6,6 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { history } from '../store/store';
 
-import { MESSAGES } from '../store/constants';
-
 import {
   StoreType,
 } from '../store/types';
