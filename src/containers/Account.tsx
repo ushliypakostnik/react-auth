@@ -79,7 +79,6 @@ class Account extends React.Component<Props, State> {
           <ButtonWrapper>
             <Button
               type="button"
-              role="button"
               aria-label='Logout button'
               onClick={(e) => {
                 e.preventDefault();
@@ -89,7 +88,6 @@ class Account extends React.Component<Props, State> {
               <FormGroup>
                 <Button
                   type="button"
-                  role="button"
                   aria-label='Logout button'
                   onClick={(e) => {
                     e.preventDefault();

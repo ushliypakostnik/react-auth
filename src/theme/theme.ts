@@ -30,6 +30,10 @@ const theme : DefaultTheme = {
     color_link: '#1890ff',
     color_border: '#eff2f5',
     color_shadow: 'rgba(0, 0, 0, 0.15)',
+
+    // Brand
+    color_fb: '#3b5998',
+    color_vk: '#45668e',
   },
 
   // Typography
@@ -58,7 +62,13 @@ const theme : DefaultTheme = {
   effects: {
     transition_duration: '0.2s',
     transition_timingfunction: 'linear',
-  }
+  },
+
+  // Roundings
+  border_radius : {
+    small: '2px',
+    large: '5px',
+  },
 };
 
 // Dependencies

@@ -158,7 +158,6 @@ class Login extends React.Component<Props, State> {
             <FormGroup>
               <Button
                 type="submit"
-                role="button"
                 aria-label="Set password"
                 onClick={(e) => {
                   e.preventDefault();

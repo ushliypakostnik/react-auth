@@ -10,7 +10,8 @@ import Api, {
   setAuth,
   deleteAuth,
   POST_AUTH_PATH,
-  POST_VERIFY,
+  GET_AUTH_FACEBOOK_PATH,
+  GET_AUTH_VKONTAKTE_PATH,
   POST_REMIND_PASSWORD_PATH,
   POST_NEW_PASSWORD_PATH,
 } from '../../../utils/api';
@@ -19,12 +20,10 @@ import Api, {
 ////////////////////////////////////////////////////////////
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
+export const AUTH_FACEBOOK_REQUEST = 'AUTH_FACEBOOK_REQUEST';
+export const AUTH_VKONTAKTE_REQUEST = 'AUTH_VKONTAKTE_REQUEST';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
-
-export const VERIFY_REQUEST = 'VERIFY_REQUEST';
-export const VERIFY_REQUEST_SUCCESS = 'VERIFY_REQUEST_SUCCESS';
-export const VERIFY_REQUEST_ERROR = 'VERIFY_REQUEST_ERROR';
 
 export const REMIND_PASSWORD_REQUEST = 'REMIND_PASSWORD';
 export const REMIND_PASSWORD_SUCCESS = 'REMIND_PASSWORD_SUCCESS';
@@ -44,6 +43,18 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const authRequest : ActionCreator<Action> = () => {
   return {
     type: AUTH_REQUEST,
+  };
+};
+
+export const authFacebookRequest : ActionCreator<Action> = () => {
+  return {
+    type: AUTH_FACEBOOK_REQUEST,
+  };
+};
+
+export const authVkontakteRequest : ActionCreator<Action> = () => {
+  return {
+    type: AUTH_VKONTAKTE_REQUEST,
   };
 };
 
@@ -75,36 +86,32 @@ export const postAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, 
     };
 };
 
-export const verifyRequest : ActionCreator<Action> = () => {
-  return {
-    type: VERIFY_REQUEST,
-  };
-};
-
-export const verifyRequestSuccess : ActionCreator<Action> = () => {
-  return {
-    type: VERIFY_REQUEST_SUCCESS,
-  };
-};
-
-export const verifyRequestError : ActionCreator<Action> = (error: string) => {
-  return {
-    type: VERIFY_REQUEST_ERROR,
-    error,
-  };
-};
-
-export const postVerify: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (id: string) => {
+export const getFacebookAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
+  = () => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
-      dispatch(verifyRequest());
+      dispatch(authFacebookRequest());
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const response = await Api.post(POST_VERIFY, { id });
-        return dispatch(verifyRequestSuccess());
+        const response = await Api.get(GET_AUTH_FACEBOOK_PATH);
+        const { token } = response.data.user;
+        setAuth(token);
+        return dispatch(authSuccess());
       } catch (e) {
-        console.log(e);
-        return dispatch(verifyRequestError(e));
+        return dispatch(authError(e));
+      };
+    };
+};
+
+export const getVkontakteAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
+  = () => {
+    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+      dispatch(authVkontakteRequest());
+      try {
+        const response = await Api.get(GET_AUTH_VKONTAKTE_PATH);
+        const { token } = response.data.user;
+        setAuth(token);
+        return dispatch(authSuccess());
+      } catch (e) {
+        return dispatch(authError(e));
       };
     };
 };

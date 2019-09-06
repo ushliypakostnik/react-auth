@@ -38,6 +38,10 @@ declare module 'styled-components' {
       color_primary? : string;
       color_success? : string;
       color_error? : string;
+
+      // Brands
+      color_fb? : string;
+      color_vk? : string;
     };
 
     // Typography
@@ -70,6 +74,12 @@ declare module 'styled-components' {
     effects? : {
       transition_duration: string,
       transition_timingfunction: string,
-    }
-  }
+    };
+
+    // Roundings
+    border_radius? : {
+      small: string;
+      large: string;
+    };
+  };
 };

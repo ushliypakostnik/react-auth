@@ -13,6 +13,8 @@ import {
 
 import {
   postAuth,
+  getFacebookAuth,
+  getVkontakteAuth,
   postRemindPassword,
   clearMessages,
 } from '../store/modules/auth/actions';
@@ -34,6 +36,8 @@ import {
 
 interface DispatchProps {
   postAuth : (credentials: CredentialsType) => void;
+  getFacebookAuth : () => void;
+  getVkontakteAuth : () => void;
   postRemindPassword : (usermail: string) => void;
   clearMessages: () => void;
 };
@@ -176,7 +180,6 @@ class Login extends React.Component<Props, State> {
             }
             <Button
               type="submit"
-              role="button"
               aria-label={login ? 'Login' : 'Remind'}
               onClick={(e) => {
                 e.preventDefault();
@@ -187,6 +190,31 @@ class Login extends React.Component<Props, State> {
                   this.submit(this.usermailInput.current.value, null);
                 }
             }}>{login ? 'Login' : 'Remind'}</Button>
+            {login &&
+              <React.Fragment>
+                <FormGroup>
+                 <Button
+                    type="button"
+                    brand="facebook"
+                    aria-label="login via Facebook"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (success !== '' || error !== '') this.props.clearMessages();
+                      this.props.getFacebookAuth();
+                    }}>Facebook</Button>
+                </FormGroup>
+                <FormGroup>
+                 <Button
+                    type="button"
+                    brand="vkontakte"
+                    aria-label="login via VKontakte"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (success !== '' || error !== '') this.props.clearMessages();
+                      this.props.getVkontakteAuth();
+                    }}>Vkontakte</Button>
+                </FormGroup>
+              </React.Fragment>}
             <A
               href="#"
               rel="noopener noreferrer"
@@ -213,6 +241,8 @@ const mapStateToProps = (state : StoreType) : StateToProps => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
   postAuth: (credentials : CredentialsType) => dispatch(postAuth(credentials)),
+  getFacebookAuth: () => dispatch(getFacebookAuth()),
+  getVkontakteAuth: () => dispatch(getVkontakteAuth()),
   postRemindPassword: (usermail : string) => dispatch(postRemindPassword(usermail)),
   clearMessages: () => dispatch(clearMessages()),
 });

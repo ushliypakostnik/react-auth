@@ -5,11 +5,10 @@ import { StoreType } from '../../types';
 
 import {
   AUTH_REQUEST,
+  AUTH_FACEBOOK_REQUEST,
+  AUTH_VKONTAKTE_REQUEST,
   AUTH_SUCCESS,
   AUTH_ERROR,
-  VERIFY_REQUEST,
-  VERIFY_REQUEST_SUCCESS,
-  VERIFY_REQUEST_ERROR,
   REMIND_PASSWORD_REQUEST,
   REMIND_PASSWORD_SUCCESS,
   REMIND_PASSWORD_ERROR,
@@ -30,6 +29,15 @@ const auth = (state : StoreType, action: Action & any) => {
       return Object.assign({}, state, {
         isFetching: true,
       });
+    case AUTH_FACEBOOK_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case AUTH_VKONTAKTE_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuth: true,
+      });
     case AUTH_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
@@ -40,18 +48,6 @@ const auth = (state : StoreType, action: Action & any) => {
         isFetching: false,
         isAuth: false,
         error: action.error,
-      });
-    case VERIFY_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true,
-      });
-    case VERIFY_REQUEST_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
-      });
-    case VERIFY_REQUEST_ERROR:
-      return Object.assign({}, state, {
-        isFetching: false,
       });
      case REMIND_PASSWORD_REQUEST:
       return Object.assign({}, state, {

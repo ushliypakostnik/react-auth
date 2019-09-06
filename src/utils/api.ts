@@ -35,6 +35,8 @@ export const deleteAuth = () : void => {
 };
 
 export const POST_AUTH_PATH = '/api/user/login';
+export const GET_AUTH_FACEBOOK_PATH = '/api/user/facebook';
+export const GET_AUTH_VKONTAKTE_PATH = '/api/user/vkontakte';
 export const GET_USER_PATH = '/api/user/profile';
 export const POST_VERIFY = '/api/user/verify';
 export const POST_REMIND_PASSWORD_PATH = '/api/user/remind';

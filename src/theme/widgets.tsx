@@ -90,6 +90,7 @@ export const Input = styled.input`
   height: ${props => props.theme.sizes.input_height}px;
   background: ${props => props.theme.colors.color_white};
   border: 1px solid ${props => props.theme.colors.color_border};
+  border-radius: ${props => props.theme.border_radius.small};
   font-family:  ${props => props.theme.typography.fontfamily_sans};
   font-size:  ${props => props.theme.typography.fontsize_normal}px;
   line-height: ${props => props.theme.typography.lineheight_normal}px;
@@ -97,7 +98,11 @@ export const Input = styled.input`
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
 `;
 
-export const Button = styled.button`
+interface ButtonProps {
+  readonly brand? : string;
+};
+
+export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   text-align: center;
   text-transform: uppercase;
@@ -110,7 +115,16 @@ export const Button = styled.button`
   font-weight: ${props => props.theme.typography.fontweight_sans_bold};
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
   border: 1px solid ${props => props.theme.colors.color_border};
+  border-radius: ${props => props.theme.border_radius.large};
   margin-bottom: calc(${props => props.theme.sizes.gutter}px / 2);
+
+  ${props => props.brand === "facebook" && css`
+    background: ${props => props.theme.colors.color_fb};
+  `}
+
+  ${props => props.brand === "vkontakte" && css`
+    background: ${props => props.theme.colors.color_vk};
+  `}
 `;
 
 export const FormGroup = styled.div`
@@ -146,6 +160,7 @@ export const FormMessage = styled.div<FormMessageProps>`
   ${props => props.success && css`
     color: ${props => props.theme.colors.color_success};
   `}
+
    ${props => props.error && css`
     color: ${props => props.theme.colors.color_error};
   `}
@@ -158,6 +173,7 @@ export const Form = styled.form`
   padding: ${props => props.theme.sizes.gutter}px;
   background: ${props => props.theme.colors.color_white};
   border: 1px solid ${props => props.theme.colors.color_border};
+  border-radius: ${props => props.theme.border_radius.large};
 
   ${Input},
   ${Button} {
@@ -197,6 +213,7 @@ export const EntryHeaderWpapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 
   ${TextLarge} {
     margin-top: 0;
