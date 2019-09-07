@@ -42,10 +42,9 @@ export const userError : ActionCreator<Action> = (error: string) => {
   };
 };
 
-export const getUser: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
+export const getUser : ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = () => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
-        console.log('BBBBBBBBBBBBBBBBBBBBBBBBBB');
       dispatch(userRequest());
       try {
         const response = await Api.get(GET_USER_PATH);
@@ -75,7 +74,7 @@ export const sendVerifyEmailError : ActionCreator<Action> = (error: string) => {
   };
 };
 
-export const postVerifyEmail: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
+export const postVerifyEmail : ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = (usermail: string) => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(sendVerifyEmail());

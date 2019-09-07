@@ -72,8 +72,8 @@ export const authError : ActionCreator<Action> = (error: string) => {
 };
 
 export const postAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (credentials: CredentialsType) => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+  = (credentials : CredentialsType) => {
+    return async (dispatch : Dispatch<Action>) : Promise<Action> => {
       dispatch(authRequest());
       try {
         const response = await Api.post(POST_AUTH_PATH, { user: credentials });
@@ -88,10 +88,10 @@ export const postAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, 
 
 export const getFacebookAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = () => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+    return async (dispatch : Dispatch<Action>) : Promise<Action> => {
       dispatch(authFacebookRequest());
       try {
-        const response = await Api.get(GET_AUTH_FACEBOOK_PATH, { headers: { mode: 'cors' } });
+        const response = await Api.get(GET_AUTH_FACEBOOK_PATH);
         const { token } = response.data.user;
         setAuth(token);
         return dispatch(authSuccess());
@@ -103,10 +103,10 @@ export const getFacebookAuth: ActionCreator<ThunkAction<Promise<Action>, Action,
 
 export const getVkontakteAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = () => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+    return async (dispatch : Dispatch<Action>) : Promise<Action> => {
       dispatch(authVkontakteRequest());
       try {
-        const response = await Api.get(GET_AUTH_VKONTAKTE_PATH, { headers: { mode: 'cors' } });
+        const response = await Api.get(GET_AUTH_VKONTAKTE_PATH);
         const { token } = response.data.user;
         setAuth(token);
         return dispatch(authSuccess());
@@ -138,7 +138,7 @@ export const remindPasswordError : ActionCreator<Action> = (error: string) => {
 
 export const postRemindPassword: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = (usermail: string) => {
-    return async (dispatch: Dispatch<Action>) : Promise<Action> => {
+    return async (dispatch : Dispatch<Action>) : Promise<Action> => {
       dispatch(remindPasswordRequest());
       try {
         const response = await Api.post(POST_REMIND_PASSWORD_PATH, { usermail });
@@ -161,7 +161,7 @@ export const setNewPasswordSuccess : ActionCreator<Action> = () => {
   };
 };
 
-export const setNewPasswordError : ActionCreator<Action> = (error: string) => {
+export const setNewPasswordError : ActionCreator<Action> = (error : string) => {
   return {
     type: SET_NEW_PASSWORD_ERROR,
     error,
@@ -169,8 +169,8 @@ export const setNewPasswordError : ActionCreator<Action> = (error: string) => {
 };
 
 export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (credentials: NewPasswordType) => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+  = (credentials : NewPasswordType) => {
+    return async (dispatch : Dispatch<Action>): Promise<Action> => {
       dispatch(setNewPassword());
       const user = { id: credentials.id, password: credentials.password }
       const { token } = credentials;

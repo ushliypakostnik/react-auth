@@ -27,7 +27,7 @@ export const verifyRequestResult : ActionCreator<Action> = (result: string) => {
 
 export const postVerify : ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = (id : string) => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+    return async (dispatch : Dispatch<Action>) : Promise<Action> => {
       dispatch(verifyRequest());
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
