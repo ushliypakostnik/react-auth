@@ -91,7 +91,7 @@ export const getFacebookAuth: ActionCreator<ThunkAction<Promise<Action>, Action,
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(authFacebookRequest());
       try {
-        const response = await Api.get(GET_AUTH_FACEBOOK_PATH);
+        const response = await Api.get(GET_AUTH_FACEBOOK_PATH, { headers: { mode: 'cors' } });
         const { token } = response.data.user;
         setAuth(token);
         return dispatch(authSuccess());
@@ -106,7 +106,7 @@ export const getVkontakteAuth: ActionCreator<ThunkAction<Promise<Action>, Action
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
       dispatch(authVkontakteRequest());
       try {
-        const response = await Api.get(GET_AUTH_VKONTAKTE_PATH);
+        const response = await Api.get(GET_AUTH_VKONTAKTE_PATH, { headers: { mode: 'cors' } });
         const { token } = response.data.user;
         setAuth(token);
         return dispatch(authSuccess());

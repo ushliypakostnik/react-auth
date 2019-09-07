@@ -204,8 +204,13 @@ export const Page = styled.div<PageProps>`
 `;
 
 export const CenterWrapper = styled.div`
-  margin-top: -15%;
+  margin-bottom: 15vh;
   width: 300px;
+
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
+    margin-top: 30px;
+    margin-bottom: 0;
+  }
 `;
 
 export const EntryHeaderWpapper = styled.div`

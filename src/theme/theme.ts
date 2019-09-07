@@ -11,7 +11,7 @@ const theme : DefaultTheme = {
 
   // Media breackpoints
   breackpoints: {
-    breackpoint_xs_max: 750,
+    xs_max: '750px',
   },
 
   // Colors

@@ -12,7 +12,7 @@ declare module 'styled-components' {
 
     // Media breackpoints
     breackpoints? : {
-      breackpoint_xs_max? : number;
+      xs_max? : string;
     };
 
     // Colors

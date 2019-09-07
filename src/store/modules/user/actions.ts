@@ -43,8 +43,9 @@ export const userError : ActionCreator<Action> = (error: string) => {
 };
 
 export const getUser: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
-  = (credentials: CredentialsType) => {
+  = () => {
     return async (dispatch: Dispatch<Action>): Promise<Action> => {
+        console.log('BBBBBBBBBBBBBBBBBBBBBBBBBB');
       dispatch(userRequest());
       try {
         const response = await Api.get(GET_USER_PATH);
