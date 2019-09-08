@@ -65,9 +65,9 @@ class App extends React.Component<Props, State> {
     return (
       <Switch>
         <LoginRoute path="/login" auth={ isAuth } component={ Login } />
+        <PrivateRoute exact path="/" auth={ isAuth } component={ Account } />
         <Route path="/verify" component={ Verify } />
         <Route path="/password" component={ Password } />
-        <PrivateRoute exact path="/" auth={ isAuth } component={ Account } />
         <Route component={ Page404 } />
       </Switch>
     );

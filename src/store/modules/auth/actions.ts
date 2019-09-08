@@ -92,9 +92,11 @@ export const getFacebookAuth: ActionCreator<ThunkAction<Promise<Action>, Action,
       dispatch(authFacebookRequest());
       try {
         const response = await Api.get(GET_AUTH_FACEBOOK_PATH);
-        const { token } = response.data.user;
-        setAuth(token);
-        return dispatch(authSuccess());
+        const redirect = response.data._redirect_url;
+        if (redirect) {
+            window.location.href = redirect;
+            return;
+        }
       } catch (e) {
         return dispatch(authError(e));
       };
@@ -107,9 +109,12 @@ export const getVkontakteAuth: ActionCreator<ThunkAction<Promise<Action>, Action
       dispatch(authVkontakteRequest());
       try {
         const response = await Api.get(GET_AUTH_VKONTAKTE_PATH);
-        const { token } = response.data.user;
-        setAuth(token);
-        return dispatch(authSuccess());
+        console.log(response.data);
+        const redirect = response.data._redirect_url;
+        if (redirect) {
+            window.location.href = redirect;
+            return;
+        }
       } catch (e) {
         return dispatch(authError(e));
       };

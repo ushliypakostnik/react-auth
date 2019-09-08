@@ -176,11 +176,10 @@ class Login extends React.Component<Props, State> {
                    && <FormMessage error>
                          <TextSmall>{ passError }</TextSmall>
                       </FormMessage>}
-              </FormGroup>
-            }
+              </FormGroup>}
             <Button
               type="submit"
-              aria-label={login ? 'Login' : 'Remind'}
+              aria-label={login ? 'Login or registration' : 'Remind password'}
               onClick={(e) => {
                 e.preventDefault();
                 if (success !== '' || error !== '') this.props.clearMessages();
@@ -189,31 +188,27 @@ class Login extends React.Component<Props, State> {
                 } else {
                   this.submit(this.usermailInput.current.value, null);
                 }
-            }}>{login ? 'Login' : 'Remind'}</Button>
+            }}>{login ? 'Login / Registration' : 'Remind password'}</Button>
             {login &&
               <React.Fragment>
-                <FormGroup>
-                 <Button
-                    type="button"
-                    brand="facebook"
-                    aria-label="login via Facebook"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (success !== '' || error !== '') this.props.clearMessages();
-                      this.props.getFacebookAuth();
-                    }}>Facebook</Button>
-                </FormGroup>
-                <FormGroup>
-                 <Button
-                    type="button"
-                    brand="vkontakte"
-                    aria-label="login via VKontakte"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (success !== '' || error !== '') this.props.clearMessages();
-                      this.props.getVkontakteAuth();
-                    }}>Vkontakte</Button>
-                </FormGroup>
+               <Button
+                  type="button"
+                  brand="facebook"
+                  aria-label="login via Facebook"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (success !== '' || error !== '') this.props.clearMessages();
+                    this.props.getFacebookAuth();
+                  }}>Via Facebook</Button>
+               <Button
+                  type="button"
+                  brand="vkontakte"
+                  aria-label="login via VKontakte"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (success !== '' || error !== '') this.props.clearMessages();
+                    this.props.getVkontakteAuth();
+                  }}>Via Vkontakte</Button>
               </React.Fragment>}
             <A
               href="#"

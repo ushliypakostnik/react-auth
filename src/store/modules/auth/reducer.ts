@@ -36,7 +36,6 @@ const auth = (state : StoreType, action: Action & any) => {
     case AUTH_VKONTAKTE_REQUEST:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuth: true,
       });
     case AUTH_SUCCESS:
       return Object.assign({}, state, {

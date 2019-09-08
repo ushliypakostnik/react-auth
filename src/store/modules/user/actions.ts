@@ -28,7 +28,7 @@ export const userRequest : ActionCreator<Action> = () => {
   };
 };
 
-export const userSuccess : ActionCreator<Action> = (profile: string) => {
+export const userSuccess : ActionCreator<Action> = (profile : string) => {
   return {
     type: USER_SUCCESS,
     profile,
@@ -44,7 +44,7 @@ export const userError : ActionCreator<Action> = (error: string) => {
 
 export const getUser : ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = () => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+    return async (dispatch : Dispatch<Action>) : Promise<Action> => {
       dispatch(userRequest());
       try {
         const response = await Api.get(GET_USER_PATH);
@@ -76,7 +76,7 @@ export const sendVerifyEmailError : ActionCreator<Action> = (error: string) => {
 
 export const postVerifyEmail : ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = (usermail: string) => {
-    return async (dispatch: Dispatch<Action>): Promise<Action> => {
+    return async (dispatch : Dispatch<Action>) : Promise<Action> => {
       dispatch(sendVerifyEmail());
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

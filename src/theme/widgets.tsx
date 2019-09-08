@@ -85,7 +85,6 @@ export const TextString = styled.div<TextStringProps>`
 ////////////////////////////////////////////////////////////
 
 export const Input = styled.input`
-  margin-bottom: calc(${props => props.theme.sizes.gutter}px * 1.5);
   padding: 0 calc(${props => props.theme.sizes.gutter}px / 2);
   height: ${props => props.theme.sizes.input_height}px;
   background: ${props => props.theme.colors.color_white};
@@ -130,6 +129,7 @@ export const Button = styled.button<ButtonProps>`
 export const FormGroup = styled.div`
   display: flex;
   position: relative;
+  padding-bottom: calc(${props => props.theme.sizes.gutter}px * 1.5);
 `;
 
 export const ButtonWrapper = styled.div`
