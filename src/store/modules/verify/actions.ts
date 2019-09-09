@@ -32,9 +32,9 @@ export const postVerify : ActionCreator<ThunkAction<Promise<Action>, Action, voi
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await Api.post(POST_VERIFY, { id });
-        return dispatch(verifyRequestResult(response.data.success.message));
+        return dispatch(verifyRequestResult(response.data.message));
       } catch (e) {
-        return dispatch(verifyRequestResult(e.response.data.error.message));
+        return dispatch(verifyRequestResult(e.response.data.message));
       };
     };
 };

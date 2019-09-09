@@ -216,7 +216,7 @@ class Login extends React.Component<Props, State> {
               aria-label={login ? 'Remind password' : 'Back to login'}
               onClick={(e) => {
                 e.preventDefault();
-                success !== '' && this.props.clearMessages();
+                if (success !== '' || error !== '') this.props.clearMessages();
                 this.setState({
                   login: !login,
                 });

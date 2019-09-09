@@ -90,7 +90,7 @@ export const postAuth: ActionCreator<ThunkAction<Promise<Action>, Action, void, 
         setAuth(token);
         return dispatch(authSuccess());
       } catch (e) {
-        return dispatch(authError(e));
+        return dispatch(authError(e.response.data.message));
       };
     };
 };
@@ -107,7 +107,7 @@ export const getFacebookAuth: ActionCreator<ThunkAction<Promise<Action>, Action,
             return;
         }
       } catch (e) {
-        return dispatch(authError(e));
+        return dispatch(authError(e.response.data.message));
       };
     };
 };
@@ -124,7 +124,7 @@ export const getVkontakteAuth: ActionCreator<ThunkAction<Promise<Action>, Action
             return;
         }
       } catch (e) {
-        return dispatch(authError(e));
+        return dispatch(authError(e.response.data.message));
       };
     };
 };
@@ -155,9 +155,10 @@ export const postRemindPassword: ActionCreator<ThunkAction<Promise<Action>, Acti
       dispatch(remindPasswordRequest());
       try {
         const response = await Api.post(POST_REMIND_PASSWORD_PATH, { usermail });
-        return dispatch(remindPasswordSuccess(response.data.success.message));
+        return dispatch(remindPasswordSuccess(response.data.message));
       } catch (e) {
-        return dispatch(remindPasswordError(e.response.data.error.message));
+        const error = e.response.data ? e.response.data.message : e.response.statusText;
+        return dispatch(remindPasswordError(e.response.data.message));
       };
     };
 };
@@ -193,7 +194,7 @@ export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action,
         const response = await Api.post(POST_NEW_PASSWORD_PATH, { user });
         return dispatch(setNewPasswordSuccess());
       } catch (e) {
-        return dispatch(setNewPasswordError(e));
+        return dispatch(setNewPasswordError(e.response.data.message));
       };
     };
 };
