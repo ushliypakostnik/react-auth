@@ -139,7 +139,7 @@ class Login extends React.Component<Props, State> {
                 ref={this.password1Input}
                />
                {!(pass1Error === '')
-                 && <FormMessage error>
+                 && <FormMessage state="error">
                        <TextSmall>{ pass1Error }</TextSmall>
                     </FormMessage>}
             </FormGroup>
@@ -151,7 +151,7 @@ class Login extends React.Component<Props, State> {
                 ref={this.password2Input}
                />
                {!(pass2Error === '')
-                 && <FormMessage error>
+                 && <FormMessage state="error">
                        <TextSmall>{ pass2Error }</TextSmall>
                     </FormMessage>}
             </FormGroup>
@@ -164,7 +164,7 @@ class Login extends React.Component<Props, State> {
                   this.submit(this.password1Input.current.value, this.password2Input.current.value);
               }}>Set password</Button>
               {!(match === '')
-                && <FormMessage error>
+                && <FormMessage state="error">
                      <TextSmall>{ match }</TextSmall>
                   </FormMessage>}
             </FormGroup>

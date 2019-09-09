@@ -41,7 +41,7 @@ class Verify extends React.Component<Props, State> {
   readonly state : State = initialState;
 
   render() {
-    return <Empty />;
+    return <Empty outer />;
   }
 };
 

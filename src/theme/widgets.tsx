@@ -142,8 +142,7 @@ export const ButtonWrapper = styled.div`
 `;
 
 interface FormMessageProps {
-  readonly error? : boolean;
-  readonly success? : boolean;
+  readonly state? : string;
 };
 
 export const FormMessage = styled.div<FormMessageProps>`
@@ -157,11 +156,11 @@ export const FormMessage = styled.div<FormMessageProps>`
   top: calc(${props => props.theme.sizes.input_height}px * 1.1);
   line-height: calc(${props => props.theme.sizes.gutter}px / 1.5);
 
-  ${props => props.success && css`
+  ${props => props.state === "success" && css`
     color: ${props => props.theme.colors.color_success};
   `}
 
-   ${props => props.error && css`
+   ${props => props.state === "error" && css`
     color: ${props => props.theme.colors.color_error};
   `}
 `;
@@ -186,7 +185,7 @@ export const Form = styled.form`
 // Containers
 ////////////////////////////////////////////////////////////
 
-interface PageProps {
+export interface PageProps {
   readonly outer? : boolean;
 };
 

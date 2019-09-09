@@ -6,12 +6,13 @@ import Loading from './elements/Loading';
 import {
   Page,
   CenterWrapper,
-  EntryHeaderWpapper
+  EntryHeaderWpapper,
+  PageProps,
 } from '../theme/widgets';
 
-const Empty : React.SFC = () => {
+const Empty : React.SFC<PageProps> = props => {
   return (
-    <Page outer>
+    <Page outer={ props.outer } >
       <CenterWrapper>
         <EntryHeaderWpapper>
           <Loading />

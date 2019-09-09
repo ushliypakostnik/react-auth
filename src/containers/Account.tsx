@@ -12,6 +12,8 @@ import {
   postVerifyEmail,
 } from '../store/modules/user/actions';
 
+import Empty from '../components/Empty';
+
 import {
   Page,
   CenterWrapper,
@@ -64,41 +66,45 @@ class Account extends React.Component<Props, State> {
     const { profile, success } = this.state;
 
     return (
-      <Page>
-        <CenterWrapper>
-          <TextString top>
-            <TextLarge light>Usermail:</TextLarge>
-          </TextString>
-          <TextString>
-            <TextLarge>{ profile.usermail }</TextLarge>
-          </TextString>
-          <TextString>
-            <TextLarge light>IsVerify: </TextLarge>
-            <TextLarge>{ profile.isVerify ? 'Yes' : 'No' }</TextLarge>
-          </TextString>
-          <ButtonWrapper>
-            <Button
-              type="button"
-              aria-label='Logout button'
-              onClick={(e) => {
-                e.preventDefault();
-                this.props.authLogout();
-            }}>Sign out</Button>
-            {!profile.isVerify &&
-              <FormGroup>
+      <React.Fragment>
+        { typeof(profile.usermail) === 'undefined' || profile.usermail === '' ?
+          <Empty /> :
+          <Page>
+            <CenterWrapper>
+              <TextString top>
+                <TextLarge light>Usermail:</TextLarge>
+              </TextString>
+              <TextString>
+                <TextLarge>{ profile.usermail }</TextLarge>
+              </TextString>
+              <TextString>
+                <TextLarge light>IsVerify: </TextLarge>
+                <TextLarge>{ profile.isVerify ? 'Yes' : 'No' }</TextLarge>
+              </TextString>
+              <ButtonWrapper>
                 <Button
                   type="button"
                   aria-label='Logout button'
                   onClick={(e) => {
                     e.preventDefault();
-                    this.props.postVerifyEmail(profile.usermail);
-                }}>Resend Verify Email</Button>
-               {success !== ''
-                 && <FormMessage success>{ success }</FormMessage>}
-              </FormGroup>}
-           </ButtonWrapper>
-        </CenterWrapper>
-      </Page>
+                    this.props.authLogout();
+                }}>Sign out</Button>
+                {!profile.isVerify &&
+                  <FormGroup>
+                    <Button
+                      type="button"
+                      aria-label='Logout button'
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.props.postVerifyEmail(profile.usermail);
+                    }}>Resend Verify Email</Button>
+                   {success !== ''
+                     && <FormMessage state="success">{ success }</FormMessage>}
+                  </FormGroup>}
+               </ButtonWrapper>
+            </CenterWrapper>
+          </Page>}
+      </React.Fragment>
     );
   }
 };
