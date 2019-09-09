@@ -22,6 +22,7 @@ import Api, {
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_FACEBOOK_REQUEST = 'AUTH_FACEBOOK_REQUEST';
 export const AUTH_VKONTAKTE_REQUEST = 'AUTH_VKONTAKTE_REQUEST';
+export const SET_TOKEN = 'SET_TOKEN';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
@@ -55,6 +56,14 @@ export const authFacebookRequest : ActionCreator<Action> = () => {
 export const authVkontakteRequest : ActionCreator<Action> = () => {
   return {
     type: AUTH_VKONTAKTE_REQUEST,
+  };
+};
+
+export const setToken : ActionCreator<Action> = (token: string) => {
+  setAuth(token);
+  return {
+    type: SET_TOKEN,
+    token,
   };
 };
 
@@ -109,7 +118,6 @@ export const getVkontakteAuth: ActionCreator<ThunkAction<Promise<Action>, Action
       dispatch(authVkontakteRequest());
       try {
         const response = await Api.get(GET_AUTH_VKONTAKTE_PATH);
-        console.log(response.data);
         const redirect = response.data._redirect_url;
         if (redirect) {
             window.location.href = redirect;

@@ -7,6 +7,7 @@ import {
   AUTH_REQUEST,
   AUTH_FACEBOOK_REQUEST,
   AUTH_VKONTAKTE_REQUEST,
+  SET_TOKEN,
   AUTH_SUCCESS,
   AUTH_ERROR,
   REMIND_PASSWORD_REQUEST,
@@ -35,7 +36,12 @@ const auth = (state : StoreType, action: Action & any) => {
       });
     case AUTH_VKONTAKTE_REQUEST:
       return Object.assign({}, state, {
+        isFetching: true,
+      });
+    case SET_TOKEN:
+      return Object.assign({}, state, {
         isFetching: false,
+        isAuth: true,
       });
     case AUTH_SUCCESS:
       return Object.assign({}, state, {
