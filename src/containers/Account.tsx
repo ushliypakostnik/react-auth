@@ -32,6 +32,7 @@ interface DispatchProps {
 };
 
 interface Props extends DispatchProps {
+  isFetching: boolean;
   profile : {
     usermail: string;
     isVerify: boolean;
@@ -39,19 +40,14 @@ interface Props extends DispatchProps {
   success: string;
 };
 
-const initialState = {
-  profile: {
-    usermail: '',
-    isVerify: false,
-  },
-  success: '',
-};
+const initialState = {};
 
 type State = Readonly<typeof initialState>;
 
 class Account extends React.Component<Props, State> {
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
+    isFetching: nextProps.isFetching,
     profile: nextProps.profile,
     success: nextProps.success,
   });
@@ -63,11 +59,11 @@ class Account extends React.Component<Props, State> {
   }
 
   public render() {
-    const { profile, success } = this.state;
+    const { isFetching, profile, success } = this.props;
 
     return (
       <React.Fragment>
-        { typeof(profile.usermail) === 'undefined' || profile.usermail === '' ?
+        { isFetching ?
           <Empty /> :
           <Page>
             <CenterWrapper>
@@ -110,6 +106,7 @@ class Account extends React.Component<Props, State> {
 };
 
 const mapStateToProps = (state : StoreType) : State => ({
+  isFetching: state.rootReducer.user.isFetching,
   profile: state.rootReducer.user.profile,
   success: state.rootReducer.user.success,
 });

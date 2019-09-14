@@ -19,6 +19,7 @@ import {
   clearMessages,
 } from '../store/modules/auth/actions';
 
+import Empty from '../components/Empty';
 import CenterMessage from '../components/CenterMessage';
 
 import {
@@ -43,6 +44,7 @@ interface DispatchProps {
 };
 
 interface StateToProps {
+  isFetching: boolean;
   success : string;
   error : string;
 };
@@ -64,6 +66,7 @@ class Login extends React.Component<Props, State> {
   private passwordInput: React.RefObject<HTMLInputElement>;
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
+    isFetching: nextProps.isFetching,
     success: nextProps.success,
     error: nextProps.error,
   });
@@ -135,101 +138,107 @@ class Login extends React.Component<Props, State> {
   }
 
   public render() {
+    const { isFetching } = this.props;
     const { login, mailError, passError, success, error } = this.state;
 
     return (
-      <Page outer>
-        <CenterWrapper>
-          <CenterMessage>
-            <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
-          </CenterMessage>
-          <Form>
-            <FormGroup>
-              <Input
-                type="email"
-                aria-label="email input"
-                placeholder="Email"
-                ref={this.usermailInput}
-              />
-              {mailError !== ''
-                && <FormMessage state="error">
-                     <TextSmall>{ mailError }</TextSmall>
-                   </FormMessage>}
-              {!login && success !== ''
-                && <FormMessage state="success">
-                     <TextSmall>{ success }</TextSmall>
-                  </FormMessage>}
-              {error !== ''
-                && <FormMessage state="error">
-                     <TextSmall>{ error }</TextSmall>
-                  </FormMessage>}
-            </FormGroup>
-            {login &&
-              <FormGroup>
-                <Input
-                  type="password"
-                  aria-label="password input"
-                  placeholder="Password"
-                  ref={this.passwordInput}
-                 />
-                 {passError !== ''
-                   && <FormMessage state="error">
-                         <TextSmall>{ passError }</TextSmall>
+      <React.Fragment>
+        { isFetching && login ?
+          <Empty outer /> :
+          <Page outer>
+            <CenterWrapper>
+              <CenterMessage>
+                <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
+              </CenterMessage>
+              <Form>
+                <FormGroup>
+                  <Input
+                    type="email"
+                    aria-label="email input"
+                    placeholder="Email"
+                    ref={this.usermailInput}
+                  />
+                  {mailError !== ''
+                    && <FormMessage state="error">
+                         <TextSmall>{ mailError }</TextSmall>
+                       </FormMessage>}
+                  {!login && success !== ''
+                    && <FormMessage state="success">
+                         <TextSmall>{ success }</TextSmall>
                       </FormMessage>}
-              </FormGroup>}
-            <Button
-              type="submit"
-              aria-label={login ? 'Login or registration' : 'Remind password'}
-              onClick={(e) => {
-                e.preventDefault();
-                if (success !== '' || error !== '') this.props.clearMessages();
-                if (login) {
-                  this.submit(this.usermailInput.current.value, this.passwordInput.current.value);
-                } else {
-                  this.submit(this.usermailInput.current.value, null);
-                }
-            }}>{login ? 'Login / Registration' : 'Remind password'}</Button>
-            {login &&
-              <React.Fragment>
-               <Button
-                  type="button"
-                  brand="facebook"
-                  aria-label="login via Facebook"
+                  {error !== ''
+                    && <FormMessage state="error">
+                         <TextSmall>{ error }</TextSmall>
+                      </FormMessage>}
+                </FormGroup>
+                {login &&
+                  <FormGroup>
+                    <Input
+                      type="password"
+                      aria-label="password input"
+                      placeholder="Password"
+                      ref={this.passwordInput}
+                     />
+                     {passError !== ''
+                       && <FormMessage state="error">
+                             <TextSmall>{ passError }</TextSmall>
+                          </FormMessage>}
+                  </FormGroup>}
+                <Button
+                  type="submit"
+                  aria-label={login ? 'Login or registration' : 'Remind password'}
                   onClick={(e) => {
                     e.preventDefault();
                     if (success !== '' || error !== '') this.props.clearMessages();
-                    this.props.getFacebookAuth();
-                  }}>Via Facebook</Button>
-               <Button
-                  type="button"
-                  brand="vkontakte"
-                  aria-label="login via VKontakte"
+                    if (login) {
+                      this.submit(this.usermailInput.current.value, this.passwordInput.current.value);
+                    } else {
+                      this.submit(this.usermailInput.current.value, null);
+                    }
+                }}>{login ? 'Login / Registration' : 'Remind password'}</Button>
+                {login &&
+                  <React.Fragment>
+                   <Button
+                      type="button"
+                      brand="facebook"
+                      aria-label="login via Facebook"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (success !== '' || error !== '') this.props.clearMessages();
+                        this.props.getFacebookAuth();
+                      }}>Via Facebook</Button>
+                   <Button
+                      type="button"
+                      brand="vkontakte"
+                      aria-label="login via VKontakte"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (success !== '' || error !== '') this.props.clearMessages();
+                        this.props.getVkontakteAuth();
+                      }}>Via Vkontakte</Button>
+                  </React.Fragment>}
+                <A
+                  href="#"
+                  rel="noopener noreferrer"
+                  aria-label={login ? 'Remind password' : 'Back to login'}
                   onClick={(e) => {
                     e.preventDefault();
                     if (success !== '' || error !== '') this.props.clearMessages();
-                    this.props.getVkontakteAuth();
-                  }}>Via Vkontakte</Button>
-              </React.Fragment>}
-            <A
-              href="#"
-              rel="noopener noreferrer"
-              aria-label={login ? 'Remind password' : 'Back to login'}
-              onClick={(e) => {
-                e.preventDefault();
-                if (success !== '' || error !== '') this.props.clearMessages();
-                this.setState({
-                  login: !login,
-                });
-              }}
-            >{login ? 'Remind password?' : 'Back to login'}</A>
-          </Form>
-        </CenterWrapper>
-       </Page>
+                    this.setState({
+                      login: !login,
+                    });
+                  }}
+                >{login ? 'Remind password?' : 'Back to login'}</A>
+              </Form>
+            </CenterWrapper>
+           </Page>}
+       </React.Fragment>
     );
   }
 };
 
 const mapStateToProps = (state : StoreType) : StateToProps => ({
+  isFetching: state.rootReducer.auth.isFetching,
   success: state.rootReducer.auth.success,
   error: state.rootReducer.auth.error,
 });

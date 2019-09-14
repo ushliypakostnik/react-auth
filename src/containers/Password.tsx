@@ -18,8 +18,8 @@ import {
   postNewPassword
 } from '../store/modules/auth/actions';
 
-import CenterMessage from '../components/CenterMessage';
 import Empty from '../components/Empty';
+import CenterMessage from '../components/CenterMessage';
 
 import {
   Page,
