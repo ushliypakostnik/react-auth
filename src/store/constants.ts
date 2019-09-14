@@ -34,6 +34,7 @@ export const INITIAL_STATE : StoreType = {
       isAuth: isAuth,
       error: '',
       success: '',
+      result: '',
     },
     verify: {
       isFetching: false,

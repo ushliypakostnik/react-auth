@@ -31,8 +31,7 @@ export const REMIND_PASSWORD_SUCCESS = 'REMIND_PASSWORD_SUCCESS';
 export const REMIND_PASSWORD_ERROR = 'REMIND_PASSWORD_ERROR';
 
 export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD';
-export const SET_NEW_PASSWORD_SUCCESS = 'SET_NEW_PASSWORD_SUCCESS';
-export const SET_NEW_PASSWORD_ERROR = 'SET_NEW_PASSWORD_ERROR';
+export const SET_NEW_PASSWORD_RESULT = 'SET_NEW_PASSWORD_RESULT';
 
 export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
 
@@ -169,38 +168,29 @@ export const setNewPassword : ActionCreator<Action> = () => {
   };
 };
 
-export const setNewPasswordSuccess : ActionCreator<Action> = () => {
+export const setNewPasswordResult : ActionCreator<Action> = (result: string) => {
   return {
-    type: SET_NEW_PASSWORD_SUCCESS,
-  };
-};
-
-export const setNewPasswordError : ActionCreator<Action> = (error : string) => {
-  return {
-    type: SET_NEW_PASSWORD_ERROR,
-    error,
+    type: SET_NEW_PASSWORD_RESULT,
+    result,
   };
 };
 
 export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action, void, any>>
   = (credentials : NewPasswordType) => {
     return async (dispatch : Dispatch<Action>): Promise<Action> => {
-      dispatch(setNewPassword());
       const user = { id: credentials.id, password: credentials.password }
-      const { token } = credentials;
-      setAuth(token);
+      dispatch(setNewPassword());
       try {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const response = await Api.post(POST_NEW_PASSWORD_PATH, { user });
-        return dispatch(setNewPasswordSuccess());
+        return dispatch(setNewPasswordResult(response.data.message));
       } catch (e) {
-        return dispatch(setNewPasswordError(e.response.data.message));
+        return dispatch(setNewPasswordResult(e.response.data.message));
       };
     };
 };
 
 export const clearMessages : ActionCreator<Action> = () => {
-  deleteAuth();
   return {
     type: CLEAR_MESSAGES,
   };

@@ -14,8 +14,7 @@ import {
   REMIND_PASSWORD_SUCCESS,
   REMIND_PASSWORD_ERROR,
   SET_NEW_PASSWORD,
-  SET_NEW_PASSWORD_SUCCESS,
-  SET_NEW_PASSWORD_ERROR,
+  SET_NEW_PASSWORD_RESULT,
   CLEAR_MESSAGES,
   AUTH_LOGOUT,
 } from './actions';
@@ -72,15 +71,10 @@ const auth = (state : StoreType, action: Action & any) => {
       return Object.assign({}, state, {
         isFetching: true,
       });
-    case SET_NEW_PASSWORD_SUCCESS:
+    case SET_NEW_PASSWORD_RESULT:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuth: true,
-      });
-    case SET_NEW_PASSWORD_ERROR:
-      return Object.assign({}, state, {
-        isFetching: false,
-        error: action.error,
+        result: action.result,
       });
     case CLEAR_MESSAGES:
       return Object.assign({}, state, {

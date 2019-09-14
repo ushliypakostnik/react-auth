@@ -5,6 +5,7 @@ export interface StoreType {
       readonly isAuth : boolean;
       readonly error : string;
       readonly success : string;
+      readonly result : string;
     };
     readonly verify : {
       readonly isFetching : boolean;
@@ -42,7 +43,6 @@ export interface CredentialsType {
 export interface NewPasswordType {
   readonly id: string;
   readonly password: string;
-  readonly token: string;
 };
 
 interface CookieType {

@@ -13,9 +13,13 @@ import {
   NewPasswordType,
 } from '../store/types';
 
-import { postNewPassword } from '../store/modules/auth/actions';
+import {
+  setToken,
+  postNewPassword
+} from '../store/modules/auth/actions';
 
 import CenterMessage from '../components/CenterMessage';
+import Empty from '../components/Empty';
 
 import {
   Page,
@@ -31,15 +35,19 @@ import {
 
 interface StateToProps {
   hash : string;
+  isFetching: boolean,
+  result: string,
 };
 
 interface DispatchProps {
+  setToken : (token: string) => void;
   postNewPassword : (credentials: NewPasswordType) => void;
 }
 
 interface Props extends StateToProps, DispatchProps {};
 
 const initialState = {
+  id: '',
   pass1Error: '',
   pass2Error: '',
   hash: '',
@@ -54,6 +62,8 @@ class Login extends React.Component<Props, State> {
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
     hash: nextProps.hash,
+    isFetching: nextProps.isFetching,
+    result: nextProps.result,
   });
 
   constructor(props) {
@@ -61,9 +71,23 @@ class Login extends React.Component<Props, State> {
 
     this.password1Input = React.createRef();
     this.password2Input = React.createRef();
-  }
+  };
 
   readonly state : State = initialState;
+
+  public componentDidMount() : void {
+    const query = this.state.hash;
+    const id = query.split('&')[0].slice(4);
+    const token = query.split('&')[1].slice(6);
+    this.props.setToken(token);
+    this.setState({
+      id: id,
+    });
+  };
+
+  public componentDidUpdate(prevProps) {
+    if (this.props.result !== prevProps.result) history.push('/');
+  };
 
   private submit = (password1 : string, password2 : string) : void => {
     const password1Valid = this.validatePassword(password1, 1);
@@ -81,11 +105,7 @@ class Login extends React.Component<Props, State> {
     }
 
     if (password1Valid && password2Valid) {
-      const query = this.state.hash;
-      const id = query.split('&')[0].slice(4);
-      const token = query.split('&')[1].slice(6);
-      this.props.postNewPassword({ id, password: password1, token });
-      history.push('/');
+      this.props.postNewPassword({ id: this.state.id, password: password1 });
     }
   };
 
@@ -122,64 +142,72 @@ class Login extends React.Component<Props, State> {
   }
 
   render() {
+    const { isFetching } = this.props;
     const { pass1Error, pass2Error, match } = this.state;
 
     return (
-      <Page outer>
-        <CenterWrapper>
-          <CenterMessage>
-            <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
-          </CenterMessage>
-          <Form>
-            <FormGroup>
-              <Input
-                type="password"
-                aria-label="password input"
-                placeholder="Password"
-                ref={this.password1Input}
-               />
-               {!(pass1Error === '')
-                 && <FormMessage state="error">
-                       <TextSmall>{ pass1Error }</TextSmall>
-                    </FormMessage>}
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="password"
-                aria-label="password again input"
-                placeholder="Password again"
-                ref={this.password2Input}
-               />
-               {!(pass2Error === '')
-                 && <FormMessage state="error">
-                       <TextSmall>{ pass2Error }</TextSmall>
-                    </FormMessage>}
-            </FormGroup>
-            <FormGroup>
-              <Button
-                type="submit"
-                aria-label="Set password"
-                onClick={(e) => {
-                  e.preventDefault();
-                  this.submit(this.password1Input.current.value, this.password2Input.current.value);
-              }}>Set password</Button>
-              {!(match === '')
-                && <FormMessage state="error">
-                     <TextSmall>{ match }</TextSmall>
-                  </FormMessage>}
-            </FormGroup>
-          </Form>
-        </CenterWrapper>
-       </Page>
+      <React.Fragment>
+        { isFetching ?
+          <Empty outer /> :
+          <Page outer>
+            <CenterWrapper>
+              <CenterMessage>
+                <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
+              </CenterMessage>
+              <Form>
+                <FormGroup>
+                  <Input
+                    type="password"
+                    aria-label="password input"
+                    placeholder="Password"
+                    ref={this.password1Input}
+                   />
+                   {!(pass1Error === '')
+                     && <FormMessage state="error">
+                           <TextSmall>{ pass1Error }</TextSmall>
+                        </FormMessage>}
+                </FormGroup>
+                <FormGroup>
+                  <Input
+                    type="password"
+                    aria-label="password again input"
+                    placeholder="Password again"
+                    ref={this.password2Input}
+                   />
+                   {!(pass2Error === '')
+                     && <FormMessage state="error">
+                           <TextSmall>{ pass2Error }</TextSmall>
+                        </FormMessage>}
+                </FormGroup>
+                <FormGroup>
+                  <Button
+                    type="submit"
+                    aria-label="Set password"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.submit(this.password1Input.current.value, this.password2Input.current.value);
+                  }}>Set password</Button>
+                  {!(match === '')
+                    && <FormMessage state="error">
+                         <TextSmall>{ match }</TextSmall>
+                      </FormMessage>}
+                </FormGroup>
+              </Form>
+            </CenterWrapper>
+           </Page>}
+      </React.Fragment>
     );
   }
 };
 
 const mapStateToProps = (state : StoreType) : StateToProps => ({
   hash: state.router.location.hash,
+  isFetching: state.rootReducer.auth.isFetching,
+  result: state.rootReducer.auth.result,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
+  setToken: (token: string) => dispatch(setToken(token)),
   postNewPassword: (credentials: NewPasswordType) => dispatch(postNewPassword(credentials)),
 });
 

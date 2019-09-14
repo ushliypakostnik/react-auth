@@ -154,7 +154,11 @@ export const FormMessage = styled.div<FormMessageProps>`
   text-align: center;
   color: ${props => props.theme.colors.color_text};
   top: calc(${props => props.theme.sizes.input_height}px * 1.1);
-  line-height: calc(${props => props.theme.sizes.gutter}px / 1.5);
+
+  ${TextSmall} {
+    display: inline-block;
+    line-height: calc(${props => props.theme.sizes.gutter}px / 1.75);
+  }
 
   ${props => props.state === "success" && css`
     color: ${props => props.theme.colors.color_success};
