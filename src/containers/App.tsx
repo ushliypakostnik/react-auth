@@ -25,7 +25,7 @@ const PrivateRoute : React.SFC<RouteProps & any> =
         {...rest}
         render={(props : RouteComponentProps<any>) => auth
           ? <Component {...props} isAuth={ auth } />
-          : <Redirect to='/login' />}
+          : <Redirect to='/' />}
       />
     );
 };
@@ -36,7 +36,7 @@ const LoginRoute : React.SFC<RouteProps & any> =
     <Route
       {...rest}
       render={(props : RouteComponentProps<any>) => auth
-        ? <Redirect to='/' />
+        ? <Redirect to='/account' />
         : <Component {...props} />}
     />
   );
@@ -65,8 +65,8 @@ class App extends React.Component<Props, State> {
 
     return (
       <Switch>
-        <LoginRoute path="/login" auth={ isAuth } component={ Login } />
-        <PrivateRoute exact path="/" auth={ isAuth } component={ Account } />
+        <LoginRoute exact path="/" auth={ isAuth } component={ Login } />
+        <PrivateRoute path="/account" auth={ isAuth } component={ Account } />
         <Route path="/social" component={ Social } />
         <Route path="/verify" component={ Verify } />
         <Route path="/password" component={ Password } />
