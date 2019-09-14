@@ -1,44 +1,78 @@
-Create React App on TypeScript PWA example
-==========================================
+Create React App based frontend boilerplate
+===========================================
+
+Описание
+--------
+
+Основанная на Create React App реализация Progressive Web App клиента с модулем полноценной аунтефикации через [Backend API](https://github.com/ushliypakostnik/express-auth).
+
+Написан на TypeScript со стилизацией с помощью Styled Components.
+
+
+Юзеркейсы:
+----------
+
+Пользователь может быть авторизован или не авторизован в интерфейсе.
+
+Неавторизованному пользователю показывается два поля ввода: адреса электронной почты и пароля, а также три кнопки - входа через Facebook или ВКонтакте, и кнопка входа с помощью валидных данных почты и пароля.
+
+Ниже стартовой формы показывается ссылка позволяющая переключиться на форму восстановления пароля, состоящую из только одного контрола ввода электронной почты и кнопки для ее отправки.
+
+Пользователь который ввел валидный электроный адрес и пароль будет авторизован в системе. Если пользователя с указанным адресом не существует в базе - он будет добавлен.
+
+Адрес электронной почты пользователя впервые авторизовавшегося в системе через социальную сеть также будет добавлен в базу. Он сможет создать пароль при первой же попытке обычного входа по паролю со своей электронной почты.
+
+Каждый новоый пользователь получает статус неверифицированного и на указанный им почтовый ящик отправляется письмо с предложением подтвердить регистрацию. При переходе по ссылке в письме пользователь получает аунтефикацию, верифицируется, и оказывается во внутреннем интерфейсе, акаунте.
+
+При попытке востановления пароля на указанный адрес электронной почты отправляется письмо, в том случае, если пользователь с такой почтой уже зарегистрирован в базе. При переходе по ссылке с такого письма пользователь получает аунтефикацию и оказывается на специальной форме из двух полей ввода пароля и кнопки, позволяющих создать новый пароль. При отправке двух совпадающийх валидных паролей пользователь окажется во внутреннем интерфейсе, акаунте. Его пароль будет изменен или создан, если ранее он входил только через социальные акаунты.
+
+Во внутреннем интерфейсе, акаунте пользователь видит адрес электронной почты, статус верификации, кнопку выхода из системы. Если пользователь не верифицирован он также видит кнопку повторной отправки письма для подтверждения регистрации с сообщением под ней предлагающим это сделать.
+
+Во всех возможных и необходимых случаях в правильных местах интерфейс показывает информативные сообщения об успехе или провале действий совершаемых пользователем.
+
+При переходе между состояниями, страницами, во время действий требуюшиъ ожидания ответа от сервера пользователю показывается анимированный лоадер.
+
+
+Features:
+---------
+
+* Локализация клиента на два языка: русский и английский
+
+* Темезиция клиента на два темы: ночную и дневную
+
+
+
+Deploy
+------
+
+Установка зависимостей npm packages
+
+    $ npm install
+
+Запуск сервера для разработки
+-----------------------------
+
+    $ npm start
+
+    http://localhost:3000/
+
+Cборка
+------
+
+Сборка проекта в продакшен
+
+    $ npm build
+
+Тесты
+-----
+
+Запуск тестов
+
+    $ npm test
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 
