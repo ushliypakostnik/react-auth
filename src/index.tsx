@@ -10,6 +10,8 @@ import theme, { GlobalStyle } from "./theme/theme";
 
 import App from './containers/App';
 
+import './utils/i18n';
+
 import * as serviceWorker from './serviceWorker';
 
 import store, { history } from './store/store';

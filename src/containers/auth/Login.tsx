@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { MESSAGES } from '../store/constants';
+import { MESSAGES } from '../../store/constants';
+
+import { WithTranslation, withTranslation } from 'react-i18next';
+
 
 import {
   StoreType,
   CredentialsType
-} from '../store/types';
+} from '../../store/types';
 
 import {
   postAuth,
@@ -17,10 +20,11 @@ import {
   getVkontakteAuth,
   postRemindPassword,
   clearMessages,
-} from '../store/modules/auth/actions';
+} from '../../store/modules/auth/actions';
 
-import Empty from '../components/Empty';
-import CenterMessage from '../components/CenterMessage';
+import Empty from '../../components/pages/Empty';
+import CenterMessage from '../../components/elements/CenterMessage';
+import LangSwitch from '../utils/LangSwitch';
 
 import {
   Page,
@@ -33,7 +37,7 @@ import {
   Input,
   Button,
   A,
-} from '../theme/widgets';
+} from '../../theme/widgets';
 
 interface DispatchProps {
   postAuth : (credentials: CredentialsType) => void;
@@ -49,7 +53,7 @@ interface StateToProps {
   error : string;
 };
 
-interface Props extends DispatchProps, StateToProps {};
+interface Props extends DispatchProps, StateToProps, WithTranslation {};
 
 const initialState = {
   login: true,
@@ -138,7 +142,7 @@ class Login extends React.Component<Props, State> {
   }
 
   public render() {
-    const { isFetching } = this.props;
+    const { i18n, isFetching } = this.props;
     const { login, mailError, passError, success, error } = this.state;
 
     return (
@@ -148,7 +152,7 @@ class Login extends React.Component<Props, State> {
           <Page outer>
             <CenterWrapper>
               <CenterMessage>
-                <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
+                <TextLarge>{i18n.t('maintitle')}</TextLarge>
               </CenterMessage>
               <Form>
                 <FormGroup>
@@ -230,6 +234,7 @@ class Login extends React.Component<Props, State> {
                   }}
                 >{login ? 'Remind password?' : 'Back to login'}</A>
               </Form>
+              <LangSwitch />
             </CenterWrapper>
            </Page>}
        </React.Fragment>
@@ -251,4 +256,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Disp
   clearMessages: () => dispatch(clearMessages()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Login));

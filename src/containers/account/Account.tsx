@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { StoreType } from '../store/types';
+import { StoreType } from '../../store/types';
 
-import { authLogout } from '../store/modules/auth/actions';
+import { authLogout } from '../../store/modules/auth/actions';
 import {
   getUser,
   postVerifyEmail,
-} from '../store/modules/user/actions';
+} from '../../store/modules/user/actions';
 
-import Empty from '../components/Empty';
+import Empty from '../../components/pages/Empty';
 
 import {
   Page,
@@ -23,7 +23,7 @@ import {
   TextString,
   FormGroup,
   FormMessage,
-} from '../theme/widgets';
+} from '../../theme/widgets';
 
 interface DispatchProps {
   authLogout : () => void;

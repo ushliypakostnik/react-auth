@@ -6,6 +6,7 @@ import {
   ObjectOfAnyType,
   CookiesType,
   LocalType,
+  LanguageObject,
 } from './types';
 
 export const COOKIES : CookiesType = {
@@ -13,6 +14,10 @@ export const COOKIES : CookiesType = {
     name: 'token',
     expires: 7,
   },
+  LANG: {
+    name: 'language',
+    expires: 7,
+  }
 };
 
 const isProd : boolean = process.env.NODE_ENV === 'production';
@@ -26,6 +31,15 @@ export const CLIENT_HOST = isProd ? clientHost || 'http://react-auth.kafedra.org
 // Auto auth
 export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null;
 const isAuth : boolean = AUTO_AUTH ? true : false;
+
+export const LANGUAGES : LanguageObject[] = [
+  { id: 1, name: 'en'},
+  { id: 2, name: 'ru'},
+];
+
+// Auto language
+const language : string | null = Cookies.get(COOKIES.LANG.name) || null;
+export const AUTO_LANG : string = language ? language : LANGUAGES[0].name;
 
 export const INITIAL_STATE : StoreType = {
   rootReducer: {
@@ -51,6 +65,10 @@ export const INITIAL_STATE : StoreType = {
       },
       error: '',
       success: '',
+    },
+    utils: {
+      language: AUTO_LANG,
+      theme: '',
     },
   },
 };

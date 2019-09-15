@@ -11,12 +11,12 @@ import {
 import { connect } from 'react-redux';
 import { StoreType } from '../store/types';
 
-import Login from './Login';
-import Password from './Password';
-import Verify from './Verify';
-import Social from './Social';
-import Account from './Account';
-import Page404 from '../components/Page404';
+import Login from './auth/Login';
+import Password from './auth/Password';
+import Verify from './auth/Verify';
+import Social from './auth/Social';
+import Account from './account/Account';
+import Page404 from '../components/pages/Page404';
 
 const PrivateRoute : React.SFC<RouteProps & any> =
   ({ component: Component, auth, ...rest }) => {

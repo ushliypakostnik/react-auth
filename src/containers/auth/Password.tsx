@@ -4,22 +4,22 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { history } from '../store/store';
+import { history } from '../../store/store';
 
-import { MESSAGES } from '../store/constants';
+import { MESSAGES } from '../../store/constants';
 
 import {
   StoreType,
   NewPasswordType,
-} from '../store/types';
+} from '../../store/types';
 
 import {
   setToken,
   postNewPassword
-} from '../store/modules/auth/actions';
+} from '../../store/modules/auth/actions';
 
-import Empty from '../components/Empty';
-import CenterMessage from '../components/CenterMessage';
+import Empty from '../../components/pages/Empty';
+import CenterMessage from '../../components/elements/CenterMessage';
 
 import {
   Page,
@@ -31,7 +31,7 @@ import {
   TextLarge,
   Input,
   Button,
-} from '../theme/widgets';
+} from '../../theme/widgets';
 
 interface StateToProps {
   hash : string;

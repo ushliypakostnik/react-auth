@@ -23,6 +23,10 @@ export interface StoreType {
       readonly error : string;
       readonly success : string;
     };
+    readonly utils : {
+      readonly language : string;
+      readonly theme : string;
+    };
   };
   readonly router? : any;
 };
@@ -33,6 +37,11 @@ export interface ObjectOfStringsType {
 
 export interface ObjectOfAnyType {
   readonly [key: string] : any;
+};
+
+export interface LanguageObject {
+  readonly id: number;
+  readonly name: string;
 };
 
 export interface CredentialsType {

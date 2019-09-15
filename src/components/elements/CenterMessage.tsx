@@ -1,14 +1,15 @@
 import * as React from 'react';
 
-import logo from '../images/logo.svg';
+import logo from '../../images/logo.svg';
 
-import { EntryHeaderWpapper, Logo } from '../theme/widgets';
+import { EntryHeaderWpapper, Logo } from '../../theme/widgets';
 
 interface CenterMessageProps {
   children? : React.ReactNode;
 };
 
 const CenterMessage : React.SFC<CenterMessageProps> = (props) => {
+
   return (
     <EntryHeaderWpapper>
       <Logo

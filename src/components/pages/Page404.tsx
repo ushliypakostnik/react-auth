@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import CenterMessage from './CenterMessage';
+import CenterMessage from '../elements/CenterMessage';
 
 import {
   Page,
   CenterWrapper,
   TextLarge,
-} from '../theme/widgets';
+} from '../../theme/widgets';
 
 const Page404 : React.SFC = () => {
   return (

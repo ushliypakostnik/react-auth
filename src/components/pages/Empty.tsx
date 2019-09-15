@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import CenterMessage from './CenterMessage';
-import Loading from './elements/Loading';
+import CenterMessage from '../elements/CenterMessage';
+import Loading from '../elements/Loading';
 
 import {
   Page,
   CenterWrapper,
   EntryHeaderWpapper,
   PageProps,
-} from '../theme/widgets';
+} from '../../theme/widgets';
 
 const Empty : React.SFC<PageProps> = props => {
   return (
