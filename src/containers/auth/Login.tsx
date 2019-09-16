@@ -6,6 +6,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { MESSAGES } from '../../store/constants';
 
+import i18n from '../../utils/i18n';
 import { WithTranslation, withTranslation } from 'react-i18next';
 
 
@@ -108,7 +109,7 @@ class Login extends React.Component<Props, State> {
     const validate = regExp.test(email);
     let mailError;
     if (email === '') {
-      mailError = MESSAGES.is_required;
+      mailError = i18n.t('is_required');
     } else if (validate) {
       mailError = '';
     } else {

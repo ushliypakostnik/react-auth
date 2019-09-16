@@ -1,3 +1,15 @@
 {
-  "maintitle": "Create React App based frontend boilerplate"
+  "maintitle": "Create React App based frontend boilerplate with authentication",
+  "validations": {
+    "verify_account": "Verify your account! A confirmation email has been sent to your inbox",
+    "resend_verify_email": "Letter sent successfully",
+    "is_required": "This field is required",
+    "password_min_lenght": {
+      "part1": "Password must be at least ",
+      "part2": " characters"
+    },
+    "password_contain_digit": "Password must contain lowercase latin letters and at least one digit",
+    "email_invalid": "Invalid email",
+    "passwords_do_not_match": "Passwords do not match"
+  }
 }

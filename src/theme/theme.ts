@@ -43,7 +43,7 @@ const theme : DefaultTheme = {
     fontweight_sans_bold: 700,
     letterspacing_normal: 'normal',
 
-    fontsize_large: 20,
+    fontsize_large: 18,
     fontsize_normal: 16,
     fontsize_small: 14,
 
