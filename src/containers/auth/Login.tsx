@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { MESSAGES } from '../../store/constants';
-
 import i18n from '../../utils/i18n';
 import { WithTranslation, withTranslation } from 'react-i18next';
 
+import { UTILS } from '../../store/constants';
 
 import {
   StoreType,
@@ -109,11 +108,11 @@ class Login extends React.Component<Props, State> {
     const validate = regExp.test(email);
     let mailError;
     if (email === '') {
-      mailError = i18n.t('is_required');
+      mailError = i18n.t('validations.is_required');
     } else if (validate) {
       mailError = '';
     } else {
-      mailError = MESSAGES.email_invalid;
+      mailError = i18n.t('validations.email_invalid');
     }
     this.setState({
       mailError: mailError,
@@ -125,14 +124,14 @@ class Login extends React.Component<Props, State> {
     // eslint-disable-next-line no-useless-escape
     const regExp = /^(?=.*\d)(?=.*[a-z])(?!.*\s).*$/;
     const validate = regExp.test(password);
-    const minLenght = 6;
+    const minLenght = UTILS.min_password_lenght;
     let passError;
     if (password === '') {
-      passError = MESSAGES.is_required;
+      passError = i18n.t('validations.is_required');
     } else if (password.length < minLenght) {
-      passError = MESSAGES.password_min_lenght;
+      passError = i18n.t('validations.password_min_lenght.part1') + String(minLenght) + i18n.t('validations.password_min_lenght.part2');
     } else if (!validate) {
-      passError = MESSAGES.password_contain_digit;
+      passError = i18n.t('password_contain_digit');
     } else {
       passError = '';
     }
@@ -153,14 +152,14 @@ class Login extends React.Component<Props, State> {
           <Page outer>
             <CenterWrapper>
               <CenterMessage>
-                <TextLarge>{i18n.t('maintitle')}</TextLarge>
+                <TextLarge>{i18n.t('login.title')}</TextLarge>
               </CenterMessage>
               <Form>
                 <FormGroup>
                   <Input
                     type="email"
-                    aria-label="email input"
-                    placeholder="Email"
+                    aria-label={i18n.t('login.input.aria-label')}
+                    placeholder={i18n.t('login.input.placeholder')}
                     ref={this.usermailInput}
                   />
                   {mailError !== ''
@@ -180,8 +179,8 @@ class Login extends React.Component<Props, State> {
                   <FormGroup>
                     <Input
                       type="password"
-                      aria-label="password input"
-                      placeholder="Password"
+                      aria-label={i18n.t('login.password.aria-label')}
+                      placeholder={i18n.t('login.password.placeholder')}
                       ref={this.passwordInput}
                      />
                      {passError !== ''
@@ -191,7 +190,7 @@ class Login extends React.Component<Props, State> {
                   </FormGroup>}
                 <Button
                   type="submit"
-                  aria-label={login ? 'Login or registration' : 'Remind password'}
+                  aria-label={login ? i18n.t('login.submit_button.aria-label1') : i18n.t('login.submit_button.aria-label2')}
                   onClick={(e) => {
                     e.preventDefault();
                     if (success !== '' || error !== '') this.props.clearMessages();
@@ -200,32 +199,31 @@ class Login extends React.Component<Props, State> {
                     } else {
                       this.submit(this.usermailInput.current.value, null);
                     }
-                }}>{login ? 'Login / Registration' : 'Remind password'}</Button>
+                }}>{login ? i18n.t('login.submit_button.text1') : i18n.t('login.submit_button.text2')}</Button>
                 {login &&
                   <React.Fragment>
                    <Button
                       type="button"
                       brand="facebook"
-                      aria-label="login via Facebook"
+                      aria-label={i18n.t('login.fb_button.aria-label')}
                       onClick={(e) => {
                         e.preventDefault();
                         if (success !== '' || error !== '') this.props.clearMessages();
                         this.props.getFacebookAuth();
-                      }}>Via Facebook</Button>
+                      }}>{i18n.t('login.fb_button.text')}</Button>
                    <Button
                       type="button"
                       brand="vkontakte"
-                      aria-label="login via VKontakte"
+                      aria-label={i18n.t('login.vk_button.aria-label')}
                       onClick={(e) => {
                         e.preventDefault();
                         if (success !== '' || error !== '') this.props.clearMessages();
                         this.props.getVkontakteAuth();
-                      }}>Via Vkontakte</Button>
+                      }}>{i18n.t('login.vk_button.text')}</Button>
                   </React.Fragment>}
                 <A
                   href="#"
-                  rel="noopener noreferrer"
-                  aria-label={login ? 'Remind password' : 'Back to login'}
+                  aria-label={login ? i18n.t('login.form_link.aria-label1') : i18n.t('login.form_link.aria-label2')}
                   onClick={(e) => {
                     e.preventDefault();
                     if (success !== '' || error !== '') this.props.clearMessages();
@@ -233,7 +231,7 @@ class Login extends React.Component<Props, State> {
                       login: !login,
                     });
                   }}
-                >{login ? 'Remind password?' : 'Back to login'}</A>
+                >{login ? i18n.t('login.form_link.text1') : i18n.t('login.form_link.text2')}</A>
               </Form>
               <LangSwitch />
             </CenterWrapper>

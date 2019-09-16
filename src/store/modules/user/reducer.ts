@@ -1,6 +1,8 @@
 import { Action } from 'redux';
 
-import { INITIAL_STATE, MESSAGES } from '../../constants';
+import i18n from '../../../utils/i18n';
+
+import { INITIAL_STATE } from '../../constants';
 import { StoreType } from '../../types';
 
 import {
@@ -26,7 +28,7 @@ const user = (state : StoreType, action: Action & any) => {
     case USER_SUCCESS:
       let success = '';
       if (!action.profile.isVerify) {
-        success = MESSAGES.verify_account;
+        success = i18n.t('validations.verify_account');
       }
       return Object.assign({}, state, {
         isFetching: false,
@@ -45,7 +47,7 @@ const user = (state : StoreType, action: Action & any) => {
     case SEND_VERIFY_EMAIL_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        success: MESSAGES.resend_verify_email,
+        success: i18n.t('validations.resend_verify_email'),
       });
     case SEND_VERIFY_EMAIL_ERROR:
       return Object.assign({}, state, {
