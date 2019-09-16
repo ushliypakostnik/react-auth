@@ -19,9 +19,9 @@ const isProd : boolean = process.env.NODE_ENV === 'production';
 const apiUrl : string = process.env.API_URL;
 const clientHost : string = process.env.CLIENT_HOST;
 
-export const API_URL = isProd ? apiUrl || 'http://express-auth.kafedra.org' : apiUrl || 'http://127.0.0.1:8082';
+export const API_URL = isProd ? apiUrl || 'https://express-auth.kafedra.org' : apiUrl || 'https://localhost:8082';
 
-export const CLIENT_HOST = isProd ? clientHost || 'http://react-auth.kafedra.org' : clientHost || 'http://localhost:3000';
+export const CLIENT_HOST = isProd ? clientHost || 'https://react-auth.kafedra.org' : clientHost || 'https://localhost:3000';
 
 // Auto auth
 export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null;
