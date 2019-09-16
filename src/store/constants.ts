@@ -8,20 +8,20 @@ import {
   LocalType,
 } from './types';
 
+const isProd : boolean = process.env.NODE_ENV === 'production';
+const apiUrl : string = process.env.REACT_APP_API_URL;
+const clientHost : string = process.env.REACT_APP_CLIENT_HOST;
+
+export const API_URL = isProd ? apiUrl || 'https://express-auth.kafedra.org' : apiUrl || 'https://localhost:8082';
+
+export const CLIENT_HOST = isProd ? clientHost || 'https://react-auth.kafedra.org' : clientHost || 'https://localhost:3000';
+
 export const COOKIES : CookiesType = {
   TOKEN: {
     name: 'token',
     expires: 7,
   },
 };
-
-const isProd : boolean = process.env.NODE_ENV === 'production';
-const apiUrl : string = process.env.API_URL;
-const clientHost : string = process.env.CLIENT_HOST;
-
-export const API_URL = isProd ? apiUrl || 'https://express-auth.kafedra.org' : apiUrl || 'https://localhost:8082';
-
-export const CLIENT_HOST = isProd ? clientHost || 'https://react-auth.kafedra.org' : clientHost || 'https://localhost:3000';
 
 // Auto auth
 export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null;
