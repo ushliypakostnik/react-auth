@@ -16,6 +16,7 @@ const Api = axios.create({
 
 // Client type
 Api.defaults.headers.common['Client'] = `${CLIENT_HOST}`;
+Api.defaults.headers.common['Origin'] = `${CLIENT_HOST}`;
 
 // Auto auth
 if (AUTO_AUTH) {
