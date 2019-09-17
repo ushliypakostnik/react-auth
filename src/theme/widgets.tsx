@@ -214,7 +214,7 @@ export interface PageProps {
 };
 
 export const Page = styled.div<PageProps>`
-  height: 100;
+  height: calc(100% - 85px);
   background: ${props => props.theme.colors.color_white};
   display: flex;
   flex-direction: column;
@@ -234,6 +234,8 @@ export const Page = styled.div<PageProps>`
   `}
 
   @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
+    height: auto;
+
     ${props => props.empty && css`
       ${CenterWrapper} {
         margin-bottom: 10vh;
@@ -243,16 +245,16 @@ export const Page = styled.div<PageProps>`
 `;
 
 export const CenterWrapper = styled.div`
-  margin-bottom: 15vh;
+  padding-bottom: 12vh;
   width: 300px;
 
   @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
-    margin-top: 20px;
-    margin-bottom: 0;
+    padding-top: 20px;
+    padding-bottom: 0;
   }
 
   @media screen and (max-width: ${props => props.theme.breackpoints.xs_middle}) {
-    margin-top: 10px;
+    padding-top: 10px;
   }
 `;
 
@@ -280,12 +282,21 @@ export const FixedFooter = styled.footer`
   border-top: 1px solid ${props => props.theme.colors.color_border};
 `;
 
-export const Card = styled.div`
+
+export interface CardProps {
+  readonly switch? : boolean;
+};
+
+export const Card = styled.div<CardProps>`
   display: inline-block;
   padding: calc(${props => props.theme.sizes.gutter}px / 2);
   background: ${props => props.theme.colors.color_white};
   border: 1px solid ${props => props.theme.colors.color_border};
   border-radius: ${props => props.theme.border_radius.large};
+
+  ${props => props.switch && css`
+    white-space: nowrap;
+  `}
 `;
 
 

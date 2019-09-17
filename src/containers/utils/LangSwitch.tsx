@@ -38,18 +38,22 @@ class LangSwitch extends React.Component<Props, State> {
   readonly state : State = initialState;
 
   render() {
+    const { language } = this.props;
+
     return (
-      <Card>
-        {LANGUAGES.map((language, index) => {
+      <Card switch>
+        {LANGUAGES.map((lang, index) => {
           return (
             <TextNormal key={index} bold uppercase>
-              <a
-                href="#"
-                onClick={e => {
+              {language !== lang.name ?
+                <a
+                  href="#"
+                  onClick={e => {
                   e.preventDefault();
-                  this.props.changeLanguage(language.name);
+                  this.props.changeLanguage(lang.name);
                 }}
-                >{ language.name }</a>
+                >{ lang.name }</a> :
+                <span>{ lang.name }</span>}
                 {index < LANGUAGES.length - 1 && <span> / </span>}
             </TextNormal>);
         })}
