@@ -11,6 +11,7 @@ const theme : DefaultTheme = {
 
   // Media breackpoints
   breackpoints: {
+    xs_middle: '360px',
     xs_max: '750px',
   },
 
@@ -44,7 +45,7 @@ const theme : DefaultTheme = {
 
     fontsize_large: 18,
     fontsize_normal: 16,
-    fontsize_small: 14,
+    fontsize_small: 13,
 
     line_height_standart: 1.428571429,
   },

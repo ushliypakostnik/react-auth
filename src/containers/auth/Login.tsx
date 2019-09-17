@@ -37,6 +37,7 @@ import {
   Input,
   Button,
   A,
+  FixedFooter,
 } from '../../theme/widgets';
 
 interface DispatchProps {
@@ -149,7 +150,7 @@ class Login extends React.Component<Props, State> {
       <React.Fragment>
         { isFetching && login ?
           <Empty outer /> :
-          <Page outer>
+          <Page outer footer>
             <CenterWrapper>
               <CenterMessage>
                 <TextLarge>{i18n.t('login.title')}</TextLarge>
@@ -233,8 +234,8 @@ class Login extends React.Component<Props, State> {
                   }}
                 >{login ? i18n.t('login.form_link.text1') : i18n.t('login.form_link.text2')}</A>
               </Form>
-              <LangSwitch />
             </CenterWrapper>
+           <FixedFooter><LangSwitch /></FixedFooter>
            </Page>}
        </React.Fragment>
     );

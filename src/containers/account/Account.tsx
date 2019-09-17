@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
+import i18n from '../../utils/i18n';
+import { WithTranslation, withTranslation } from 'react-i18next';
+
 import { StoreType } from '../../store/types';
 
 import { authLogout } from '../../store/modules/auth/actions';
@@ -13,6 +16,7 @@ import {
 } from '../../store/modules/user/actions';
 
 import Empty from '../../components/pages/Empty';
+import LangSwitch from '../utils/LangSwitch';
 
 import {
   Page,
@@ -20,9 +24,12 @@ import {
   Button,
   ButtonWrapper,
   TextLarge,
+  TextSmall,
   TextString,
+  Form,
   FormGroup,
   FormMessage,
+  FixedFooter,
 } from '../../theme/widgets';
 
 interface DispatchProps {
@@ -31,14 +38,16 @@ interface DispatchProps {
   postVerifyEmail: (usermail: string) => void;
 };
 
-interface Props extends DispatchProps {
+interface StateToProps {
   isFetching: boolean;
   profile : {
     usermail: string;
     isVerify: boolean;
   };
-  success: string;
+  success: boolean;
 };
+
+interface Props extends DispatchProps, StateToProps, WithTranslation {};
 
 const initialState = {};
 
@@ -59,53 +68,59 @@ class Account extends React.Component<Props, State> {
   }
 
   public render() {
-    const { isFetching, profile, success } = this.props;
+    const { i18n, isFetching, profile, success } = this.props;
 
     return (
       <React.Fragment>
         { isFetching ?
           <Empty /> :
-          <Page>
+          <Page footer>
             <CenterWrapper>
-              <TextString top>
-                <TextLarge light>Usermail:</TextLarge>
-              </TextString>
-              <TextString>
-                <TextLarge>{ profile.usermail }</TextLarge>
-              </TextString>
-              <TextString>
-                <TextLarge light>IsVerify: </TextLarge>
-                <TextLarge>{ profile.isVerify ? 'Yes' : 'No' }</TextLarge>
-              </TextString>
-              <ButtonWrapper>
-                <Button
-                  type="button"
-                  aria-label='Logout button'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.props.authLogout();
-                }}>Sign out</Button>
-                {!profile.isVerify &&
-                  <FormGroup>
-                    <Button
-                      type="button"
-                      aria-label='Logout button'
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.props.postVerifyEmail(profile.usermail);
-                    }}>Resend Verify Email</Button>
-                   {success !== ''
-                     && <FormMessage state="success">{ success }</FormMessage>}
-                  </FormGroup>}
-               </ButtonWrapper>
+              <Form>
+                <TextString top>
+                  <TextLarge light>{i18n.t('account.field1')}:</TextLarge>
+                </TextString>
+                <TextString>
+                  <TextLarge>{ profile.usermail }</TextLarge>
+                </TextString>
+                <TextString>
+                  <TextLarge light>{i18n.t('account.field2')}: </TextLarge>
+                  <TextLarge>{ profile.isVerify ? i18n.t('boolean.true') : i18n.t('boolean.false') }</TextLarge>
+                </TextString>
+                <ButtonWrapper>
+                  <Button
+                    type="button"
+                    aria-label={i18n.t('account.logout_button.aria-label')}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.props.authLogout();
+                  }}>{i18n.t('account.logout_button.text')}</Button>
+                  {!profile.isVerify &&
+                    <FormGroup>
+                      <Button
+                        type="button"
+                        aria-label={i18n.t('account.resend_button.aria-label')}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          this.props.postVerifyEmail(profile.usermail);
+                      }}>{i18n.t('account.resend_button.text')}</Button>
+                      <FormMessage state="success">
+                        <TextSmall>
+                          { success ? i18n.t('validations.resend_verify_email') : i18n.t('validations.verify_account') }
+                        </TextSmall>
+                      </FormMessage>
+                    </FormGroup>}
+                 </ButtonWrapper>
+              </Form>
             </CenterWrapper>
+            <FixedFooter><LangSwitch /></FixedFooter>
           </Page>}
       </React.Fragment>
     );
   }
 };
 
-const mapStateToProps = (state : StoreType) : State => ({
+const mapStateToProps = (state : StoreType) : StateToProps => ({
   isFetching: state.rootReducer.user.isFetching,
   profile: state.rootReducer.user.profile,
   success: state.rootReducer.user.success,
@@ -117,4 +132,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Disp
   postVerifyEmail: (usermail: string) => dispatch(postVerifyEmail(usermail)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Account);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Account));

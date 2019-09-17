@@ -56,5 +56,22 @@
       "aria-label": "set new password",
       "text1": "Set new password"
     }
+  },
+  "account": {
+    "field1": "Usermail",
+    "field1": "isVerify",
+    "logout_button": {
+      "aria-label": "logout button",
+      "text": "Sign out"
+    },
+    "resend_button": {
+      "aria-label": "resend verify email",
+      "text": "Resend Verify Email"
+    }
+  },
+  "page404": "Page Not Found!!!",
+  "boolean": {
+    "true": "Yes",
+    "false": "No"
   }
 }

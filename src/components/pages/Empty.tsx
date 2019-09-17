@@ -12,7 +12,7 @@ import {
 
 const Empty : React.SFC<PageProps> = props => {
   return (
-    <Page outer={ props.outer } >
+    <Page outer={ props.outer } empty >
       <CenterWrapper>
         <EntryHeaderWpapper>
           <Loading />

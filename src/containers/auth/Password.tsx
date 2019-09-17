@@ -22,6 +22,7 @@ import {
 
 import Empty from '../../components/pages/Empty';
 import CenterMessage from '../../components/elements/CenterMessage';
+import LangSwitch from '../utils/LangSwitch';
 
 import {
   Page,
@@ -33,6 +34,7 @@ import {
   TextLarge,
   Input,
   Button,
+  FixedFooter,
 } from '../../theme/widgets';
 
 interface StateToProps {
@@ -151,12 +153,12 @@ class Login extends React.Component<Props, State> {
       <React.Fragment>
         { isFetching ?
           <Empty outer /> :
-          <Page outer>
+          <Page outer footer>
             <CenterWrapper>
               <CenterMessage>
                 <TextLarge>{i18n.t('password.title')}</TextLarge>
               </CenterMessage>
-              <Form>
+              <Form bottom>
                 <FormGroup>
                   <Input
                     type="password"
@@ -196,7 +198,8 @@ class Login extends React.Component<Props, State> {
                 </FormGroup>
               </Form>
             </CenterWrapper>
-           </Page>}
+           <FixedFooter><LangSwitch /></FixedFooter>
+         </Page>}
       </React.Fragment>
     );
   }

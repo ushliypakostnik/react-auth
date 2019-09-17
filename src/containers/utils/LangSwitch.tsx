@@ -4,13 +4,16 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import {
-  StoreType,
-} from '../../store/types';
+import { StoreType } from '../../store/types';
 
 import { LANGUAGES } from '../../store/constants';
 
 import { changeLanguage } from '../../store/modules/utils/actions';
+
+import {
+  Card,
+  TextNormal,
+} from '../../theme/widgets';
 
 interface StateToProps {
   language : string;
@@ -36,18 +39,21 @@ class LangSwitch extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="languages-switch">
+      <Card>
         {LANGUAGES.map((language, index) => {
-          return <a
-                   href="#"
-                   key={index}
-                   onClick={e => {
-                     e.preventDefault();
-                     this.props.changeLanguage(language.name);
-                   }}
-                 >{ language.name }</a>;
+          return (
+            <TextNormal key={index} bold uppercase>
+              <a
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  this.props.changeLanguage(language.name);
+                }}
+                >{ language.name }</a>
+                {index < LANGUAGES.length - 1 && <span> / </span>}
+            </TextNormal>);
         })}
-      </div>
+      </Card>
     );
   }
 };

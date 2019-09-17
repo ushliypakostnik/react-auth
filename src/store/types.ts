@@ -21,7 +21,7 @@ export interface StoreType {
         readonly userdata : [];
       };
       readonly error : string;
-      readonly success : string;
+      readonly success : boolean | null;
     };
     readonly utils : {
       readonly language : string;

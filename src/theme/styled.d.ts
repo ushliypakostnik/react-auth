@@ -12,6 +12,7 @@ declare module 'styled-components' {
 
     // Media breackpoints
     breackpoints? : {
+      xs_middle? : string;
       xs_max? : string;
     };
 

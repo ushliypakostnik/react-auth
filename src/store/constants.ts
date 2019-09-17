@@ -64,7 +64,7 @@ export const INITIAL_STATE : StoreType = {
         userdata: [],
       },
       error: '',
-      success: '',
+      success: false,
     },
     utils: {
       language: AUTO_LANG,

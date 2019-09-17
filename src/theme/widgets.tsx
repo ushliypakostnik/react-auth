@@ -26,6 +26,8 @@ export const TextSmall = styled.span`
 
 interface TextNormalProps {
   readonly label? : boolean;
+  readonly bold? : boolean;
+  readonly uppercase? : boolean;
 };
 
 export const TextNormal = styled.span<TextNormalProps>`
@@ -36,6 +38,14 @@ export const TextNormal = styled.span<TextNormalProps>`
   line-height: ${props => props.theme.typography.lineheight_normal}px;
   font-weight: ${props => props.theme.typography.fontweight_sans_regular};
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+
+  ${props => props.bold && css`
+    font-weight: ${props => props.theme.typography.fontweight_sans_bold};
+  `}
+
+  ${props => props.uppercase && css`
+    text-transform: uppercase;
+  `}
 `;
 
 interface TextLargeProps {
@@ -157,7 +167,7 @@ export const FormMessage = styled.div<FormMessageProps>`
 
   ${TextSmall} {
     display: inline-block;
-    line-height: calc(${props => props.theme.sizes.gutter}px / 1.75);
+    line-height: calc(${props => props.theme.sizes.gutter}px / 1.5);
   }
 
   ${props => props.state === "success" && css`
@@ -169,7 +179,11 @@ export const FormMessage = styled.div<FormMessageProps>`
   `}
 `;
 
-export const Form = styled.form`
+interface FormProps {
+  readonly bottom? : boolean;
+};
+
+export const Form = styled.form<FormProps>`
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -183,6 +197,10 @@ export const Form = styled.form`
     display: block;
     flex-grow: 1;
   }
+
+   ${props => props.bottom && css`
+      padding-bottom:  0;
+  `}
 `;
 
 
@@ -191,10 +209,12 @@ export const Form = styled.form`
 
 export interface PageProps {
   readonly outer? : boolean;
+  readonly empty? : boolean;
+  readonly footer? : boolean;
 };
 
 export const Page = styled.div<PageProps>`
-  height: 100%;
+  height: 100;
   background: ${props => props.theme.colors.color_white};
   display: flex;
   flex-direction: column;
@@ -204,6 +224,22 @@ export const Page = styled.div<PageProps>`
   ${props => props.outer && css`
     background: ${props => props.theme.colors.color_light};
   `}
+
+  ${props => props.footer && css`
+    padding-bottom: calc(${props => props.theme.sizes.gutter}px + 65px);
+
+    @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
+      padding-bottom: calc((${props => props.theme.sizes.gutter}px / 2 ) + 65px);
+    }
+  `}
+
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
+    ${props => props.empty && css`
+      ${CenterWrapper} {
+        margin-bottom: 10vh;
+      }
+    `}
+  }
 `;
 
 export const CenterWrapper = styled.div`
@@ -211,8 +247,12 @@ export const CenterWrapper = styled.div`
   width: 300px;
 
   @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 0;
+  }
+
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_middle}) {
+    margin-top: 10px;
   }
 `;
 
@@ -228,8 +268,28 @@ export const EntryHeaderWpapper = styled.div`
   }
 `;
 
+export const FixedFooter = styled.footer`
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: calc(${props => props.theme.sizes.gutter}px / 2);
+  padding-bottom: calc(${props => props.theme.sizes.gutter}px / 2);
+  background: ${props => props.theme.colors.color_light};
+  border-top: 1px solid ${props => props.theme.colors.color_border};
+`;
 
-// Animatin and elements
+export const Card = styled.div`
+  display: inline-block;
+  padding: calc(${props => props.theme.sizes.gutter}px / 2);
+  background: ${props => props.theme.colors.color_white};
+  border: 1px solid ${props => props.theme.colors.color_border};
+  border-radius: ${props => props.theme.border_radius.large};
+`;
+
+
+// Animation and elements
 ////////////////////////////////////////////////////////////
 
 export const rotate = keyframes`
@@ -241,10 +301,20 @@ export const rotate = keyframes`
   }
 `;
 
-export const Logo = styled.img`
+export interface LogoProps {
+  readonly loader? : boolean;
+};
+
+export const Logo = styled.img<LogoProps>`
   height: 60px;
   pointer-events: none;
   display: inline-block;
   animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 20) ${props => props.theme.effects.transition_timingfunction};
+
+  ${props => props.loader && css`
+    height: 80px;
+    width: 80px;
+    animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 5) ${props => props.theme.effects.transition_timingfunction};
+  `}
 `;
 
