@@ -37,7 +37,7 @@ import {
   Input,
   Button,
   A,
-  FixedFooter,
+  Footer,
 } from '../../theme/widgets';
 
 interface DispatchProps {
@@ -235,7 +235,7 @@ class Login extends React.Component<Props, State> {
                 >{login ? i18n.t('login.form_link.text1') : i18n.t('login.form_link.text2')}</A>
               </Form>
             </CenterWrapper>
-           <FixedFooter><LangSwitch /></FixedFooter>
+           <Footer><LangSwitch /></Footer>
            </Page>}
        </React.Fragment>
     );

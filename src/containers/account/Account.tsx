@@ -29,7 +29,7 @@ import {
   Form,
   FormGroup,
   FormMessage,
-  FixedFooter,
+  Footer,
 } from '../../theme/widgets';
 
 interface DispatchProps {
@@ -113,7 +113,7 @@ class Account extends React.Component<Props, State> {
                  </ButtonWrapper>
               </Form>
             </CenterWrapper>
-            <FixedFooter><LangSwitch /></FixedFooter>
+            <Footer><LangSwitch /></Footer>
           </Page>}
       </React.Fragment>
     );

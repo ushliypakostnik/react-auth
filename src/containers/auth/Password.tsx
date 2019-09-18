@@ -34,7 +34,7 @@ import {
   TextLarge,
   Input,
   Button,
-  FixedFooter,
+  Footer,
 } from '../../theme/widgets';
 
 interface StateToProps {
@@ -198,7 +198,7 @@ class Login extends React.Component<Props, State> {
                 </FormGroup>
               </Form>
             </CenterWrapper>
-           <FixedFooter><LangSwitch /></FixedFooter>
+           <Footer><LangSwitch /></Footer>
          </Page>}
       </React.Fragment>
     );

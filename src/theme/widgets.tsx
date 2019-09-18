@@ -270,7 +270,7 @@ export const EntryHeaderWpapper = styled.div`
   }
 `;
 
-export const FixedFooter = styled.footer`
+export const Footer = styled.footer`
   text-align: center;
   position: fixed;
   left: 0;

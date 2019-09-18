@@ -5,7 +5,7 @@ import {
   ObjectOfStringsType,
   ObjectOfAnyType,
   CookiesType,
-  LocalType,
+  LocalStorageType,
   LanguageObject,
 } from './types';
 
@@ -73,7 +73,7 @@ export const INITIAL_STATE : StoreType = {
   },
 };
 
-export const LOCAL : LocalType = {
+export const LOCALSTORAGE : LocalStorageType = {
   PROFILE: 'UserProfile',
 }
 

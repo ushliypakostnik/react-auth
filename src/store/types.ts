@@ -63,7 +63,7 @@ export interface CookiesType {
   readonly [key: string] : CookieType;
 };
 
-export interface LocalType {
+export interface LocalStorageType {
   readonly [key: string] : string;
 };
 

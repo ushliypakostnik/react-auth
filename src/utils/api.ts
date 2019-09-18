@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import {
   COOKIES,
   API_URL,
-  LOCAL,
+  LOCALSTORAGE,
   AUTO_AUTH,
   CLIENT_HOST,
 } from '../store/constants';
@@ -29,15 +29,15 @@ export const setAuth = (token: string) : void => {
 };
 
 export const deleteAuth = () : void => {
-  localStorage.removeItem(LOCAL.PROFILE);
+  localStorage.removeItem(LOCALSTORAGE.PROFILE);
   Cookies.remove(COOKIES.TOKEN.name);
   delete Api.defaults.headers.common['Authorization'];
   delete Api.defaults.headers.common['Language'];
 };
 
-export const rememberLanguage = (Language: string) : void => {
-  Api.defaults.headers.common['Language'] = `${Language}`;
-  Cookies.set(COOKIES.LANG.name, Language, { expires: COOKIES.LANG.expires });
+export const rememberLanguage = (language: string) : void => {
+  Api.defaults.headers.common['Language'] = `${language}`;
+  Cookies.set(COOKIES.LANG.name, language, { expires: COOKIES.LANG.expires });
 };
 
 export const POST_AUTH_PATH = '/api/user/login';
