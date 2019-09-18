@@ -1,7 +1,8 @@
 import { Action, ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
-import i18n, { rememberLanguage } from '../../../utils/i18n';
+import i18n from '../../../utils/i18n';
+import { rememberLanguage } from '../../../utils/api';
 
 // Actions Types
 ////////////////////////////////////////////////////////////

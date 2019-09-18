@@ -2,12 +2,10 @@ import i18n from 'i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
-import Cookies from "js-cookie";
 
 import {
   LANGUAGES,
   AUTO_LANG,
-  COOKIES,
 } from '../store/constants';
 
 i18n
@@ -42,9 +40,5 @@ i18n
       useSuspense: false,
     },
   });
-
-export const rememberLanguage = (Language: string) : void => {
-  Cookies.set(COOKIES.LANG.name, Language, { expires: COOKIES.LANG.expires });
-}
 
 export default i18n;
