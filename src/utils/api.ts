@@ -6,7 +6,7 @@ import {
   API_URL,
   LOCALSTORAGE,
   AUTO_AUTH,
-  CLIENT_HOST,
+  AUTO_LANG,
 } from '../store/constants';
 
 const Api = axios.create({
@@ -14,14 +14,14 @@ const Api = axios.create({
   responseType: 'json',
 });
 
-// Client type
-Api.defaults.headers.common['Client'] = `${CLIENT_HOST}`;
-
 // Auto auth
 if (AUTO_AUTH) {
   // eslint-disable-next-line dot-notation
   Api.defaults.headers.common['Authorization'] = `Token ${AUTO_AUTH}`;
 }
+
+// Auto language
+Cookies.set(COOKIES.LANG.name, AUTO_LANG, { expires: COOKIES.LANG.expires });
 
 export const setAuth = (token: string) : void => {
   Cookies.set(COOKIES.TOKEN.name, token, { expires: COOKIES.TOKEN.expires });
@@ -32,11 +32,9 @@ export const deleteAuth = () : void => {
   localStorage.removeItem(LOCALSTORAGE.PROFILE);
   Cookies.remove(COOKIES.TOKEN.name);
   delete Api.defaults.headers.common['Authorization'];
-  delete Api.defaults.headers.common['Language'];
 };
 
 export const rememberLanguage = (language: string) : void => {
-  Api.defaults.headers.common['Language'] = `${language}`;
   Cookies.set(COOKIES.LANG.name, language, { expires: COOKIES.LANG.expires });
 };
 
