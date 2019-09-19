@@ -245,7 +245,7 @@ export const Page = styled.div<PageProps>`
 `;
 
 export const CenterWrapper = styled.div`
-  padding-bottom: 12vh;
+  padding-bottom: 13vh;
   width: 300px;
 
   @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
