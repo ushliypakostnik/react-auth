@@ -60,7 +60,7 @@
   "account": {
     "title": "Account",
     "field1": "Usermail",
-    "field1": "isVerify",
+    "field2": "isVerify",
     "logout_button": {
       "aria-label": "logout button",
       "text": "Sign out"
