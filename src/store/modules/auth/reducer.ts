@@ -15,9 +15,11 @@ import {
   REMIND_PASSWORD_ERROR,
   SET_NEW_PASSWORD,
   SET_NEW_PASSWORD_RESULT,
-  CLEAR_MESSAGES,
   AUTH_LOGOUT,
 } from './actions';
+import {
+  CLEAR_MESSAGES,
+} from '../utils/actions';
 
 const auth = (state : StoreType, action: Action & any) => {
   if (typeof state === 'undefined') {

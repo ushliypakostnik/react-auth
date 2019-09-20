@@ -4,19 +4,16 @@ import Cookies from "js-cookie";
 import {
   COOKIES,
   API_URL,
-  LOCAL,
+  LOCALSTORAGE,
   AUTO_AUTH,
-  CLIENT_HOST,
+  AUTO_LANG,
 } from '../store/constants';
 
 const Api = axios.create({
   baseURL: API_URL,
   responseType: 'json',
+  withCredentials: true,
 });
-
-// Client type
-Api.defaults.headers.common['Client'] = `${CLIENT_HOST}`;
-Api.defaults.headers.common['Origin'] = `${CLIENT_HOST}`;
 
 // Auto auth
 if (AUTO_AUTH) {
@@ -24,15 +21,26 @@ if (AUTO_AUTH) {
   Api.defaults.headers.common['Authorization'] = `Token ${AUTO_AUTH}`;
 }
 
+// Auto language
+Cookies.set(COOKIES.LANG.name, AUTO_LANG, { expires: COOKIES.LANG.expires });
+
 export const setAuth = (token: string) : void => {
   Cookies.set(COOKIES.TOKEN.name, token, { expires: COOKIES.TOKEN.expires });
   Api.defaults.headers.common['Authorization'] = `Token ${token}`;
 };
 
 export const deleteAuth = () : void => {
-  localStorage.removeItem(LOCAL.PROFILE);
+  localStorage.removeItem(LOCALSTORAGE.PROFILE);
   Cookies.remove(COOKIES.TOKEN.name);
   delete Api.defaults.headers.common['Authorization'];
+};
+
+export const rememberLanguage = (language: string) : void => {
+  Cookies.set(COOKIES.LANG.name, language, { expires: COOKIES.LANG.expires });
+};
+
+export const rememberTheme = (theme: string) : void => {
+  Cookies.set(COOKIES.THEME.name, theme, { expires: COOKIES.THEME.expires });
 };
 
 export const POST_AUTH_PATH = '/api/user/login';

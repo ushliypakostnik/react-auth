@@ -21,7 +21,11 @@ export interface StoreType {
         readonly userdata : [];
       };
       readonly error : string;
-      readonly success : string;
+      readonly success : boolean | null;
+    };
+    readonly utils : {
+      readonly language : string;
+      readonly theme : string;
     };
   };
   readonly router? : any;
@@ -34,6 +38,13 @@ export interface ObjectOfStringsType {
 export interface ObjectOfAnyType {
   readonly [key: string] : any;
 };
+
+export interface LanguageObjectType {
+  readonly id: number;
+  readonly name: string;
+};
+
+export interface ThemeObjectType extends LanguageObjectType {};
 
 export interface CredentialsType {
   readonly usermail: string;
@@ -54,7 +65,7 @@ export interface CookiesType {
   readonly [key: string] : CookieType;
 };
 
-export interface LocalType {
+export interface LocalStorageType {
   readonly [key: string] : string;
 };
 

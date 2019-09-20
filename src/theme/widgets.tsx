@@ -26,16 +26,26 @@ export const TextSmall = styled.span`
 
 interface TextNormalProps {
   readonly label? : boolean;
+  readonly bold? : boolean;
+  readonly uppercase? : boolean;
 };
 
 export const TextNormal = styled.span<TextNormalProps>`
   display: inline;
-  color: inherit;
+  color: ${props => props.theme.colors.color_text};
   font-family:  ${props => props.theme.typography.fontfamily_sans};
   font-size:  ${props => props.theme.typography.fontsize_normal}px;
   line-height: ${props => props.theme.typography.lineheight_normal}px;
   font-weight: ${props => props.theme.typography.fontweight_sans_regular};
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+
+  ${props => props.bold && css`
+    font-weight: ${props => props.theme.typography.fontweight_sans_bold};
+  `}
+
+  ${props => props.uppercase && css`
+    text-transform: uppercase;
+  `}
 `;
 
 interface TextLargeProps {
@@ -45,7 +55,7 @@ interface TextLargeProps {
 
 export const TextLarge = styled.span<TextLargeProps>`
   display: inline;
-  color: inherit;
+  color: ${props => props.theme.colors.color_text};
   font-family:  ${props => props.theme.typography.fontfamily_sans};
   font-size:  ${props => props.theme.typography.fontsize_large}px;
   line-height: ${props => props.theme.typography.lineheight_large}px;
@@ -60,6 +70,30 @@ export const TextLarge = styled.span<TextLargeProps>`
   ${props => props.light && css`
     opacity: 0.5;
   `}
+`;
+
+export const TextHeader = styled.span<TextLargeProps>`
+  display: inline;
+  color: ${props => props.theme.colors.color_header};
+  font-family:  ${props => props.theme.typography.fontfamily_sans};
+  font-size:  calc(${props => props.theme.typography.fontsize_large}px * 1.5);
+  line-height: ${props => props.theme.typography.lineheight_large}px;
+  font-weight: ${props => props.theme.typography.fontweight_sans_bold};
+  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+
+  ${props => props.super && css`
+    font-size:  calc(${props => props.theme.typography.fontsize_large}px * 4);
+    line-height: calc(${props => props.theme.typography.lineheight_large}px * 4);
+  `}
+
+  ${props => props.light && css`
+    opacity: 0.5;
+  `}
+
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_middle}) {
+    display: inline-block;
+    margin-top: 20px;
+  }
 `;
 
 interface TextStringProps {
@@ -102,6 +136,7 @@ interface ButtonProps {
 };
 
 export const Button = styled.button<ButtonProps>`
+  border: none;
   cursor: pointer;
   text-align: center;
   text-transform: uppercase;
@@ -113,7 +148,6 @@ export const Button = styled.button<ButtonProps>`
   line-height: ${props => props.theme.typography.lineheight_normal}px;
   font-weight: ${props => props.theme.typography.fontweight_sans_bold};
   letter-spacing: ${props => props.theme.typography.letterspacing_normal};
-  border: 1px solid ${props => props.theme.colors.color_border};
   border-radius: ${props => props.theme.border_radius.large};
   margin-bottom: calc(${props => props.theme.sizes.gutter}px / 2);
 
@@ -157,7 +191,7 @@ export const FormMessage = styled.div<FormMessageProps>`
 
   ${TextSmall} {
     display: inline-block;
-    line-height: calc(${props => props.theme.sizes.gutter}px / 1.75);
+    line-height: calc(${props => props.theme.sizes.gutter}px / 1.5);
   }
 
   ${props => props.state === "success" && css`
@@ -169,12 +203,16 @@ export const FormMessage = styled.div<FormMessageProps>`
   `}
 `;
 
-export const Form = styled.form`
+interface FormProps {
+  readonly bottom? : boolean;
+};
+
+export const Form = styled.form<FormProps>`
   display: flex;
   flex-direction: column;
   text-align: center;
   padding: ${props => props.theme.sizes.gutter}px;
-  background: ${props => props.theme.colors.color_white};
+  background: ${props => props.theme.colors.color_card};
   border: 1px solid ${props => props.theme.colors.color_border};
   border-radius: ${props => props.theme.border_radius.large};
 
@@ -183,6 +221,10 @@ export const Form = styled.form`
     display: block;
     flex-grow: 1;
   }
+
+   ${props => props.bottom && css`
+      padding-bottom:  0;
+  `}
 `;
 
 
@@ -190,29 +232,48 @@ export const Form = styled.form`
 ////////////////////////////////////////////////////////////
 
 export interface PageProps {
-  readonly outer? : boolean;
+  readonly empty? : boolean;
+  readonly footer? : boolean;
 };
 
 export const Page = styled.div<PageProps>`
-  height: 100%;
-  background: ${props => props.theme.colors.color_white};
+  height: calc(100% - 85px);
+  background: ${props => props.theme.colors.color_background};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  ${props => props.outer && css`
-    background: ${props => props.theme.colors.color_light};
+  ${props => props.footer && css`
+    padding-bottom: calc(${props => props.theme.sizes.gutter}px + 65px);
+
+    @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
+      padding-bottom: calc((${props => props.theme.sizes.gutter}px / 2 ) + 65px);
+    }
   `}
+
+  ${props => props.empty && css`
+    height: 100%;
+    height: 100vh;
+  `};
+
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_middle}) {
+    height: auto;
+  }
 `;
 
 export const CenterWrapper = styled.div`
-  margin-bottom: 15vh;
+  padding-bottom: 13vh;
   width: 300px;
 
   @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
-    margin-top: 30px;
-    margin-bottom: 0;
+    padding-top: 20px;
+    padding-bottom: 0;
+  }
+
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_middle}) {
+    padding-top: 10px;
+    padding-bottom: 0;
   }
 `;
 
@@ -228,8 +289,42 @@ export const EntryHeaderWpapper = styled.div`
   }
 `;
 
+export const Footer = styled.footer`
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: calc(${props => props.theme.sizes.gutter}px / 2);
+  padding-bottom: calc(${props => props.theme.sizes.gutter}px / 2);
+  background: ${props => props.theme.colors.color_background};
+  border-top: 1px solid ${props => props.theme.colors.color_border};
+`;
 
-// Animatin and elements
+
+export interface CardProps {
+  readonly switch? : boolean;
+  readonly after? : boolean;
+};
+
+export const Card = styled.div<CardProps>`
+  display: inline-block;
+  color: ${props => props.theme.colors.color_text};
+  padding: calc(${props => props.theme.sizes.gutter}px / 2);
+  background: ${props => props.theme.colors.color_card};
+  border: 1px solid ${props => props.theme.colors.color_border};
+  border-radius: ${props => props.theme.border_radius.large};
+
+  ${props => props.switch && css`
+    white-space: nowrap;
+  `}
+
+  ${props => props.after && css`
+    margin-left: ${props => props.theme.sizes.gutter}px;
+  `}
+`;
+
+// Animation and elements
 ////////////////////////////////////////////////////////////
 
 export const rotate = keyframes`
@@ -241,10 +336,20 @@ export const rotate = keyframes`
   }
 `;
 
-export const Logo = styled.img`
+export interface LogoProps {
+  readonly loader? : boolean;
+};
+
+export const Logo = styled.img<LogoProps>`
   height: 60px;
   pointer-events: none;
   display: inline-block;
   animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 20) ${props => props.theme.effects.transition_timingfunction};
+
+  ${props => props.loader && css`
+    height: 80px;
+    width: 80px;
+    animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 5) ${props => props.theme.effects.transition_timingfunction};
+  `}
 `;
 

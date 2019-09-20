@@ -5,27 +5,55 @@ import {
   ObjectOfStringsType,
   ObjectOfAnyType,
   CookiesType,
-  LocalType,
+  LocalStorageType,
+  LanguageObjectType,
+  ThemeObjectType,
 } from './types';
-
-const isProd : boolean = process.env.NODE_ENV === 'production';
-const apiUrl : string = process.env.REACT_APP_API_URL;
-const clientHost : string = process.env.REACT_APP_CLIENT_HOST;
-
-export const API_URL = isProd ? apiUrl || 'https://express-auth.kafedra.org' : apiUrl || 'https://localhost:8082';
-
-export const CLIENT_HOST = isProd ? clientHost || 'https://react-auth.kafedra.org' : clientHost || 'https://localhost:3000';
 
 export const COOKIES : CookiesType = {
   TOKEN: {
     name: 'token',
     expires: 7,
   },
+  LANG: {
+    name: 'language',
+    expires: 7,
+  },
+  THEME: {
+    name: 'theme',
+    expires: 7,
+  }
 };
+
+
+const isProd : boolean = process.env.NODE_ENV === 'production';
+const apiUrl : string = process.env.REACT_APP_API_URL;
+export const API_URL = isProd ? apiUrl || 'https://express-auth.kafedra.org' : apiUrl || 'http://localhost:8082';
+
 
 // Auto auth
 export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null;
 const isAuth : boolean = AUTO_AUTH ? true : false;
+
+export const LANGUAGES : LanguageObjectType[] = [
+  { id: 1, name: 'en' },
+  { id: 2, name: 'ru' },
+];
+
+// Auto language
+const language : string | null = Cookies.get(COOKIES.LANG.name) || null;
+export const AUTO_LANG : string = language || LANGUAGES[1].name;
+
+
+export const THEMES : ThemeObjectType[] = [
+  { id: 1, name: 'light'},
+  { id: 2, name: 'dark' },
+];
+
+// Auto theme
+const theme : string | null = Cookies.get(COOKIES.THEME.name) || null;
+export const AUTO_THEME : string = theme || THEMES[1].name;
+
 
 export const INITIAL_STATE : StoreType = {
   rootReducer: {
@@ -50,25 +78,20 @@ export const INITIAL_STATE : StoreType = {
         userdata: [],
       },
       error: '',
-      success: '',
+      success: false,
+    },
+    utils: {
+      language: AUTO_LANG,
+      theme: AUTO_THEME,
     },
   },
 };
 
-export const LOCAL : LocalType = {
+
+export const LOCALSTORAGE : LocalStorageType = {
   PROFILE: 'UserProfile',
 }
 
 export const UTILS : ObjectOfAnyType = {
   min_password_lenght: 6,
 }
-
-export const MESSAGES : ObjectOfStringsType = {
-  verify_account: 'Verify your account! A confirmation email has been sent to your inbox',
-  resend_verify_email: 'Letter sent successfully',
-  is_required: 'This field is required',
-  password_min_lenght: `Password must be at least ${UTILS.min_password_lenght} characters`,
-  password_contain_digit: 'Password must contain lowercase latin letters and at least one digit',
-  email_invalid: 'Invalid email',
-  passwords_do_not_match: 'Passwords do not match',
-};

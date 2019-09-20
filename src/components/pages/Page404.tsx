@@ -1,20 +1,24 @@
 import * as React from 'react';
 
-import CenterMessage from './CenterMessage';
+import CenterMessage from '../elements/CenterMessage';
+
+import { useTranslation } from 'react-i18next';
 
 import {
   Page,
   CenterWrapper,
   TextLarge,
-} from '../theme/widgets';
+} from '../../theme/widgets';
 
 const Page404 : React.SFC = () => {
+  const { t, i18n } = useTranslation();
+
   return (
-    <Page outer>
+    <Page empty>
       <CenterWrapper>
         <CenterMessage>
           <TextLarge super>404</TextLarge>
-          <TextLarge>Page Not Found!!!</TextLarge>
+          <TextLarge>{t('page404')}</TextLarge>
         </CenterMessage>
       </CenterWrapper>
     </Page>

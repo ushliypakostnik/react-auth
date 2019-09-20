@@ -4,22 +4,26 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { history } from '../store/store';
+import i18n from '../../utils/i18n';
+import { WithTranslation, withTranslation } from 'react-i18next';
 
-import { MESSAGES } from '../store/constants';
+import { UTILS } from '../../store/constants';
+import { history } from '../../store/store';
 
 import {
   StoreType,
   NewPasswordType,
-} from '../store/types';
+} from '../../store/types';
 
 import {
   setToken,
   postNewPassword
-} from '../store/modules/auth/actions';
+} from '../../store/modules/auth/actions';
 
-import Empty from '../components/Empty';
-import CenterMessage from '../components/CenterMessage';
+import Empty from '../../components/pages/Empty';
+import CenterMessage from '../../components/elements/CenterMessage';
+import LangSwitch from '../utils/LangSwitch';
+import ThemeSwitch from '../utils/ThemeSwitch';
 
 import {
   Page,
@@ -31,7 +35,8 @@ import {
   TextLarge,
   Input,
   Button,
-} from '../theme/widgets';
+  Footer,
+} from '../../theme/widgets';
 
 interface StateToProps {
   hash : string;
@@ -44,7 +49,7 @@ interface DispatchProps {
   postNewPassword : (credentials: NewPasswordType) => void;
 }
 
-interface Props extends StateToProps, DispatchProps {};
+interface Props extends StateToProps, DispatchProps, WithTranslation {};
 
 const initialState = {
   id: '',
@@ -95,7 +100,7 @@ class Login extends React.Component<Props, State> {
 
     if (password1 !== password2) {
       this.setState({
-        match: MESSAGES.passwords_do_not_match,
+        match: i18n.t('validations.passwords_do_not_match'),
       });
       return;
     } else {
@@ -113,14 +118,14 @@ class Login extends React.Component<Props, State> {
     // eslint-disable-next-line no-useless-escape
     const regExp = /^(?=.*\d)(?=.*[a-z])(?!.*\s).*$/;
     const validate = regExp.test(password);
-    const minLenght = 6;
+    const minLenght = UTILS.min_password_lenght;
     let passError;
     if (password === '') {
-      passError = MESSAGES.is_required;
+      passError = i18n.t('validations.is_required');
     } else if (password.length < minLenght) {
-      passError = MESSAGES.password_min_lenght;
+      passError = i18n.t('validations.password_min_lenght.part1') + String(minLenght) + i18n.t('validations.password_min_lenght.part2');
     } else if (!validate) {
-      passError = MESSAGES.password_contain_digit;
+      passError = i18n.t('password_contain_digit');
     } else {
       passError = '';
     }
@@ -142,24 +147,24 @@ class Login extends React.Component<Props, State> {
   }
 
   render() {
-    const { isFetching } = this.props;
+    const { i18n, isFetching } = this.props;
     const { pass1Error, pass2Error, match } = this.state;
 
     return (
       <React.Fragment>
         { isFetching ?
-          <Empty outer /> :
-          <Page outer>
+          <Empty /> :
+          <Page footer>
             <CenterWrapper>
               <CenterMessage>
-                <TextLarge>Create React App based<br />frontend boilerplate</TextLarge>
+                <TextLarge>{i18n.t('password.title')}</TextLarge>
               </CenterMessage>
-              <Form>
+              <Form bottom>
                 <FormGroup>
                   <Input
                     type="password"
-                    aria-label="password input"
-                    placeholder="Password"
+                    aria-label={i18n.t('password.password1.aria-label')}
+                    placeholder={i18n.t('password.password1.placeholder')}
                     ref={this.password1Input}
                    />
                    {!(pass1Error === '')
@@ -170,8 +175,8 @@ class Login extends React.Component<Props, State> {
                 <FormGroup>
                   <Input
                     type="password"
-                    aria-label="password again input"
-                    placeholder="Password again"
+                    aria-label={i18n.t('password.password2.aria-label')}
+                    placeholder={i18n.t('password.password2.placeholder')}
                     ref={this.password2Input}
                    />
                    {!(pass2Error === '')
@@ -182,11 +187,11 @@ class Login extends React.Component<Props, State> {
                 <FormGroup>
                   <Button
                     type="submit"
-                    aria-label="Set password"
+                    aria-label={i18n.t('password.submit_button.aria-label')}
                     onClick={(e) => {
                       e.preventDefault();
                       this.submit(this.password1Input.current.value, this.password2Input.current.value);
-                  }}>Set password</Button>
+                  }}>{i18n.t('password.submit_button.text')}</Button>
                   {!(match === '')
                     && <FormMessage state="error">
                          <TextSmall>{ match }</TextSmall>
@@ -194,7 +199,8 @@ class Login extends React.Component<Props, State> {
                 </FormGroup>
               </Form>
             </CenterWrapper>
-           </Page>}
+           <Footer><LangSwitch /><ThemeSwitch /></Footer>
+         </Page>}
       </React.Fragment>
     );
   }
@@ -211,4 +217,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Disp
   postNewPassword: (credentials: NewPasswordType) => dispatch(postNewPassword(credentials)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(Login));

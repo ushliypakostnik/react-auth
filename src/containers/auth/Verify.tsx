@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { history } from '../store/store';
+import { history } from '../../store/store';
 
 import {
   StoreType,
-} from '../store/types';
+} from '../../store/types';
 
-import { postVerify } from '../store/modules/verify/actions';
+import { postVerify } from '../../store/modules/verify/actions';
 
-import Empty from '../components/Empty';
+import Empty from '../../components/pages/Empty';
 
 interface StateToProps {
   search : string;
@@ -48,7 +48,7 @@ class Verify extends React.Component<Props, State> {
   readonly state : State = initialState;
 
   render() {
-    return <Empty outer />;
+    return <Empty />;
   }
 };
 

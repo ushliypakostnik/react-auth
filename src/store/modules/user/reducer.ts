@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-import { INITIAL_STATE, MESSAGES } from '../../constants';
+import { INITIAL_STATE } from '../../constants';
 import { StoreType } from '../../types';
 
 import {
@@ -24,14 +24,10 @@ const user = (state : StoreType, action: Action & any) => {
         isFetching: true,
       });
     case USER_SUCCESS:
-      let success = '';
-      if (!action.profile.isVerify) {
-        success = MESSAGES.verify_account;
-      }
       return Object.assign({}, state, {
         isFetching: false,
         profile: action.profile,
-        success,
+        success: false,
       });
     case USER_ERROR:
       return Object.assign({}, state, {
@@ -45,7 +41,7 @@ const user = (state : StoreType, action: Action & any) => {
     case SEND_VERIFY_EMAIL_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        success: MESSAGES.resend_verify_email,
+        success: true,
       });
     case SEND_VERIFY_EMAIL_ERROR:
       return Object.assign({}, state, {

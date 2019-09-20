@@ -5,7 +5,7 @@ import { createBrowserHistory as createHistory } from 'history';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-import { INITIAL_STATE, LOCAL } from './constants';
+import { INITIAL_STATE, LOCALSTORAGE } from './constants';
 import { StoreType } from './types';
 import rootReducer from './reducers';
 
@@ -22,7 +22,7 @@ const localStorageMiddleware = ({getState} : any) => {
   return (next : any) => (action: any) => {
     const result = next(action);
     if (getState().rootReducer.auth.isAuth) {
-      localStorage.setItem(LOCAL.PROFILE, JSON.stringify(
+      localStorage.setItem(LOCALSTORAGE.PROFILE, JSON.stringify(
           getState().rootReducer.user.profile,
       ));
     }
@@ -32,8 +32,8 @@ const localStorageMiddleware = ({getState} : any) => {
 middlewares.push(localStorageMiddleware);
 
 const reHydrateStore = (state: StoreType) => {
-  if (localStorage.getItem(LOCAL.PROFILE) !== null) {
-    const localData = JSON.parse(localStorage.getItem(LOCAL.PROFILE) || '{}');
+  if (localStorage.getItem(LOCALSTORAGE.PROFILE) !== null) {
+    const localData = JSON.parse(localStorage.getItem(LOCALSTORAGE.PROFILE) || '{}');
     const _state = Object.assign({}, state, {
       rootReducer: {
         ...state.rootReducer,

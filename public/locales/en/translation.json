@@ -1,0 +1,78 @@
+{
+  "validations": {
+    "verify_account": "Verify your account! A confirmation email has been sent to your inbox",
+    "resend_verify_email": "Letter sent successfully",
+    "is_required": "This field is required",
+    "password_min_lenght": {
+      "part1": "Password must be at least ",
+      "part2": " characters"
+    },
+    "password_contain_digit": "Password must contain lowercase latin letters and at least one digit",
+    "email_invalid": "Invalid email",
+    "passwords_do_not_match": "Passwords do not match"
+  },
+  "login": {
+    "title": "Create React App based frontend boilerplate with authentication",
+    "input": {
+      "aria-label": "email input",
+      "placeholder": "Email"
+    },
+    "password": {
+      "aria-label": "password input",
+      "placeholder": "Password"
+    },
+    "submit_button": {
+      "aria-label1": "Login or registration",
+      "aria-label2": "Remind password",
+      "text1": "Login / Registration",
+      "text2": "Remind password"
+    },
+    "fb_button": {
+      "aria-label": "login via Facebook",
+      "text": "Via Facebook"
+    },
+    "vk_button": {
+      "aria-label": "login via VKontakte",
+      "text": "Via VKontakte"
+    },
+    "form_link": {
+      "aria-label1": "Remind password",
+      "aria-label2": "Back to login",
+      "text1": "Remind password?",
+      "text2": "Back to login"
+    }
+  },
+  "password": {
+    "title": "Change Password",
+    "password1": {
+      "aria-label": "new password input",
+      "placeholder": "New password"
+    },
+    "password2": {
+      "aria-label": "new password input again",
+      "placeholder": "New password again"
+    },
+    "submit_button": {
+      "aria-label": "set new password",
+      "text1": "Set new password"
+    }
+  },
+  "account": {
+    "title": "Account",
+    "field1": "Usermail",
+    "field1": "isVerify",
+    "logout_button": {
+      "aria-label": "logout button",
+      "text": "Sign out"
+    },
+    "resend_button": {
+      "aria-label": "resend verify email",
+      "text": "Resend Verify Email"
+    }
+  },
+  "page404": "Page Not Found!!!",
+  "boolean": {
+    "true": "Yes",
+    "false": "No"
+  }
+}
