@@ -12,6 +12,7 @@ import {
 const Api = axios.create({
   baseURL: API_URL,
   responseType: 'json',
+  withCredentials: true,
 });
 
 // Auto auth
@@ -36,6 +37,10 @@ export const deleteAuth = () : void => {
 
 export const rememberLanguage = (language: string) : void => {
   Cookies.set(COOKIES.LANG.name, language, { expires: COOKIES.LANG.expires });
+};
+
+export const rememberTheme = (theme: string) : void => {
+  Cookies.set(COOKIES.THEME.name, theme, { expires: COOKIES.THEME.expires });
 };
 
 export const POST_AUTH_PATH = '/api/user/login';

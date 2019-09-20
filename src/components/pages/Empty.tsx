@@ -10,9 +10,9 @@ import {
   PageProps,
 } from '../../theme/widgets';
 
-const Empty : React.SFC<PageProps> = props => {
+const Empty : React.SFC<PageProps> = () => {
   return (
-    <Page outer={ props.outer } empty >
+    <Page empty >
       <CenterWrapper>
         <EntryHeaderWpapper>
           <Loading />

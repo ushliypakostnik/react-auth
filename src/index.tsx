@@ -4,11 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from "connected-react-router";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styled, { ThemeProvider } from 'styled-components';
-import theme, { GlobalStyle } from "./theme/theme";
-
-import App from './containers/App';
+import ThemeWrapper from './containers/wrappers/ThemeWrapper';
 
 import './utils/i18n';
 
@@ -19,10 +15,7 @@ import store, { history } from './store/store';
 ReactDOM.render((
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+       <ThemeWrapper />
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));

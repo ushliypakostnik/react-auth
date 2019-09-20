@@ -19,12 +19,13 @@ import {
   getFacebookAuth,
   getVkontakteAuth,
   postRemindPassword,
-  clearMessages,
 } from '../../store/modules/auth/actions';
+import { clearMessages } from '../../store/modules/utils/actions';
 
 import Empty from '../../components/pages/Empty';
 import CenterMessage from '../../components/elements/CenterMessage';
 import LangSwitch from '../utils/LangSwitch';
+import ThemeSwitch from '../utils/ThemeSwitch';
 
 import {
   Page,
@@ -149,8 +150,8 @@ class Login extends React.Component<Props, State> {
     return (
       <React.Fragment>
         { isFetching && login ?
-          <Empty outer /> :
-          <Page outer footer>
+          <Empty /> :
+          <Page footer>
             <CenterWrapper>
               <CenterMessage>
                 <TextLarge>{i18n.t('login.title')}</TextLarge>
@@ -235,7 +236,7 @@ class Login extends React.Component<Props, State> {
                 >{login ? i18n.t('login.form_link.text1') : i18n.t('login.form_link.text2')}</A>
               </Form>
             </CenterWrapper>
-           <Footer><LangSwitch /></Footer>
+           <Footer><LangSwitch /><ThemeSwitch /></Footer>
            </Page>}
        </React.Fragment>
     );

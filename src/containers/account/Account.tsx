@@ -17,6 +17,7 @@ import {
 
 import Empty from '../../components/pages/Empty';
 import LangSwitch from '../utils/LangSwitch';
+import ThemeSwitch from '../utils/ThemeSwitch';
 
 import {
   Page,
@@ -113,7 +114,7 @@ class Account extends React.Component<Props, State> {
                  </ButtonWrapper>
               </Form>
             </CenterWrapper>
-            <Footer><LangSwitch /></Footer>
+           <Footer><LangSwitch /><ThemeSwitch /></Footer>
           </Page>}
       </React.Fragment>
     );

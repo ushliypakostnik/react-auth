@@ -33,8 +33,6 @@ export const REMIND_PASSWORD_ERROR = 'REMIND_PASSWORD_ERROR';
 export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD';
 export const SET_NEW_PASSWORD_RESULT = 'SET_NEW_PASSWORD_RESULT';
 
-export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
-
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 // Action Creators
@@ -188,12 +186,6 @@ export const postNewPassword: ActionCreator<ThunkAction<Promise<Action>, Action,
         return dispatch(setNewPasswordResult(e.response.data.message));
       };
     };
-};
-
-export const clearMessages : ActionCreator<Action> = () => {
-  return {
-    type: CLEAR_MESSAGES,
-  };
 };
 
 export const authLogout : ActionCreator<Action> = () => {

@@ -21,14 +21,11 @@ const theme : DefaultTheme = {
     color_white: '#ffffff',
     color_black: '#000000',
     color_mint: '#00A287',
-    color_red: '#ff3237',
+    color_red: '#f76c70',
     color_green: '#00C20D',
 
     // Functional
-    color_light: '#fafafa',
-    color_text: '#6c7a89',
-    color_text_light: 'rgba(108, 122, 137, 0.75)',
-    color_border: '#eff2f5',
+    color_placeholder: '#a4adb7',
     color_shadow: 'rgba(0, 0, 0, 0.15)',
 
     // Brand
@@ -80,8 +77,7 @@ Object.assign(theme, {
     color_primary: theme.colors.color_mint,
     color_success: theme.colors.color_green,
     color_error: theme.colors.color_red,
-    color_disabled: theme.colors.color_border,
-    color_placeholder: theme.colors.color_border,
+    color_disabled: theme.colors.color_placeholder,
   },
   // Good line height for all font sizes
   typography: {
@@ -113,7 +109,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     margin: 0
     padding: 0;
-    color: ${theme.colors.color_text};
+    color: ${theme.colors.color_black};
     background-color: ${theme.colors.color_white};
     font-family:  ${theme.typography.fontfamily_sans};
     font-size:  ${theme.typography.fontsize_small}px;
@@ -127,6 +123,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   a {
+    cursor: pointer;
     color: ${theme.colors.color_link};
     text-decoration: none;
     &:hover {
@@ -137,6 +134,10 @@ export const GlobalStyle = createGlobalStyle`
   ul {
     padding-left: 0;
     list-style: none;
+  }
+
+  button {
+    cursor: pointer;
   }
 
   button,

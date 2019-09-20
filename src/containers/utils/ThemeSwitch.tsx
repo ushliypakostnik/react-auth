@@ -6,12 +6,9 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { StoreType } from '../../store/types';
 
-import { LANGUAGES } from '../../store/constants';
+import { THEMES } from '../../store/constants';
 
-import {
-  changeLanguage,
-  clearMessages
-} from '../../store/modules/utils/actions';
+import { changeTheme } from '../../store/modules/utils/actions';
 
 import {
   Card,
@@ -19,12 +16,11 @@ import {
 } from '../../theme/widgets';
 
 interface StateToProps {
-  language : string;
+  theme : string;
 };
 
 interface DispatchProps {
-  changeLanguage : (language: string) => void;
-  clearMessages: () => void;
+  changeTheme : (theme: string) => void;
 }
 
 interface Props extends StateToProps, DispatchProps {};
@@ -36,30 +32,29 @@ type State = Readonly<typeof initialState>;
 class LangSwitch extends React.Component<Props, State> {
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
-    language: nextProps.language,
+    theme: nextProps.theme,
   });
 
   readonly state : State = initialState;
 
   render() {
-    const { language } = this.props;
+    const { theme } = this.props;
 
     return (
-      <Card switch>
-        {LANGUAGES.map((lang, index) => {
+      <Card switch after>
+        {THEMES.map((t, index) => {
           return (
             <TextNormal key={index} bold uppercase>
-              {language !== lang.name ?
+              {theme !== t.name ?
                 <a
                   href="#"
                   onClick={e => {
                   e.preventDefault();
-                  this.props.changeLanguage(lang.name);
-                  this.props.clearMessages();
+                  this.props.changeTheme(t.name);
                 }}
-                >{ lang.name }</a> :
-                <span>{ lang.name }</span>}
-                {index < LANGUAGES.length - 1 && <span> / </span>}
+                >{ t.name }</a> :
+                <span>{ t.name }</span>}
+                {index < THEMES.length - 1 && <span> / </span>}
             </TextNormal>);
         })}
       </Card>
@@ -68,12 +63,11 @@ class LangSwitch extends React.Component<Props, State> {
 };
 
 const mapStateToProps = (state : StoreType) : StateToProps => ({
-  language: state.rootReducer.utils.language,
+  theme: state.rootReducer.utils.theme,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : DispatchProps => ({
-   changeLanguage: (language: string) => dispatch(changeLanguage(language)),
-   clearMessages: () => dispatch(clearMessages()),
+   changeTheme: (theme: string) => dispatch(changeTheme(theme)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LangSwitch);

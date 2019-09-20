@@ -26,7 +26,7 @@ declare module 'styled-components' {
       color_green? : string;
 
       // Functional
-      color_light? : string;
+      color_background? : string;
       color_text? : string;
       color_text_light? : string;
       color_link? : string;
@@ -35,6 +35,7 @@ declare module 'styled-components' {
       color_placeholder? : string,
       color_border? : string;
       color_shadow? : string;
+      color_card? : string;
 
       color_primary? : string;
       color_success? : string;

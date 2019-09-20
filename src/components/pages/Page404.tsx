@@ -14,7 +14,7 @@ const Page404 : React.SFC = () => {
   const { t, i18n } = useTranslation();
 
   return (
-    <Page outer>
+    <Page empty>
       <CenterWrapper>
         <CenterMessage>
           <TextLarge super>404</TextLarge>

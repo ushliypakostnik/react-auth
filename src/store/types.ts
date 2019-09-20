@@ -39,10 +39,12 @@ export interface ObjectOfAnyType {
   readonly [key: string] : any;
 };
 
-export interface LanguageObject {
+export interface LanguageObjectType {
   readonly id: number;
   readonly name: string;
 };
+
+export interface ThemeObjectType extends LanguageObjectType {};
 
 export interface CredentialsType {
   readonly usermail: string;

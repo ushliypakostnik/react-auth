@@ -6,7 +6,8 @@ import {
   ObjectOfAnyType,
   CookiesType,
   LocalStorageType,
-  LanguageObject,
+  LanguageObjectType,
+  ThemeObjectType,
 } from './types';
 
 export const COOKIES : CookiesType = {
@@ -17,26 +18,41 @@ export const COOKIES : CookiesType = {
   LANG: {
     name: 'language',
     expires: 7,
+  },
+  THEME: {
+    name: 'theme',
+    expires: 7,
   }
 };
 
-const isProd : boolean = process.env.NODE_ENV === 'production';
-const apiUrl : string = process.env.API_URL;
 
-export const API_URL = isProd ? apiUrl || 'http://express-auth.kafedra.org' : apiUrl || 'http://127.0.0.1:8082';
+const isProd : boolean = process.env.NODE_ENV === 'production';
+const apiUrl : string = process.env.REACT_APP_API_URL;
+export const API_URL = isProd ? apiUrl || 'https://express-auth.kafedra.org' : apiUrl || 'http://localhost:8082';
 
 // Auto auth
 export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null;
 const isAuth : boolean = AUTO_AUTH ? true : false;
 
-export const LANGUAGES : LanguageObject[] = [
+export const LANGUAGES : LanguageObjectType[] = [
   { id: 1, name: 'en'},
   { id: 2, name: 'ru'},
 ];
 
 // Auto language
 const language : string | null = Cookies.get(COOKIES.LANG.name) || null;
-export const AUTO_LANG : string = language || LANGUAGES[0].name;
+export const AUTO_LANG : string = language || LANGUAGES[1].name;
+
+
+export const THEMES : ThemeObjectType[] = [
+  { id: 1, name: 'light'},
+  { id: 2, name: 'dark'},
+];
+
+// Auto theme
+const theme : string | null = Cookies.get(COOKIES.THEME.name) || null;
+export const AUTO_THEME : string = theme || THEMES[1].name;
+
 
 export const INITIAL_STATE : StoreType = {
   rootReducer: {
@@ -65,10 +81,11 @@ export const INITIAL_STATE : StoreType = {
     },
     utils: {
       language: AUTO_LANG,
-      theme: '',
+      theme: AUTO_THEME,
     },
   },
 };
+
 
 export const LOCALSTORAGE : LocalStorageType = {
   PROFILE: 'UserProfile',
