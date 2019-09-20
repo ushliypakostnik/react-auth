@@ -16,6 +16,7 @@ Object.assign(themeDark, {
     color_text: '#aebfd0',
     color_card: '#263340',
     color_border: '#1c2630',
+    color_header: '#131920',
   },
 });
 

@@ -35,8 +35,8 @@ export const AUTO_AUTH : string | null = Cookies.get(COOKIES.TOKEN.name) || null
 const isAuth : boolean = AUTO_AUTH ? true : false;
 
 export const LANGUAGES : LanguageObjectType[] = [
-  { id: 1, name: 'en'},
-  { id: 2, name: 'ru'},
+  { id: 1, name: 'en' },
+  { id: 2, name: 'ru' },
 ];
 
 // Auto language
@@ -46,7 +46,7 @@ export const AUTO_LANG : string = language || LANGUAGES[1].name;
 
 export const THEMES : ThemeObjectType[] = [
   { id: 1, name: 'light'},
-  { id: 2, name: 'dark'},
+  { id: 2, name: 'dark' },
 ];
 
 // Auto theme

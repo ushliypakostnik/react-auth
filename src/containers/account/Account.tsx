@@ -24,6 +24,7 @@ import {
   CenterWrapper,
   Button,
   ButtonWrapper,
+  TextHeader,
   TextLarge,
   TextSmall,
   TextString,
@@ -77,6 +78,7 @@ class Account extends React.Component<Props, State> {
           <Empty /> :
           <Page footer>
             <CenterWrapper>
+              <TextString><TextHeader>{i18n.t('account.title')}</TextHeader></TextString>
               <Form>
                 <TextString top>
                   <TextLarge light>{i18n.t('account.field1')}:</TextLarge>

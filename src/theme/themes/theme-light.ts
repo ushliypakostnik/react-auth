@@ -15,7 +15,7 @@ Object.assign(themeLight, {
     color_background: '#fafafa',
     color_text: '#6c7a89',
     color_card: theme.colors.color_white,
-    color_border: '#eff2f5',
+    color_border: '#dfe5eb',
   },
 });
 

@@ -25,6 +25,7 @@ const theme : DefaultTheme = {
     color_green: '#00C20D',
 
     // Functional
+    color_header: '#131920',
     color_placeholder: '#a4adb7',
     color_shadow: 'rgba(0, 0, 0, 0.15)',
 

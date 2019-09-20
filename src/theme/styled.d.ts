@@ -36,6 +36,7 @@ declare module 'styled-components' {
       color_border? : string;
       color_shadow? : string;
       color_card? : string;
+      color_header? : string,
 
       color_primary? : string;
       color_success? : string;

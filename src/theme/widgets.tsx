@@ -72,6 +72,30 @@ export const TextLarge = styled.span<TextLargeProps>`
   `}
 `;
 
+export const TextHeader = styled.span<TextLargeProps>`
+  display: inline;
+  color: ${props => props.theme.colors.color_header};
+  font-family:  ${props => props.theme.typography.fontfamily_sans};
+  font-size:  calc(${props => props.theme.typography.fontsize_large}px * 1.5);
+  line-height: ${props => props.theme.typography.lineheight_large}px;
+  font-weight: ${props => props.theme.typography.fontweight_sans_bold};
+  letter-spacing: ${props => props.theme.typography.letterspacing_normal};
+
+  ${props => props.super && css`
+    font-size:  calc(${props => props.theme.typography.fontsize_large}px * 4);
+    line-height: calc(${props => props.theme.typography.lineheight_large}px * 4);
+  `}
+
+  ${props => props.light && css`
+    opacity: 0.5;
+  `}
+
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_middle}) {
+    display: inline-block;
+    margin-top: 20px;
+  }
+`;
+
 interface TextStringProps {
   readonly top? : boolean;
 };
@@ -233,7 +257,7 @@ export const Page = styled.div<PageProps>`
     height: 100vh;
   `};
 
-  @media screen and (max-width: ${props => props.theme.breackpoints.xs_max}) {
+  @media screen and (max-width: ${props => props.theme.breackpoints.xs_middle}) {
     height: auto;
   }
 `;
