@@ -19,5 +19,5 @@ Object.assign(themeLight, {
   },
 });
 
-console.log('Theme variables: ', themeLight);
+// console.log('Theme light variables: ', themeLight);
 export default themeLight;

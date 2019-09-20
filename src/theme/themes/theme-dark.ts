@@ -19,5 +19,5 @@ Object.assign(themeDark, {
   },
 });
 
-console.log('Theme variables: ', themeDark);
+// console.log('Theme dark variables: ', themeDark);
 export default themeDark;
