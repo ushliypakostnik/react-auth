@@ -336,20 +336,10 @@ export const rotate = keyframes`
   }
 `;
 
-export interface LogoProps {
-  readonly loader? : boolean;
-};
-
-export const Logo = styled.img<LogoProps>`
+export const Logo = styled.img`
   height: 60px;
   pointer-events: none;
   display: inline-block;
   animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 20) ${props => props.theme.effects.transition_timingfunction};
-
-  ${props => props.loader && css`
-    height: 80px;
-    width: 80px;
-    animation: ${rotate} infinite calc(${props => props.theme.effects.transition_duration} * 5) ${props => props.theme.effects.transition_timingfunction};
-  `}
 `;
 
