@@ -6,7 +6,7 @@ Create React App based frontend boilerplate
 
 [Демонстрация](https://react-auth.kafedra.org/)
 
-Основанная на Create React App реализация Progressive Web App клиента с модулем полноценной аунтефикации через [Backend API](https://github.com/ushliypakostnik/express-auth).
+Основанная на Create React App реализация Progressive Web App клиента с модулем полноценной аунтефикации через [Backend API](https://github.com/ushliypakostnik/express-auth), локализацией и темезацией.
 
 Написан на TypeScript со стилизацией с помощью Styled Components.
 
