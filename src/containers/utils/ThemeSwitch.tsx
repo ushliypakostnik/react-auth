@@ -29,7 +29,7 @@ const initialState = {};
 
 type State = Readonly<typeof initialState>;
 
-class LangSwitch extends React.Component<Props, State> {
+class ThemeSwitch extends React.Component<Props, State> {
 
   public static getDerivedStateFromProps = (nextProps : Props, prevState : State) => ({
     theme: nextProps.theme,
@@ -70,4 +70,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) : Disp
    changeTheme: (theme: string) => dispatch(changeTheme(theme)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LangSwitch);
+export default connect(mapStateToProps, mapDispatchToProps)(ThemeSwitch);
